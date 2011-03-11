@@ -1,0 +1,12 @@
+= Nivel inalt =
+
+Rich client scris in GWT se ocupa exclusiv de UI. Serverul *nu* trimite instructiuni de desenare. 
+
+Serverul consta din servicii care fac operatii logice. 
+Ex: 
+ * updateaza contractul 
+ * asociaza student cu laborator
+
+Serviciile opereaza cu DTO (data transfer objects) obiecte simple java .
+
+Serviciile persista modificarile in BD folosind HIBERNATE si eventual tranzactii si control concurenta.
