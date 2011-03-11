@@ -2,11 +2,12 @@
 
 [http://code.google.com/webtoolkit/doc/latest/DevGuide.html docs oficiala]
 
-[http://code.google.com/eclipse/docs/download.html plugin eclipse]
+eclipse plugin url:
+[http://code.google.com/eclipse/docs/download.html] 
 
 == svn == 
-
-[http://subclipse.tigris.org/update_1.6.x plugin de eclipse]
+eclipse plugin url:
+[http://subclipse.tigris.org/update_1.6.x ]
 
 [http://svnbook.red-bean.com/en/1.5/index.html carte]
 
