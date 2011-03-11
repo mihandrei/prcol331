@@ -1,0 +1,14 @@
+== GWT ==
+
+[http://code.google.com/webtoolkit/doc/latest/DevGuide.html docs oficiala]
+
+[http://code.google.com/eclipse/docs/download.html plugin eclipse]
+
+== svn == 
+
+[http://subclipse.tigris.org/update_1.6.x plugin de eclipse]
+
+[http://svnbook.red-bean.com/en/1.5/index.html carte]
+
+==hibernate==
+[http://docs.jboss.org/hibernate/core/3.6/quickstart/en-US/html/ docs]
