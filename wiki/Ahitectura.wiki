@@ -10,3 +10,13 @@ Ex:
 Serviciile opereaza cu DTO (data transfer objects) obiecte simple java .
 
 Serviciile persista modificarile in BD folosind HIBERNATE si eventual tranzactii si control concurenta.
+
+= versiunea 1 =
+
+ * serverul ramane simplu: servleturi
+ * autentificare minimala si nesigura
+ * CRUD pt clasele de suport
+ * finalizat contracte
+
+=versiunea 2=
+ * sa dea domu' sa ajungem aici
