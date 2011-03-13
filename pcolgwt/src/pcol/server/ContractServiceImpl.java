@@ -19,6 +19,8 @@ public class ContractServiceImpl extends RemoteServiceServlet implements
 		return Curicul.mock1();
 	}
 
+	//hello
+	
 	@Override
 	public void submitContract(Curicul c) {
 		System.out.println("contract update request recv");
