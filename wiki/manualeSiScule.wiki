@@ -17,5 +17,5 @@ eclipse plugin url:
 [http://sourceforge.net/projects/hibernate/files/hibernate3/3.6.2.Final/hibernate-distribution-3.6.2.Final-dist.zip/download download]
 
 ==mySQL==
-[http://dev.mysql.com/downloads/mysql/ download]
-[http://dev.mysql.com/downloads/workbench/5.2.html download]
+[http://dev.mysql.com/downloads/mysql/ download mysql server]
+[http://dev.mysql.com/downloads/workbench/5.2.html download workbench]
