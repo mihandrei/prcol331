@@ -7,8 +7,6 @@ import pcol.shared.Course;
 import pcol.shared.CourseGroup;
 import pcol.shared.Curicul;
 
-
-
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
