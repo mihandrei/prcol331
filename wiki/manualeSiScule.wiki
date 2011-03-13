@@ -20,3 +20,6 @@ eclipse plugin url:
 [http://dev.mysql.com/downloads/mysql/ download mysql server]
 
 [http://dev.mysql.com/downloads/workbench/5.2.html download workbench]
+
+daca la instalare la workbench va zice ca nu aveti .NET 4 instalati si :
+[http://www.microsoft.com/downloads/en/confirmation.aspx?FamilyID=9cfb2d51-5ff4-4491-b0e5-b386f32c0992 download]
