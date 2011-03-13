@@ -30,6 +30,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 public class Main implements EntryPoint, CgChangedListener {
 
 	private static MainUiBinder uiBinder = GWT.create(MainUiBinder.class);
+	
 	@UiField TabLayoutPanel tabpanel;
 	@UiField Label total;
 	@UiField Label plata;
