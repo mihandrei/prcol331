@@ -16,8 +16,6 @@ eclipse plugin url:
 ==hibernate==
 [http://docs.jboss.org/hibernate/core/3.6/quickstart/en-US/html/ docs]
 
-[http://sourceforge.net/projects/hibernate/files/hibernate3/3.6.2.Final/hibernate-distribution-3.6.2.Final-dist.zip/download download]
-
 ==mySQL==
 [http://dev.mysql.com/downloads/mysql/ download mysql server]
 
