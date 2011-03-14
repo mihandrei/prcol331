@@ -23,4 +23,14 @@
 		<url-pattern>/pcolgwt/contractService</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>auth</servlet-name>
+		<servlet-class>pcol.server.AuthenticationServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>auth</servlet-name>
+		<url-pattern>/pcolgwt/auth</url-pattern>
+	</servlet-mapping>
+	
 </web-app>

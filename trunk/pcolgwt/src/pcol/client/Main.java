@@ -7,6 +7,7 @@ import pcol.shared.Course;
 import pcol.shared.CourseGroup;
 import pcol.shared.Curicul;
 
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -15,6 +16,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
@@ -22,13 +24,9 @@ import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.TabLayoutPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-//tre sa extend widget numai daca vreau sa il pot atasa undeva
-//fiind top levell nu tre
-
-public class Main implements EntryPoint, CgChangedListener {
+public class Main extends Composite implements CgChangedListener {
 
 	private static MainUiBinder uiBinder = GWT.create(MainUiBinder.class);
-	
 	@UiField TabLayoutPanel tabpanel;
 	@UiField Label total;
 	@UiField Label plata;
@@ -41,12 +39,8 @@ public class Main implements EntryPoint, CgChangedListener {
 	
 	interface MainUiBinder extends UiBinder<DockLayoutPanel, Main> {
 	}
-
-	@Override
-	public void onModuleLoad() {
-		DockLayoutPanel outer = uiBinder.createAndBindUi(this);
-		contractService = GWT.create(ContractService.class);
-		AsyncCallback<Curicul> callback = new AsyncCallback<Curicul>() {
+	
+	class ContractCallback implements AsyncCallback<Curicul> {
 			@Override
 			public void onSuccess(Curicul result) {
 				curicul=result;
@@ -56,13 +50,17 @@ public class Main implements EntryPoint, CgChangedListener {
 			public void onFailure(Throwable caught) {
 				new ErrorDialog(caught.toString()).show();
 			}
-		};
-		contractService.getCuricula("1040", callback );
-		
-		RootLayoutPanel root = RootLayoutPanel.get();		
-		root.add(outer);
 	}
-
+	
+	public Main(){
+		initWidget(uiBinder.createAndBindUi(this));
+		contractService = GWT.create(ContractService.class);
+	}
+	
+	public void userchanged(int nrmatr){
+		contractService.getCuricula(Integer.toString(nrmatr), new ContractCallback());
+	}
+	
 	void onModelChange(Curicul model){
 		tabpanel.clear();
 		cgws.clear();
