@@ -2,6 +2,12 @@ package pcol.shared;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
+/**
+ * Data transfer object
+ * Scopul: sa fie trimis pe fir intre serer si client
+ * Entitatile hibernate *NU* pot fi trimise pe fir
+ * deci trebuiesc obiecte aproape asemanatoare doar pentru transfer
+ */
 public class Course implements IsSerializable{
 
 	public Course(){

@@ -5,9 +5,10 @@
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/proj_col</property>
-    <property name="hibernate.connection.username">pccol</property>
+    <property name="hibernate.connection.username">pcol</property>
     <property name="hibernate.connection.password">pcol</property>
     <property name="hibernate.show_sql">true</property>
+    <!-- conigurez hibernate sa foloseasca anotariile din clase; nu folosesc xml -->
     <mapping class="pcol.server.domain.Sectii"/>
     <mapping class="pcol.server.domain.CuriculeId"/>
     <mapping class="pcol.server.domain.Facultati"/>
