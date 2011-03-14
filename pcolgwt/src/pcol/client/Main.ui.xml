@@ -1,7 +1,6 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
 	xmlns:g='urn:import:com.google.gwt.user.client.ui' xmlns:p1="urn:import:pcol.client">
 	<ui:style>
-		
 		.statusDiv {
 			float: right;
 			margin: 1em;
@@ -14,10 +13,17 @@
 		.rightpanel {
 			padding: 1em;
 		}
-		.leftpanel{
-			padding:1em;
-			background-color:#FAFAFB;	
+		
+		.leftpanel {
+			padding: 1em;
+			background-color: #FAFAFB;
 		}
+		.leftpanel > div{
+			margin:0.5em;
+			padding:0.2em;
+			background-color:#BBBBFF;
+			text-align:center;
+		} 
 	</ui:style>
 
 	<g:DockLayoutPanel unit='EM' width="600">
@@ -53,10 +59,14 @@
 				<g:Button ui:field="button" text="pastreaza modificarile" />
 			</g:HTMLPanel>
 		</g:east>
-		<g:west size="7.7" >
+		<g:west size="13.9">
 			<g:HTMLPanel styleName="{style.leftpanel}">
-				<g:Hyperlink text="contracte" targetHistoryToken="contracteHistoryToken" />
-				<g:Hyperlink text="teme" targetHistoryToken="temeHistoryToken" />
+				<div>
+					<g:Hyperlink text="contracte" targetHistoryToken="contracteHistoryToken" />
+				</div>
+				<div>
+					<g:Hyperlink text="teme" targetHistoryToken="temeHistoryToken" />
+				</div>
 			</g:HTMLPanel>
 		</g:west>
 	</g:DockLayoutPanel>
