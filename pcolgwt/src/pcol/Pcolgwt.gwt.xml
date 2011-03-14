@@ -15,5 +15,6 @@
 	<source path='client' />
 	<source path='shared' />
 	
+	<!-- cand so-ncarcat clientul GWT o sa apeleze onModuleload a clasei de mai jos -->
 	 <entry-point class='pcol.client.LoginScreen' />
 </module>

@@ -9,7 +9,13 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
-
+/**
+ * un widget simplu
+ * afiseaza un mesaj 
+ *
+ *extinde dialogbox si nu compozite ca-i menit sa 
+ *fie modal (sa nu mai poti da click cand apare pe restul aplicatiei)
+ */
 public class ErrorDialog extends DialogBox {
 
 	private static ErrorDialogUiBinder binder = GWT

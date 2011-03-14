@@ -14,16 +14,21 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 public class AuthenticationServiceImpl extends RemoteServiceServlet implements AuthenticationService {
 
+	/**
+	 * interogez db daca exista userul si daca parola ii ok
+	 * updatez lastlogin
+	 * TODO: fa-l pe lastlogin de tip date
+	 */
 	private boolean doAuthenticate(String usrname,String pwd){
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session session = sf.openSession();
 		try {
 			session.beginTransaction();
-			Users user = (Users) session.get(Users.class, usrname);
+			Users user = (Users) session.get(Users.class, usrname); //da-mi userul cu numele asta
 			session.getTransaction().commit();
 			if( user!=null && pwd.equals(user.getPasswordHash())){
 				user.setLastlogin(new Date().toString());
-				
+				session.update(user);
 				return true;
 			}
 			return false;
