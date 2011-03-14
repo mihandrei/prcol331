@@ -1,3 +1,5 @@
+==eclipse==
+[http://www.eclipse.org/downloads/ download(primul link)]
 == GWT ==
 
 [http://code.google.com/webtoolkit/doc/latest/DevGuide.html docs oficiala]
