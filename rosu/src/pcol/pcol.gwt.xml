@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+
+	<inherits name="com.google.gwt.user.User" />
+	<inherits name="com.google.gwt.user.theme.chrome.Chrome" />
+
+	<inherits name='com.google.gwt.editor.Editor' />
+	<inherits name="com.google.gwt.activity.Activity" />
+	<inherits name="com.google.gwt.place.Place" />
+
+	<inherits name="com.google.gwt.logging.Logging" />
+	<set-property name="gwt.logging.logLevel" value="FINE" />
+	<set-property name="gwt.logging.developmentModeHandler"
+		value="ENABLED" />
+		
+	<!-- <extend-property name="locale" values="en" />
+	<extend-property name="locale" values="ro" />	
+	-->
+	<set-configuration-property name="CssResource.style" value="pretty"/> 
+
+	<source path='client' />
+	<source path='shared' />
+	
+	<entry-point class="pcol.client.App" />
+</module>
