@@ -2,7 +2,16 @@ package model;
 
 public class Student {
 	private int nr_matr;
+	public String blabla;
 	public String nume;
+	
+	public String getBlabla() {
+		return blabla;
+	}
+
+	public void setBlabla(String blabla) {
+		this.blabla = blabla;
+	}
 
 	public String getNume() {
 		return nume;
