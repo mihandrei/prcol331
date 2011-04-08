@@ -2,12 +2,13 @@
 	xmlns:g='urn:import:com.google.gwt.user.client.ui'>
 	<ui:style>
 		.credittotal {
-			font-size: 2em;
+			font-weight: bold;
 		}
 		
 		.rightpanel {
 			padding: 1em;
-			margin-left: 0.5em;
+			margin-right: 0.5em;
+			margin-top:3em;
 			background-color: white;
 		}
 		
@@ -22,24 +23,24 @@
 				height="100%" ui:field="tabpanel" styleName="tabpanelnav">
 			</g:TabLayoutPanel>
 		</g:center>
-		<g:east size="12">
+		<g:west size="12">
 			<g:HTMLPanel styleName="{style.rightpanel}">
 				<p>
 					Mai sunt
-					<g:InlineLabel text="30" ui:field="nrzile" />
+					<g:InlineLabel text="30" ui:field="nrzile" styleName="{style.credittotal}" />
 					zile in care se poate modifica contractul.
 				</p>
 
 				<p>
 					Total credite:
-					<g:Label text="0" ui:field="total" styleName="{style.credittotal}" />
+					<g:InlineLabel text="0" ui:field="total" styleName="{style.credittotal}" />
 				</p>
 				<p>
-					Suma de plata
-					<g:Label text="0" ui:field="plata" styleName="{style.credittotal}" />
+					Suma de plata:
+					<g:InlineLabel text="0" ui:field="plata" styleName="{style.credittotal}" />
 				</p>
 				<g:Button ui:field="button" text="pastreaza modificarile" />
 			</g:HTMLPanel>
-		</g:east>
+		</g:west>
 	</g:DockLayoutPanel>
 </ui:UiBinder>

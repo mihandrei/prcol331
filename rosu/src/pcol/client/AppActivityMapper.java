@@ -6,6 +6,7 @@ import pcol.client.materii.MaterieActivity;
 import pcol.client.materii.MateriePlace;
 import pcol.client.materii.MateriiActivity;
 import pcol.client.materii.MateriiPlace;
+import pcol.client.teme.TemeActivity;
 import pcol.client.tweet.TweetActivity;
 import pcol.client.tweet.TweetPlace;
 
@@ -32,6 +33,9 @@ public class AppActivityMapper implements ActivityMapper {
 			return new MateriiActivity(app.getMateriiView());
 		else if (place instanceof MateriePlace)
 			return new MaterieActivity(app.getMaterieView(),(MateriePlace)place);
+		else if(place instanceof TemePlace){
+			return new TemeActivity(app.getTemeView());
+		}
 		return null;
 	}
 

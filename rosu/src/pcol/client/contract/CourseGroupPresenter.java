@@ -1,58 +1,105 @@
 package pcol.client.contract;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
+
+import pcol.client.contract.ContractView.Presenter;
+
+import com.google.gwt.event.logical.shared.HasValueChangeHandlers;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.event.shared.GwtEvent;
+import com.google.gwt.event.shared.HandlerRegistration;
 
 class MultipleSelectionModel implements CourseGroupWidget.SelectionModel{
-	Map<Object,Boolean> selection = new HashMap<Object, Boolean>();
+	private Set<Object> selection = new HashSet<Object>();
 	
 	@Override
 	public void setSelected(Object object, Boolean inscris) {
-		selection.put(object,inscris);
+		if(inscris) {
+			selection.add(object);
+		}else{
+			selection.remove(object);
+		}
+	}
+
+	@Override
+	public Set<Object> getSelected(){
+		return selection;
+	}
+	
+	public boolean isSelected(Object object) {
+		return selection.contains(object);
+	}
+}
+
+class SingleSelectionModel implements CourseGroupWidget.SelectionModel{
+	Object selection = null;
+
+	@Override
+	public void setSelected(Object object, Boolean inscris) {
+		selection = inscris? object: null;
 	}
 
 	@Override
 	public boolean isSelected(Object object) {
-		return selection.containsKey(object) && selection.get(object);
+		return selection!=null && selection.equals(object);
+	}
+
+	@Override
+	public Set<Object> getSelected() {
+		return new HashSet<Object>(Arrays.asList(selection));
 	}
 }
 
+/*are acces direct la contractactivity care-i presentarul "parinte"
+ * Alta varianta: publica un valuechangedevent pe eventbus, astfel ne decuplam de 
+ * contractActivity. Dar nu merita sa mai complic flowwu de dragul decuplarii
+ * */
+
 public class CourseGroupPresenter implements CourseGroupWidget.Presenter {
-	static CourseGroup getACourseGroup(){
-		Course c1 =  new Course("MF 002","Analiza complexa",4,null,false);
-		Course c2 =  new Course("MF 022","Algebra",4,3.5f,false);
-		Course c3 =  new Course("MF 042","Algebra",6,6.5f,false);
-		Course c4 =  new Course("MF 102","Mecanica",4,null,true);
-		CourseGroup cg = new CourseGroup();
-		cg.courses = Arrays.asList(c1,c2,c3,c4);
-		cg.exclusive = true;
-		cg.name = "obligatorii";
-		return cg;
-	}
-	
     	private CourseGroupWidget view;
-		private String semid;
 		private CourseGroupWidget.SelectionModel selectionmodel;
-    	
-    	
-		CourseGroupPresenter(CourseGroupWidget cgw, String semid){
+		private CourseGroup cg;
+		private Presenter parentPresenter;
+		
+		@Override
+		public void setParentPresenter(ContractView.Presenter parentPresenter) {
+			this.parentPresenter = parentPresenter;
+		}
+
+		CourseGroupPresenter(CourseGroupWidget cgw){
     		this.view=cgw;
-    		this.semid = semid;
     	}
     	
-    	@Override
+    	//poate ar trebui sa pun o notificare pe eventbus
+    	//si widgetul care se ocupa de sumar sa se updateze de acolo
+		@Override
 		public void onSelectionChanged(Object object) {
 			selectionmodel.setSelected(object, ! selectionmodel.isSelected(object));
 			view.setSelection(selectionmodel);
-			//poate ar trebui sa pun o notificare pe eventbus
-			//si widgetul care se ocupa de sumar sa se updateze de acolo
+
+			//updatez modelul , notific activitatea parinte de schimbari
+			CourseGroup old  = cg.copy();
+
+			for(Course c : cg.courses){
+				c.inscris = selectionmodel.isSelected(c);
+			}
 			
+			if(parentPresenter!=null){
+				parentPresenter.onCgChanged(old, cg);
+			}
 		}
 		
 		public void start(){
-			CourseGroup cg = getACourseGroup();
-			selectionmodel = new MultipleSelectionModel();
+			if(cg.exclusive){
+				selectionmodel = new SingleSelectionModel();
+			}else{
+				selectionmodel = new MultipleSelectionModel();
+			}
 			view.setRowData(cg.courses);        
 	        view.setTitle(cg.name);
 	        
@@ -60,6 +107,11 @@ public class CourseGroupPresenter implements CourseGroupWidget.Presenter {
 	        	selectionmodel.setSelected(c, c.inscris);
 	        }
 			view.setSelection(selectionmodel);
-
 		}
-	}
+		@Override
+		public void setCourseGroup(CourseGroup cg){
+			this.cg=cg;
+		}
+
+		
+}

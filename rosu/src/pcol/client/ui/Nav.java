@@ -98,6 +98,8 @@ public class Nav extends Composite implements HasSelectionHandlers<String> {
 		String navItem();
 
 		String navItemSel();
+
+		String navItemSmall();
 	}
 
 	private List<String> links = new ArrayList<String>();
@@ -163,11 +165,23 @@ public class Nav extends Composite implements HasSelectionHandlers<String> {
 		Label lbl = new Label(tab);
 		lbl.setStylePrimaryName(style.navItem());
 		lbl.addClickHandler(clickHandler);
+
 		links.add(tab);
 		widgets.add(lbl);
 		tabc.add(lbl);
 	}
-
+	
+	public void addSmallTab(String tab){
+		Label lbl = new Label(tab);
+		lbl.setStylePrimaryName(style.navItem());
+		lbl.addStyleName(style.navItemSmall());
+		lbl.addClickHandler(clickHandler);
+		
+		links.add(tab);
+		widgets.add(lbl);
+		tabc.add(lbl);
+	}
+	
 	public void selectTabByToken(String token) {
 		selectTab(links.indexOf(token),true);
 	}

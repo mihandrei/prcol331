@@ -10,6 +10,8 @@ import pcol.client.materii.MaterieView;
 import pcol.client.materii.MaterieViewImpl;
 import pcol.client.materii.MateriiView;
 import pcol.client.materii.MateriiViewImpl;
+import pcol.client.teme.TemeView;
+import pcol.client.teme.TemeViewImpl;
 import pcol.client.tweet.TweetPlace;
 import pcol.client.tweet.TweetView;
 import pcol.client.tweet.TweetViewImpl;
@@ -42,6 +44,7 @@ public class App implements EntryPoint, Nav.Presenter{
 	private final LoginView loginView = new LoginScreen();
 	private final MaterieView materieView = new MaterieViewImpl();
 	private final MateriiView materiiView = new MateriiViewImpl();
+	private final TemeView temeView = new TemeViewImpl();
 
 	private Place defaultPlace = new TweetPlace.Tokenizer().getPlace("");
 
@@ -52,6 +55,11 @@ public class App implements EntryPoint, Nav.Presenter{
 				historyMapper);
 		historyHandler.register(placeController, eventBus, defaultPlace);
 
+		//pot sa am mai multi acctivitymanageri si mappere coresp
+		//fiecare manager se ocupa de display-ul lui
+		//Dar inn cazuri generice gen breadcrumb cred ca-i mai bine sa aculte 
+		//placechangeeventuri ( ca activvitattiile ar fi boring ar selecta
+		//un tab hardcodat in activitate
 		final ActivityMapper activityMapper = new AppActivityMapper(this);
 		final ActivityManager activityManager = new ActivityManager(
 				activityMapper, eventBus);
@@ -90,7 +98,9 @@ public class App implements EntryPoint, Nav.Presenter{
 		shell.addTab("noutati");
 		shell.addTab("materii");
 		shell.addTab("teme");
-		shell.addTab("contract");
+		shell.addSmallTab("contract");
+		shell.addSmallTab("plati");
+		shell.addSmallTab("etc");
 
 		activityManager.setDisplay(shell.getContainer());
 
@@ -127,6 +137,10 @@ public class App implements EntryPoint, Nav.Presenter{
 
 	public MateriiView getMateriiView() {
 		return materiiView;
+	}
+
+	public TemeView getTemeView() {
+		return temeView;
 	}
 
 }

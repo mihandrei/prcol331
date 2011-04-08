@@ -20,4 +20,11 @@ public class Course implements IsSerializable{
 		this.nota = nota;
 		this.inscris=inscris;
 	}
+	
+	//clone se pare ca nu-i suporatat de gwt
+	public Course copy() {
+		return new Course(id,name,credits,nota,inscris);
+	}
+	
+	
 }
