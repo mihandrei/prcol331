@@ -16,6 +16,16 @@ import com.google.gwt.place.shared.PlaceTokenizer;
 /**
  * Ocoleste mecanismul implicit din gwt (care-i cam magic si nu suporta #token)
  * asociaza manual history tokenruri cu place-uri
+ * 
+ * Idee : implementat o notiune de place hierarchy 
+ * ex : teme/db/lab1 <--> temeActivity, temeMaterieActivity , temaActivity
+ * Scopul ierarhiei e doar pentru breadcrumbs si taburile colorate
+ * 
+ * pnetru a mentine url-u de mai sus si a face dispatch la activitati diferite
+ * tre ca AppPlaceHistory,apper sa nu faca match pe substringul pana la primu /
+ * ci logest (most specific) match 
+ * ex teme -> temeactivity
+ * teme/somestr -> temematerie 
  */
 public class AppPlaceHistoryMapper implements PlaceHistoryMapper {
 	private static Logger log = Logger.getLogger(AppPlaceHistoryMapper.class.getName());
@@ -38,6 +48,9 @@ public class AppPlaceHistoryMapper implements PlaceHistoryMapper {
 		
 		tokenizers.put("materie", new MateriePlace.Tokenizer());
 		placetokens.put(MateriePlace.class, "materie");
+		
+		tokenizers.put("teme", new TemePlace.Tokenizer());
+		placetokens.put(TemePlace.class, "teme");
 	}
 
 	@Override

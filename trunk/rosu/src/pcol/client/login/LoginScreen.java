@@ -12,7 +12,6 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
-import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -29,7 +28,6 @@ public class LoginScreen extends Composite implements LoginView{
 	PasswordTextBox pwd;
 	@UiField
 	Label badauth;
-	@UiField SimplePanel progp;
 
 	private Presenter presenter ;
 	interface LoginScreenUiBinder extends UiBinder<Widget, LoginScreen> {

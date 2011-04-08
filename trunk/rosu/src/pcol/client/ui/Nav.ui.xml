@@ -59,6 +59,12 @@
 			text-shadow:0 1px 0 #404040;
 			cursor: pointer;
 		}
+		
+		.navItemSmall{
+			padding: 0.1em 0.5em 0.1em 0.5em;
+			margin-bottom: 2px;
+		}
+		
 		.navItem:hover{
 			color:white;	
 		}

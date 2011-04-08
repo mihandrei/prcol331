@@ -1,6 +1,7 @@
 package pcol.client.contract;
 
 import java.util.List;
+import java.util.Set;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -23,10 +24,13 @@ public class CourseGroupWidget extends Composite {
 	public interface Presenter{
 		void onSelectionChanged(Object object);
 		void start();
+		void setCourseGroup(CourseGroup cg);
+		void setParentPresenter(ContractView.Presenter parentPresenter);
 	}
 	public interface SelectionModel{
 		void setSelected(Object object, Boolean inscris);
 		boolean isSelected(Object object);
+		Set<Object> getSelected();
 	}
 	
 	@UiField
@@ -52,6 +56,7 @@ public class CourseGroupWidget extends Composite {
 		String caption();
 		String picat();
 		String luat();
+		String col4();
 	}
 	
 	public CourseGroupWidget() {
@@ -81,8 +86,8 @@ public class CourseGroupWidget extends Composite {
 			tbl.setText(i, 2, c.name);
 			tbl.setText(i, 3, c.credits + " credite");
 			
+			String status = "";
 			if(c.nota != null){
-				String status ;
 			//asta e business rule, tre mutata de aici; 
 			//sau consider metoda asta un fel de columnmodel responsabil de randare? 
 			   if(c.nota < 5){  
@@ -92,14 +97,14 @@ public class CourseGroupWidget extends Composite {
 				   status = "<span class=\"" + style.luat()+"\"> luat cu " +
 				   c.nota + "</span>";
 			   }
-			   tbl.setHTML(i, 4, status);
 			}	
+			tbl.setHTML(i, 4, status);
 		}
 		
 		tbl.getColumnFormatter().setStylePrimaryName(0, style.col0());
 		tbl.getColumnFormatter().setStylePrimaryName(1, style.col1());
 		tbl.getColumnFormatter().setStylePrimaryName(3, style.col3());
-		tbl.getColumnFormatter().setStylePrimaryName(4, style.col3());
+		tbl.getColumnFormatter().setStylePrimaryName(4, style.col4());
 	}
 	
 	@UiHandler("tbl")

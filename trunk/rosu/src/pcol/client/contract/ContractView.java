@@ -8,6 +8,7 @@ public interface ContractView extends IsWidget{
 
 	public interface Presenter {
 		void onSave();
+		void onCgChanged(CourseGroup old, CourseGroup cg);
 	}
 
 	void setPresenter(Presenter presenter);
@@ -21,5 +22,7 @@ public interface ContractView extends IsWidget{
 	void addToCategory(String category, List<? extends IsWidget> widgets);
 
 	void clearAllCategories();
+
+	void setNrzile(int zile);
 
 }

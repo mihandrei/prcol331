@@ -6,27 +6,26 @@
 			background-color: #B0F070;
 		}
 		
-		.selected:first-child {
-			-moz-border-left-radius: 15px;
-			border-left-radius: 15px;
-		}
-		
 		.col0 {
 			width: 2em;
 		}
 		
 		.col1 {
-			width: 6em;
+			width: 5em;
 		}
 		
 		.col3 {
-			width: 8em;
+			width: 5em;
+		}
+		
+		.col4 {
+			width: 6.8em;
 		}
 		
 		.caption {
 			font-size: 1.2em;
-			border-bottom: solid 1px;
-			margin: 1em 0em 1em 0em;
+			border-bottom: solid 1px #A1E619;
+			/*margin: 1em 0em 1em 0em;*/
 			padding:0.2em;
 			width: 10em;
 		}
@@ -35,7 +34,7 @@
 			border-collapse: collapse;
 			font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
 			
-			margin-left:1em;
+			/*margin-left:1em;*/
 		}
 		
 		.tbl td {
