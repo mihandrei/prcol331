@@ -8,15 +8,25 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	<welcome-file-list>
 		<welcome-file>pcol.html</welcome-file>
 	</welcome-file-list>
-	
+
 	<servlet>
 		<servlet-name>TweetServiceImpl</servlet-name>
 		<servlet-class>pcol.server.TweetServiceImpl</servlet-class>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>TweetServiceImpl</servlet-name>
 		<url-pattern>/pcol.pcol/tweets</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>AuthenticationServiceImpl</servlet-name>
+		<servlet-class>pcol.server.AuthenticationServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>AuthenticationServiceImpl</servlet-name>
+		<url-pattern>/pcol.pcol/auth</url-pattern>
+	</servlet-mapping>
+	
 </web-app>
