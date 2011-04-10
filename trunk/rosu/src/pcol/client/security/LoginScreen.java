@@ -1,4 +1,4 @@
-package pcol.client.login;
+package pcol.client.security;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -9,13 +9,13 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public class LoginScreen extends Composite implements LoginView{
+public class LoginScreen extends DialogBox implements LoginView{
 	// standard uibinder
 	private static LoginScreenUiBinder uiBinder = GWT
 			.create(LoginScreenUiBinder.class);
@@ -42,12 +42,14 @@ public class LoginScreen extends Composite implements LoginView{
 		}
 	};
 
-	public LoginScreen() {
-		initWidget(uiBinder.createAndBindUi(this));
+	public LoginScreen() {		
+		setWidget(uiBinder.createAndBindUi(this));
+		setGlassEnabled(true);
+		setText("Authentication required");
+
 		usr.addKeyDownHandler(keydownh);
 		pwd.addKeyDownHandler(keydownh);
 		badauth.setVisible(false);
-		usr.setFocus(true);
 	}
 
 	@Override
@@ -62,5 +64,18 @@ public class LoginScreen extends Composite implements LoginView{
 	@Override
 	public void showLoginError(){
 		badauth.setVisible(true);
+	}
+
+	@Override
+	public void reset(){
+		badauth.setVisible(false);
+		usr.setValue("");
+		pwd.setValue("");
+	}
+	
+	@Override
+	public void showscreen(){
+		center();
+		usr.setFocus(true);		
 	}
 }

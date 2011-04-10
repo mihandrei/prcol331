@@ -4,11 +4,15 @@ import java.util.Date;
 //import java.util.List;
 import java.util.logging.Logger;
 
+import javax.servlet.http.HttpSession;
+
 //import javax.persistence.EntityManager;
 //import javax.persistence.Query;
 
 import pcol.client.TweetService;
+import pcol.shared.AuthenticationException;
 import pcol.shared.Tweet;
+import pcol.shared.User;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -40,7 +44,14 @@ public class TweetServiceImpl extends RemoteServiceServlet implements
 					"Gigi becali", new Date(), Tweet.Level.CRITICAL) };
 
 	@Override
-	public Tweet[] getTweets(int limit) {
+	public Tweet[] getTweets(int limit) throws AuthenticationException {
+		//astea tre intr-un filtru
+		HttpSession session = getThreadLocalRequest().getSession();
+		if (session.getAttribute("user")==null){
+			throw new AuthenticationException();
+		}
+		//end filtru
+		
 //		EntityManager em = EMF.get().createEntityManager();
 //
 //		try {
