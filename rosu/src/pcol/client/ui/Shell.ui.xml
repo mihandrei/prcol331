@@ -2,7 +2,7 @@
 	xmlns:g='urn:import:com.google.gwt.user.client.ui'
 	xmlns:pw='urn:import:pcol.client.widgets'>
 
-	<ui:style type="pcol.client.ui.Nav.NavStyle">
+	<ui:style type="pcol.client.ui.Shell.Style">
 		.dockp{
 			min-width:49em;/*move to rootlayoutpanel style to get scroll*/
 			min-height:40em;
@@ -78,22 +78,26 @@
 			margin-left:1em;
 		}
 		
+		.logoutlbl{
+			cursor:pointer;
+		}
+		
 	</ui:style>
-	<g:DockLayoutPanel unit='EM' styleName="{style.dockp}" ui:field="dock">
-		<g:north size='6'>
+	<g:DockLayoutPanel unit='PX' styleName="{style.dockp}" ui:field="dock">
+		<g:north size='60'>
 			<g:HTMLPanel>
 				<div class="{style.bar}">
 					<div class="{style.status}">
 						<g:InlineLabel ui:field="usernamelbl"/><span>|</span>
 						nr matricol <g:InlineLabel ui:field="nrmatrlbl"/> <span>|</span>
-						<g:InlineLabel ui:field="logoutlbl"> logout </g:InlineLabel>
+						<g:InlineLabel styleName="{style.logoutlbl}" ui:field="logoutlbl"> logout </g:InlineLabel>
 					</div>
 					<span class="{style.sketch}"> PCOL / student </span>
 				</div>
 			</g:HTMLPanel>
 		</g:north>
 		
-		<g:south size="4">
+		<g:south size="50">
 			<g:HTMLPanel>
 				<div  class="{style.bbar}">
 					<span>331</span>|<span>copyleft</span>|ana lugojana stie karate
@@ -101,7 +105,7 @@
 			</g:HTMLPanel>
 		</g:south>
 		
-		<g:west size="10">
+		<g:west size="150">
 			<g:FlowPanel ui:field="tabc" styleName="{style.nav}">
 			</g:FlowPanel>
 		</g:west>

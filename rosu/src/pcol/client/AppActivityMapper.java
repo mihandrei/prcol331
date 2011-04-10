@@ -17,24 +17,26 @@ import com.google.gwt.place.shared.Place;
 
 public class AppActivityMapper implements ActivityMapper {
 
-	private App app;
-
-	public AppActivityMapper(App app) {
-		this.app=app;
+	public AppActivityMapper() {
 	}
 
 	@Override
+	//WARN: historychanged -> runasync.
+	//async  ok :creeaza viewul daca nu-i cachat in app 
+	//apoi activitatea 
+	//DAR activity framework e sincrona asteapta 
+	//historyhanged->Place->activity->inject into shell
 	public Activity getActivity(Place place) {
 		if (place instanceof TweetPlace)
-			return new TweetActivity(app.getTweetView());
+			return new TweetActivity();
 		else if (place instanceof ContractPlace)
-			return new ContractActivity(app.getContractView());
+			return new ContractActivity();
 		else if (place instanceof MateriiPlace)
-			return new MateriiActivity(app.getMateriiView());
+			return new MateriiActivity();
 		else if (place instanceof MateriePlace)
-			return new MaterieActivity(app.getMaterieView(),(MateriePlace)place);
+			return new MaterieActivity((MateriePlace)place);
 		else if(place instanceof TemePlace){
-			return new TemeActivity(app.getTemeView());
+			return new TemeActivity();
 		}
 		return null;
 	}

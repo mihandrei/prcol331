@@ -70,6 +70,7 @@ public class AppPlaceHistoryMapper implements PlaceHistoryMapper {
 		PlaceTokenizer<?> tokenizer = tokenizers.get(placeId);
 
 		if (tokenizer == null) {
+			log.warning("no place for token " + token);
 			return null;
 		} else {
 			return tokenizer.getPlace(placeArgs);

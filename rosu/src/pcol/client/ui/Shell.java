@@ -6,7 +6,6 @@ import java.util.List;
 import pcol.client.widgets.SimpleLayoutPanel;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.HasSelectionHandlers;
@@ -32,7 +31,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author miha
  * 
  */
-public class Nav extends Composite implements HasSelectionHandlers<String> {
+public class Shell extends Composite implements HasSelectionHandlers<String> {
 	public interface Presenter {
 		void onLogout();
 	}
@@ -75,7 +74,7 @@ public class Nav extends Composite implements HasSelectionHandlers<String> {
 					break;
 				}
 			}
-			selectTab(index,true);
+			fireTabSelected(index);
 
 		}
 	};
@@ -92,9 +91,9 @@ public class Nav extends Composite implements HasSelectionHandlers<String> {
 	@UiField
 	InlineLabel logoutlbl;
 	@UiField
-	NavStyle style;
+	Style style;
 
-	interface NavStyle extends CssResource {
+	interface Style extends CssResource {
 		String navItem();
 
 		String navItemSel();
@@ -110,10 +109,10 @@ public class Nav extends Composite implements HasSelectionHandlers<String> {
 
 	private Presenter presenter;
 
-	interface Binder extends UiBinder<Widget, Nav> {
+	interface Binder extends UiBinder<Widget, Shell> {
 	}
 
-	public Nav() {
+	public Shell() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 
@@ -129,13 +128,25 @@ public class Nav extends Composite implements HasSelectionHandlers<String> {
 		// nrmatr.setText(Integer.toString(nrmatr));
 	}
 
-	//permitem reselcarea tabului curent
-	private void selectTab(int index, boolean fire) {
+	/**
+	 * programatically fire tab selection
+	 * @param index
+	 */
+	public void fireTabSelected(int index){
+		SelectionEvent.fire(this, links.get(index));
+	}
+	
+	/** 
+	 * marcheaza un tab ca selectat
+	 * NU lanseaza un selectionEvent
+	 * handlerul selctioneventului tre sa apeleze metoda asta
+	 * Responsabiliitatea e la handler ca sa poata sa dea abort la selectie
+	 * TODO: ori impune existenta unui singur handler ( gen setPresenter) 
+	 *       ori permite handlerelor sa intoarca false ca sa dea abort
+	 * permitem reselcarea tabului curent
+	 */
+	private void selectTab(int index) {
 		if (index < 0 || index > links.size()) {
-			return;
-		}
-		
-		if(index == selectedidx && !fire){
 			return;
 		}
 		
@@ -145,7 +156,7 @@ public class Nav extends Composite implements HasSelectionHandlers<String> {
 				widgets.get(selectedidx).getElement().getStyle().clearBackgroundColor();
 			}
 	
-			Style containerstyle = container.getElement().getStyle();
+			com.google.gwt.dom.client.Style containerstyle = container.getElement().getStyle();
 			containerstyle.setBorderColor(pallete.getSColor(index));
 			containerstyle.setBackgroundColor(pallete.getSColor(index));
 			
@@ -155,9 +166,6 @@ public class Nav extends Composite implements HasSelectionHandlers<String> {
 			selectedidx = index;
 		}
 		
-		if(fire){
-			SelectionEvent.fire(this, links.get(selectedidx));
-		}
 	}
 
 	public void addTab(String tab) {
@@ -183,11 +191,7 @@ public class Nav extends Composite implements HasSelectionHandlers<String> {
 	}
 	
 	public void selectTabByToken(String token) {
-		selectTab(links.indexOf(token),true);
-	}
-	
-	public void selectTabByToken(String token,boolean fire) {
-		selectTab(links.indexOf(token),fire);
+		selectTab(links.indexOf(token));
 	}
 
 	@Override
