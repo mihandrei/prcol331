@@ -18,13 +18,14 @@
 		}
 		
 		.grid td {
-			border-right: solid 1px #EEEEEE;
+			border-right: solid 1px #0095FF;
 			border-bottom: dashed 1px #EEEEEE;
 			width: 12.5%;
 		}
 		
 		.head td{
-			border-bottom: solid 1px #EEEEEE;
+			border-bottom: solid 1px #0095FF;
+			font-weight:bold;
 		}
 		.even td{
 			border-bottom: solid 1px #EEEEEE;
@@ -34,7 +35,7 @@
 	<g:HTMLPanel ui:field="weekWrap" styleName="{style.wrap}">
 		<table class="{style.grid}">
 			<tbody>
-			<tr class="{style.head}"><td>L</td><td>M</td><td>M</td><td>J</td><td>V</td></tr>
+			<tr class="{style.head}"><td>Luni</td><td>Marti</td><td>Miercuri</td><td>Joi</td><td>Vineri</td></tr>
 			<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
 			<tr class="{style.even}"><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
 			<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>

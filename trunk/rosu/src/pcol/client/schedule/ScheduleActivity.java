@@ -1,5 +1,6 @@
 package pcol.client.schedule;
 
+import pcol.client.App;
 import pcol.client.schedule.ScheduleItem.Day;
 import pcol.client.schedule.ScheduleItem.Week;
 
@@ -31,28 +32,39 @@ public class ScheduleActivity extends AbstractActivity implements
 					firstrun=false;
 					view.setPresenter(ScheduleActivity.this);
 					view.clear();
+					
 					view.addEvent(new ScheduleItem(14, 16, Day.MON,Week.ALL, "Tehnici de optimizare", "curs", "5/I"));
 					view.addEvent(new ScheduleItem(16, 18, Day.MON,Week.EVEN, "Tehnici de optimizare", "seminar", "5/I"));
 					
-					view.addEvent(new ScheduleItem(8, 10, Day.TUE,Week.ALL, "Retele de calculatoare", "curs", "2/I"));
-					view.addEvent(new ScheduleItem(10, 12, Day.TUE,Week.ALL, "ingineria siistemelor soft", "curs", "2/I"));
-					view.addEvent(new ScheduleItem(14, 16, Day.TUE,Week.ALL, "inteligenta atificiala", "curs", "2/I"));
-					view.addEvent(new ScheduleItem(14, 16, Day.TUE,Week.ALL, "Structuri de date si algoritmi", "curs", "7/I"));
+					view.addEvent(new ScheduleItem(8, 10, Day.TUE,Week.ALL, "Retele", "curs", "2/I"));
+					view.addEvent(new ScheduleItem(10, 12, Day.TUE,Week.ALL, "Inginerie soft", "curs", "2/I"));
+					view.addEvent(new ScheduleItem(14, 16, Day.TUE,Week.ALL, "AI", "curs", "2/I"));
+					view.addEvent(new ScheduleItem(14, 16, Day.TUE,Week.ALL, "Algoritmi", "curs", "7/I"));
+					view.addEvent(new ScheduleItem(8, 10, Day.TUE,Week.ODD, "OOP", "lab", "L336"));
 					
-					view.addEvent(new ScheduleItem(8, 10, Day.WED,Week.ALL, "Retele de calculatoare", "lab", "L302"));
-					view.addEvent(new ScheduleItem(10, 12, Day.WED,Week.ODD, "ingineria sistemelor soft", "lab", "L339"));
-					view.addEvent(new ScheduleItem(10, 12, Day.WED,Week.EVEN, "inteligenta atificiala", "lab", "L302"));
-					view.addEvent(new ScheduleItem(18, 20, Day.WED,Week.ALL, "proiect colectiv", "lab", "L307"));
+					view.addEvent(new ScheduleItem(8, 10, Day.WED,Week.ALL, "Retele", "lab", "L302"));
+					view.addEvent(new ScheduleItem(10, 12, Day.WED,Week.ODD, "Inginerie soft", "lab", "L339"));
+					view.addEvent(new ScheduleItem(10, 12, Day.WED,Week.EVEN, "AI", "lab", "L302"));
+					view.addEvent(new ScheduleItem(12, 14, Day.WED,Week.ALL, "proj col", "lab", "L307"));
 					
-					view.addEvent(new ScheduleItem(8, 10, Day.THU,Week.EVEN, "Metodologia documentarii si elaborarii unei lucrari stiintifice", "curs", "5/I"));
-					view.addEvent(new ScheduleItem(10, 12, Day.THU,Week.EVEN, "Ingineria sistemelor soft", "seminar", "7/I"));
-					view.addEvent(new ScheduleItem(12, 14, Day.THU,Week.EVEN, "inteligenta atificiala", "seminar", "5/I"));
-					view.addEvent(new ScheduleItem(14, 16, Day.THU,Week.ALL, "Sisteme de operare", "curs", "C310"));
-					view.addEvent(new ScheduleItem(16, 18, Day.THU,Week.ALL, "Sisteme de operare", "lab", "L339"));
+					view.addEvent(new ScheduleItem(8, 10, Day.THU,Week.EVEN, "Paper", "curs", "5/I"));
+					view.addEvent(new ScheduleItem(10, 12, Day.THU,Week.EVEN, "Inginerie soft", "seminar", "7/I"));
+					view.addEvent(new ScheduleItem(12, 14, Day.THU,Week.EVEN, "AI", "seminar", "5/I"));
+					view.addEvent(new ScheduleItem(14, 16, Day.THU,Week.ALL, "SO", "curs", "C310"));
+					view.addEvent(new ScheduleItem(16, 18, Day.THU,Week.ALL, "SO", "lab", "L339"));
 					
-					view.addEvent(new ScheduleItem(14, 16, Day.FRI,Week.EVEN, "Structuri de date si algoritmi", "seminar", "C509"));
+					view.addEvent(new ScheduleItem(8, 10, Day.FRI,Week.ALL, "OOP", "curs", "C335"));
+					view.addEvent(new ScheduleItem(14, 16, Day.FRI,Week.ODD, "OOP", "seminar", "C509"));
+					view.addEvent(new ScheduleItem(14, 16, Day.FRI,Week.EVEN, "Algoritmi", "seminar", "C509"));
+					view.addEvent(new ScheduleItem(16, 18, Day.FRI,Week.EVEN, "OOP", "lab", "L307"));
 				}
 				panel.setWidget(view.asWidget());
+
+//				String tip = user.gettip("orar");
+				String tip = "tip: incearca linkurile 'curs' , 'seminar' , 'lab'";
+				if(tip!=null){ //serverul intoarce null daca a epuizat nr de afisari a tipurilor
+					App.getInstance().showInfo(tip);
+				}
 			}
 			
 			@Override

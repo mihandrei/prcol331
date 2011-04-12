@@ -5,6 +5,8 @@ import java.util.List;
 
 import pcol.client.widgets.SimpleLayoutPanel;
 
+import com.google.gwt.animation.client.Animation;
+import com.google.gwt.core.client.Duration;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -96,6 +98,8 @@ public class Shell extends Composite implements HasSelectionHandlers<String> {
 	InlineLabel logoutlbl;
 	@UiField
 	Style style;
+	@UiField
+	Label infobar;
 
 	interface Style extends CssResource {
 		String navItem();
@@ -118,6 +122,7 @@ public class Shell extends Composite implements HasSelectionHandlers<String> {
 
 	public Shell() {
 		initWidget(uiBinder.createAndBindUi(this));
+		infobar.setVisible(false);
 	}
 
 	public void setPresenter(Presenter p) {
@@ -127,9 +132,9 @@ public class Shell extends Composite implements HasSelectionHandlers<String> {
 	public void setUserName(String usr) {
 		usernamelbl.setText(usr);
 	}
-
-	public void setNrMatr(int nrmatr) {
-		// nrmatr.setText(Integer.toString(nrmatr));
+	
+	public void setNrMatr(int nr) {
+		nrmatrlbl.setText(Integer.toString(nr));
 	}
 
 	/**
@@ -211,5 +216,21 @@ public class Shell extends Composite implements HasSelectionHandlers<String> {
 	@UiHandler("logoutlbl")
 	void onLogoutlblClick(ClickEvent event) {
 		presenter.onLogout();
+	}
+	
+	public void showinfo(String msg){
+		infobar.setText(msg);
+		infobar.setVisible(true);
+		new Animation() {
+			@Override
+			protected void onUpdate(double progress) {
+				infobar.getElement().getStyle().setOpacity(1-progress);
+			}
+			@Override
+			protected void onComplete() {
+				infobar.setVisible(false);
+				infobar.getElement().getStyle().setOpacity(1);
+			}
+		}.run(1000,Duration.currentTimeMillis()+4000);
 	}
 }

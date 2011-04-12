@@ -101,6 +101,7 @@ public class App implements EntryPoint, Shell.Presenter{
 				shell.setPresenter(App.this);
 				shell.setUserName(usr.getName());
 				shell.setNrMatr(usr.getNrMatr());
+				shell.setNrMatr(usr.getNrMatr());
 				for(String s: usr.getAuthorizedActivities()){
 					shell.addTab(s);
 					//shell.addsmalltab(s); <- daca in loc de string intorc UserNavPref {name, relevance}
@@ -161,6 +162,12 @@ public class App implements EntryPoint, Shell.Presenter{
 		loginManager.logout();
 		RootLayoutPanel.get().clear();
 		loginManager.onAuthenticationException();
+	}
+	
+	public void showInfo(String msg){
+		if(shell!=null){
+			shell.showinfo(msg);
+		}
 	}
 
 }

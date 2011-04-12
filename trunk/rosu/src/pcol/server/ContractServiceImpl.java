@@ -13,7 +13,7 @@ public class ContractServiceImpl extends RemoteServiceServlet implements
 		ContractService {
 
 	@Override
-	public Curicul getCuricula(String nrmatricol) {		
+	public Curicul getCuricula(int nrmatricol) {		
 //		throw new RuntimeException("nu mai lucru aza");
 		
 		return Curicul.mock1();

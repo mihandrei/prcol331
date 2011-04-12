@@ -27,4 +27,6 @@ public interface ContractView extends IsWidget{
 
 	void setNrzile(int zile);
 
+	void setSaveEnabled(boolean dirty);
+
 }
