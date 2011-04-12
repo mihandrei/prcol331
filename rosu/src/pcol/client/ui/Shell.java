@@ -32,6 +32,10 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  */
 public class Shell extends Composite implements HasSelectionHandlers<String> {
+	static {
+	    AppResources.INSTANCE.pcolcss().ensureInjected();  
+	}
+	
 	public interface Presenter {
 		void onLogout();
 	}

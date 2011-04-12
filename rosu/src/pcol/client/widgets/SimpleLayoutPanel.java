@@ -8,6 +8,8 @@ import com.google.gwt.user.client.ui.Widget;
 
 /**
  * A simple panel that {@link ProvidesResize} to its one child.
+ * warning. This implementation is incomplete. add, remove etc are not overriden.
+ * The widget can incorrectly have more than one child. 
  */
 public class SimpleLayoutPanel extends LayoutPanel implements AcceptsOneWidget {
 

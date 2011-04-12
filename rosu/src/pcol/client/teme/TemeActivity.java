@@ -27,6 +27,7 @@ public class TemeActivity extends AbstractActivity implements
 					view = new TemeViewImpl();
 				}
 				view.setPresenter(TemeActivity.this);
+				view.clear();
 				List<AssignmentOverview> aos = Arrays.asList(
 						new AssignmentOverview(Status.DONE, new Date(),
 								"LAb 1", "bd/lab1"), new AssignmentOverview(

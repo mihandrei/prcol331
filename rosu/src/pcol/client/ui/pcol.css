@@ -1,3 +1,6 @@
+@external gwt-TabLayoutPanelTab, gwt-TabLayoutPanelContent;
+@external tabpanelnav, gwt-TabLayoutPanelTab-selected;
+
 body {
 	background-color:#505050;			
 	color: #202020;
