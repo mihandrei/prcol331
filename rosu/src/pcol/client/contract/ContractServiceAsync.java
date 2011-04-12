@@ -6,7 +6,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface ContractServiceAsync {
 
-	void getCuricula(String nrmatricol, AsyncCallback<Curicul> callback);
+	void getCuricula(int nrmatricol, AsyncCallback<Curicul> callback);
 
 	void submitContract(Curicul c, AsyncCallback<Void> callback);
 

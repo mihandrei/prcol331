@@ -8,6 +8,6 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 @RemoteServiceRelativePath("contract")
 public interface ContractService extends RemoteService{
-	public Curicul getCuricula(String nrmatricol);
+	public Curicul getCuricula(int nrmatricol);
 	public void submitContract(Curicul c);
 }

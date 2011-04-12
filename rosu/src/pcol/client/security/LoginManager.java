@@ -19,6 +19,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
  */
 public class LoginManager implements Presenter {
 	private static final Logger log = Logger.getLogger(LoginManager.class.getName());
+	private User user;
 	private LoginView loginView  =  new LoginScreen();
 	private String authToken = null;
 	private AuthenticationServiceAsync authService = GWT.create(AuthenticationService.class);
@@ -41,6 +42,7 @@ public class LoginManager implements Presenter {
 					if(usr != null){
 						authToken = sessionID;
 						setcookie(authToken);
+						LoginManager.this.user=usr;
 						App.getInstance().getEventBus().fireEvent(new LoginEvent(usr));
 					}
 					else{
@@ -86,6 +88,7 @@ public class LoginManager implements Presenter {
 				if(user!=null){
 					authToken = user.getSid();
 					setcookie(authToken);
+					LoginManager.this.user = user;
 					loginView.hide();
 					App.getInstance().getEventBus().fireEventFromSource(new LoginEvent(user), this);
 				}else{
@@ -109,6 +112,10 @@ public class LoginManager implements Presenter {
 	private void handleAuthFailure(Throwable ex){
 		Window.alert(ex.getLocalizedMessage());
 		ex.printStackTrace();
+	}
+
+	public User getUser() {
+		return user;
 	}
 }
 //public invokeCommand

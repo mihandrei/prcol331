@@ -29,4 +29,13 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<url-pattern>/pcol/auth</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>ContractServiceImpl</servlet-name>
+		<servlet-class>pcol.server.ContractServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ContractServiceImpl</servlet-name>
+		<url-pattern>/pcol/contract</url-pattern>
+	</servlet-mapping>
 </web-app>

@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <project name="pcol" default="build" basedir=".">
-  <!-- Arguments to gwtc and devmode targets -->
-  <property name="gwt.args" value="" />
-  <property name="module" value="pcol.Pcol" />
-	
-  <!-- Configure path to GWT SDK -->
-  <property name="gwt.sdk" location="G:/apps/eclipse/plugins/com.google.gwt.eclipse.sdkbundle_2.2.0.v201103311225/gwt-2.2.0" />
-	
+  <property file="${basedir}/build.properties"/>
+  
   <path id="project.class.path">
     <pathelement location="war/WEB-INF/classes"/>
     <pathelement location="${gwt.sdk}/gwt-user.jar"/>
@@ -59,7 +54,7 @@
       </classpath>
       <jvmarg value="-Xmx256M"/>
       <arg value="-startupUrl"/>
-      <arg value="pcol.html"/>
+      <arg value="${htmlhost}"/>
       <arg line="-war"/>
       <arg value="war"/>
       <!-- Additional arguments like -style PRETTY or -logLevel DEBUG -->
@@ -136,12 +131,12 @@ Test targets suppressed because -junit argument was not specified when running w
   <target name="build" depends="gwtc" description="Build this project" />
 
   <target name="war" depends="build" description="Create a war file">
-    <zip destfile="pcol.war" basedir="war"/>
+    <zip destfile="${war}.war" basedir="war"/>
   </target>
 
   <target name="clean" description="Cleans this project">
     <delete dir="war/WEB-INF/classes" failonerror="false" />
-    <delete dir="war/pcol" failonerror="false" />
+    <delete dir="war/${war}" failonerror="false" />
   </target>
 
 </project>

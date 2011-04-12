@@ -18,10 +18,6 @@
 			color:white;			
 		}
 		
-		.bar a, .bar b, .bar span {
-			margin-right: 1em;			
-		}
-		
 		.bbar{
 			padding: 0.5em;
 			text-align:center;
@@ -81,18 +77,28 @@
 		.logoutlbl{
 			cursor:pointer;
 		}
-		
+		.infotopbar{
+			position:absolute;
+			left:150px;
+			bottom:5px;
+			
+			background-color:#FFF550;
+			color:black;
+			padding : 1px 10px;
+			border-radius:2px;
+		}
 	</ui:style>
 	<g:DockLayoutPanel unit='PX' styleName="{style.dockp}" ui:field="dock">
 		<g:north size='60'>
 			<g:HTMLPanel>
 				<div class="{style.bar}">
 					<div class="{style.status}">
-						<g:InlineLabel ui:field="usernamelbl"/><span>|</span>
-						nr matricol <g:InlineLabel ui:field="nrmatrlbl"/> <span>|</span>
+						<g:InlineLabel ui:field="usernamelbl"/>&nbsp;|&nbsp;
+						<g:InlineLabel ui:field="nrmatrlbl"/> &nbsp;|&nbsp;
 						<g:InlineLabel styleName="{style.logoutlbl}" ui:field="logoutlbl"> logout </g:InlineLabel>
 					</div>
-					<span class="{style.sketch}"> PCOL / student </span>
+					<span class="{style.sketch}"> PCOL </span>
+					<g:Label styleName="{style.infotopbar}" ui:field="infobar"/> 
 				</div>
 			</g:HTMLPanel>
 		</g:north>

@@ -63,6 +63,9 @@ class EventWidget extends Composite {
 		float height = (range.endrow-range.startrow) * dy;
 		float width = (range.endcol - range.startcol) * dx /((float) range.coldivident);
 		float left = range.startcol * dx + range.indent*width;
+		//hack ca sa nu dea overflow, sa incapa cu border si float err cu tot
+		width -= 0.2;
+		height -=0.2;
 		Style style = getElement().getStyle();
 		style.setTop(top, Unit.PCT);
 		style.setHeight(height, Unit.PCT);

@@ -99,4 +99,10 @@ public class ContractViewImpl extends Composite implements ContractView {
 		nrzile.setText(Integer.toString(zile));
 	}
 
+	@Override
+	public void setSaveEnabled(boolean enabled) {
+		button.setEnabled(enabled);
+		
+	}
+
 }

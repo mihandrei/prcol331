@@ -3,7 +3,11 @@ package pcol.client.contract;
 import java.util.Arrays;
 import java.util.List;
 
+import pcol.client.App;
+import pcol.client.TweetService;
+import pcol.client.TweetServiceAsync;
 import pcol.client.contract.CourseGroupWidget.Presenter;
+import pcol.client.security.AppAsyncCallback;
 import pcol.shared.CourseGroup;
 import pcol.shared.Curicul;
 
@@ -12,6 +16,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 
 
@@ -19,8 +24,11 @@ public class ContractActivity extends AbstractActivity implements
 		ContractView.Presenter {
 	
 	private static ContractView view;
+	private static ContractServiceAsync rpc = null;
+	
 	private int credittotal;
 	private boolean dirty;
+	private Curicul curicul;
 
 	public ContractActivity() {
 	
@@ -45,23 +53,34 @@ public class ContractActivity extends AbstractActivity implements
 	@Override
 	public void start(final AcceptsOneWidget panel, EventBus eventBus) {
 		GWT.runAsync(new RunAsyncCallback() {
+			private AsyncCallback<Curicul> getCuriculCallback = new AppAsyncCallback<Curicul>() {
+				@Override
+				public void onSuccess(Curicul c) {
+					curicul = c;
+					for(int sem : c.cursuriPeSemestru.keySet()){
+						addCgs(c.cursuriPeSemestru.get(sem), "sem "+sem);
+					}
+					dirty = false;
+					view.setSaveEnabled(dirty);
+					App.getInstance().showInfo("tip: puteti sa va inscieti la cursuri din ani diferiti");
+				}
+			};
 			
 			@Override
 			public void onSuccess() {
 				if(view == null){
 					view = new ContractViewImpl();
 				}
+				
+				if(rpc == null){
+					rpc = GWT.create(ContractService.class);
+				}
 				view.setPresenter(ContractActivity.this);
 				view.clearAllCategories();
 				credittotal = 0;
-				
-				Curicul mock = Curicul.mock1();
-				for(int sem : mock.cursuriPeSemestru.keySet()){
-					addCgs(mock.cursuriPeSemestru.get(sem), "sem "+sem);
-				}
-				
 				panel.setWidget(view);
-				
+				rpc.getCuricula(App.getInstance().loginManager.getUser().getNrMatr(),
+						getCuriculCallback);
 			}
 			
 			@Override
@@ -73,8 +92,14 @@ public class ContractActivity extends AbstractActivity implements
 
 	@Override
 	public void onSave() {
-		// TODO Auto-generated method stub
-		dirty = false;
+		rpc.submitContract(curicul, new AppAsyncCallback<Void>() {
+			@Override
+			public void onSuccess(Void result) {
+				App.getInstance().showInfo("contractul a fost salvat");
+				dirty = false;
+				view.setSaveEnabled(dirty);
+			}
+		});
 	}
 
 	private int getSelectedCredits(CourseGroup cg){
@@ -89,6 +114,7 @@ public class ContractActivity extends AbstractActivity implements
 	
 	public void onCgChanged(CourseGroup old, CourseGroup cg) {
 		dirty = true;
+		view.setSaveEnabled(dirty);
 		credittotal += getSelectedCredits(cg);
 		credittotal -= getSelectedCredits(old);
 		view.setCreditTotal(credittotal);

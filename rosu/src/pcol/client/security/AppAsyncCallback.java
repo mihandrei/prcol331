@@ -1,12 +1,15 @@
 package pcol.client.security;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import pcol.client.App;
 import pcol.shared.AuthenticationException;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public abstract class AppAsyncCallback<T> implements AsyncCallback<T>{
-
+	private static Logger log = Logger.getLogger(AppAsyncCallback.class.getName()); 
 	@Override
 	public void onFailure(Throwable caught) {
 	  if(caught instanceof AuthenticationException) { 
@@ -19,13 +22,13 @@ public abstract class AppAsyncCallback<T> implements AsyncCallback<T>{
            handleFailure(caught); 
       } 
       catch(Throwable e) { 
-        //default application-wide error handling 
+    	  log.log(Level.SEVERE,"rpc unhandled error",caught);
       } 
 		
 	}
 
-	protected void handleFailure(Throwable caught){
-		
+	protected void handleFailure(Throwable caught) throws Throwable{
+		throw caught;
 	}
 
 }
