@@ -16,7 +16,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 
 	<servlet-mapping>
 		<servlet-name>TweetServiceImpl</servlet-name>
-		<url-pattern>/pcol.pcol/tweets</url-pattern>
+		<url-pattern>/pcol/tweets</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
@@ -26,7 +26,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 
 	<servlet-mapping>
 		<servlet-name>AuthenticationServiceImpl</servlet-name>
-		<url-pattern>/pcol.pcol/auth</url-pattern>
+		<url-pattern>/pcol/auth</url-pattern>
 	</servlet-mapping>
 	
 </web-app>

@@ -1,8 +1,10 @@
 package pcol.shared;
 
+import java.io.Serializable;
+
 import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class User implements IsSerializable{
+public class User implements IsSerializable, Serializable{
 	public User(){
 		
 	}

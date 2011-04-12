@@ -3,6 +3,9 @@ package pcol.client.contract;
 import java.util.List;
 import java.util.Set;
 
+import pcol.shared.Course;
+import pcol.shared.CourseGroup;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.resources.client.CssResource;

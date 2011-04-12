@@ -42,7 +42,7 @@ public class AuthenticationServiceImpl extends RemoteServiceServlet implements A
 	private User doAuthenticate(String usrname,String pwd){
 		if(usrname.equals("mihai") && pwd.equals("mihai")){
 			return new User("mihai", "andrei mihai daniel", 1040,
-					new String[]{"noutati","materii","teme","contract"}, "");
+					new String[]{"noutati","orar","materii","teme","contract"}, "");
 		}else{
 			return null;
 		}

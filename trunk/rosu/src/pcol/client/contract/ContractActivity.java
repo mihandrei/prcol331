@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import pcol.client.contract.CourseGroupWidget.Presenter;
+import pcol.shared.CourseGroup;
+import pcol.shared.Curicul;
 
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.core.client.GWT;
@@ -53,10 +55,10 @@ public class ContractActivity extends AbstractActivity implements
 				view.clearAllCategories();
 				credittotal = 0;
 				
-				addCgs(Arrays.asList(CourseGroup.getMock1(),
-						CourseGroup.getMock3(),CourseGroup.getMock2()), "sem1");
-				addCgs(Arrays.asList(CourseGroup.getMock4(),
-						CourseGroup.getMock5()), "sem2");
+				Curicul mock = Curicul.mock1();
+				for(int sem : mock.cursuriPeSemestru.keySet()){
+					addCgs(mock.cursuriPeSemestru.get(sem), "sem "+sem);
+				}
 				
 				panel.setWidget(view);
 				
