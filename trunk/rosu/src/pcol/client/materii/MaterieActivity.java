@@ -31,20 +31,9 @@ public class MaterieActivity extends AbstractActivity implements
 					materieView = new MaterieViewImpl();
 				}
 				materieView.setPresenter(MaterieActivity.this);
-				materieView.clearSchedule();
-				if (place.getMaterieid().equals("DB")) {
-					materieView.addScheduleItem(1, 10, 12, "seminar");
-					materieView.addScheduleItem(4, 16, 18, "curs");
-					materieView
-							.setMateriale("Miller, Bradley, and David Ranum. Problem Solving "
-									+ "with Algorithms and Data Structures Using Python. Wilsonville, OR: "
-									+ "Franklin, Beedle and Associates,");
-				} else {
-					materieView.addScheduleItem(2, 10, 12, "seminar");
-					materieView.addScheduleItem(3, 8, 10, "curs");
-					materieView.setMateriale("zabadum ");
-
-				}
+				materieView.setMateriale("Miller, Bradley, and David Ranum. Problem Solving "
+						+ "with Algorithms and Data Structures Using Python. Wilsonville, OR: "
+						+ "Franklin, Beedle and Associates,");
 				panel.setWidget(materieView.asWidget());
 			}
 

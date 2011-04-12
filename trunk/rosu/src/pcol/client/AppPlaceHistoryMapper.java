@@ -7,6 +7,8 @@ import java.util.logging.Logger;
 import pcol.client.contract.ContractPlace;
 import pcol.client.materii.MateriePlace;
 import pcol.client.materii.MateriiPlace;
+import pcol.client.schedule.SchedulePlace;
+import pcol.client.teme.TemePlace;
 import pcol.client.tweet.TweetPlace;
 
 import com.google.gwt.place.shared.Place;
@@ -14,7 +16,9 @@ import com.google.gwt.place.shared.PlaceHistoryMapper;
 import com.google.gwt.place.shared.PlaceTokenizer;
 
 /**
- * Ocoleste mecanismul implicit din gwt (care-i cam magic si nu suporta #token)
+ * Clasa de config . Ar putea fi generata dintr-un config file;
+ * 
+ * Ocoleste mecanismul implicit din gwt (care-i cam magic (codegen) si nu suporta #token)
  * asociaza manual history tokenruri cu place-uri
  * 
  * Idee : implementat o notiune de place hierarchy 
@@ -51,6 +55,9 @@ public class AppPlaceHistoryMapper implements PlaceHistoryMapper {
 		
 		tokenizers.put("teme", new TemePlace.Tokenizer());
 		placetokens.put(TemePlace.class, "teme");
+		
+		tokenizers.put("orar", new SchedulePlace.Tokenizer());
+		placetokens.put(SchedulePlace.class, "orar");
 	}
 
 	@Override

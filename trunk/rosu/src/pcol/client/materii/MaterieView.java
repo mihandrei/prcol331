@@ -7,8 +7,5 @@ public interface MaterieView extends IsWidget{
 	}
 
 	void setPresenter(Presenter presenter);
-	void addScheduleItem(int dayOfWeek, int startHour,
-			int endHour, String name);
-	void clearSchedule();
 	void setMateriale(String string);
 }
