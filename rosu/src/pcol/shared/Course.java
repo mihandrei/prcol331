@@ -1,4 +1,4 @@
-package pcol.client.contract;
+package pcol.shared;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 

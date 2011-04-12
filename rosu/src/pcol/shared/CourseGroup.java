@@ -1,4 +1,4 @@
-package pcol.client.contract;
+package pcol.shared;
 
 import java.util.ArrayList;
 import java.util.Arrays;

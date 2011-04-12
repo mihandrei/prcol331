@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.Set;
 
 import pcol.client.contract.ContractView.Presenter;
+import pcol.shared.Course;
+import pcol.shared.CourseGroup;
 
 import com.google.gwt.event.logical.shared.HasValueChangeHandlers;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
