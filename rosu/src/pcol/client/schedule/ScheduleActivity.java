@@ -60,11 +60,7 @@ public class ScheduleActivity extends AbstractActivity implements
 				}
 				panel.setWidget(view.asWidget());
 
-//				String tip = user.gettip("orar");
-				String tip = "tip: incearca linkurile 'curs' , 'seminar' , 'lab'";
-				if(tip!=null){ //serverul intoarce null daca a epuizat nr de afisari a tipurilor
-					App.getInstance().showInfo(tip);
-				}
+				App.getInstance().showTipFor("orar");
 			}
 			
 			@Override

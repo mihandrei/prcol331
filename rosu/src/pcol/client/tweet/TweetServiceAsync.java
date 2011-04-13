@@ -1,4 +1,4 @@
-package pcol.client;
+package pcol.client.tweet;
 
 import pcol.shared.Tweet;
 

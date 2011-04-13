@@ -4,10 +4,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import pcol.client.App;
-import pcol.client.TweetService;
-import pcol.client.TweetServiceAsync;
 import pcol.client.contract.CourseGroupWidget.Presenter;
 import pcol.client.security.AppAsyncCallback;
+import pcol.client.tweet.TweetService;
+import pcol.client.tweet.TweetServiceAsync;
 import pcol.shared.CourseGroup;
 import pcol.shared.Curicul;
 
@@ -62,7 +62,7 @@ public class ContractActivity extends AbstractActivity implements
 					}
 					dirty = false;
 					view.setSaveEnabled(dirty);
-					App.getInstance().showInfo("tip: puteti sa va inscieti la cursuri din ani diferiti");
+					App.getInstance().showTipFor("contract");
 				}
 			};
 			

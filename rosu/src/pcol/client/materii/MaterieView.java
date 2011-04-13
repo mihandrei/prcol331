@@ -8,4 +8,5 @@ public interface MaterieView extends IsWidget{
 
 	void setPresenter(Presenter presenter);
 	void setMateriale(String string);
+	void setName(String name);
 }

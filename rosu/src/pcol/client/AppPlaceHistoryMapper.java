@@ -84,6 +84,7 @@ public class AppPlaceHistoryMapper implements PlaceHistoryMapper {
 		}
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public String getToken(Place place) {
 		String token = placetokens.get(place.getClass());		

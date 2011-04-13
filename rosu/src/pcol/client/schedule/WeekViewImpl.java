@@ -12,7 +12,27 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
-
+/**
+ * implementeaza un calendar pentru saptamana de lucru
+ * evenimentele sunt intr-un pozitionate absolut peste grid
+ * 
+ * logica de layout ii impartita intre weekviewimpl si eventwidget
+ * Asta nu-i o problema, eventwidget face parte conceptual din clasa asta
+ * e fisier separat doar ca sa-l folosesc ca template 
+ * (s-ar putea emite html-ul dinamic din clasa asta)
+ * 
+ * idee pentru pixel perfect width:
+ * http://www.web-delicious.com/jquery-plugins-demo/wdCalendar/sample.php
+ * nucleu' ii un tabel 7*2
+ * primul row are un td span 7 care contine un div relative; 
+ * in divul asta is puse divuri care deseneaza liniile
+ * al doilea row  are un div relative in td-uri
+ * fata de divul asta sunt pozitionate absolut eventurile
+ * top & height e dat in pixeli absoluti, 
+ * restul is procente relative la latimea td-ului  
+ * 
+ * @author miha
+ */
 public class WeekViewImpl extends Composite implements WeekView {
 
 	private static final int NCOLS = 5;
