@@ -9,7 +9,7 @@ import javax.servlet.http.HttpSession;
 //import javax.persistence.EntityManager;
 //import javax.persistence.Query;
 
-import pcol.client.TweetService;
+import pcol.client.tweet.TweetService;
 import pcol.shared.AuthenticationException;
 import pcol.shared.Tweet;
 import pcol.shared.User;

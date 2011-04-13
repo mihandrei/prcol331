@@ -39,7 +39,7 @@
 					Suma de plata:
 					<g:InlineLabel text="0" ui:field="plata" styleName="{style.credittotal}" />
 				</p>
-				<g:Button ui:field="button" text="pastreaza modificarile" />
+				<g:Button ui:field="button" text="salveaza" />
 			</g:HTMLPanel>
 		</g:west>
 	</g:DockLayoutPanel>

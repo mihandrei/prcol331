@@ -24,7 +24,7 @@
 		}
 
 		.sketch { 
-			font-family: 'Cabin Sketch', arial, serif;
+			font-family: sans-serif;
 			font-size: 4em;
 		 }
 		

@@ -1,5 +1,6 @@
 package pcol.client;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import pcol.client.security.LoginEvent;
@@ -43,6 +44,7 @@ public class App implements EntryPoint, Shell.Presenter{
 	public LoginManager loginManager = new LoginManager();
 	
 	private PlaceHistoryHandler historyHandler;
+	private Tips tips;
 
 	/** 
 	 *  init activity/places framework and wires navigation ui to history changes
@@ -51,6 +53,8 @@ public class App implements EntryPoint, Shell.Presenter{
 		//si daca-i in functie de user?
 		Place defaultPlace = new TweetPlace.Tokenizer().getPlace("");
 		final AppPlaceHistoryMapper historyMapper = new AppPlaceHistoryMapper();
+		final ShellTabMapper tabplaceMapper = new ShellTabMapper();
+		
 		historyHandler = new PlaceHistoryHandler(historyMapper);
 		historyHandler.register(placeController, eventBus, defaultPlace);
 		
@@ -67,7 +71,7 @@ public class App implements EntryPoint, Shell.Presenter{
 		shell.addSelectionHandler(new SelectionHandler<String>() {
 			@Override
 			public void onSelection(SelectionEvent<String> event) {
-				Place p = historyMapper.getPlace(event.getSelectedItem());
+				Place p = tabplaceMapper.getPlace(event.getSelectedItem());
 				if(p!=null){
 					placeController.goTo(p);
 				}
@@ -79,16 +83,9 @@ public class App implements EntryPoint, Shell.Presenter{
 			@Override
 			public void onPlaceChange(PlaceChangeEvent event) {
 				Place pl = event.getNewPlace();
-				String token = historyMapper.getToken(pl);
-				//TODO: HACK, tre un mecanism mai robust de asociat 
-				//place-uri cu taburi
-				log.fine(token);
-				Document.get().setTitle(token);
-				if(token!=null && token.startsWith("materie")){
-					token = "materii";
-				}
-
-				shell.selectTabByToken(token);
+				String tabname = tabplaceMapper.getTab(pl);
+				Document.get().setTitle("pcol - " + tabname);
+				shell.selectTabByToken(tabname);
 			}
 		});
 	}
@@ -97,6 +94,7 @@ public class App implements EntryPoint, Shell.Presenter{
 		GWT.runAsync(new RunAsyncCallback() {
 			@Override
 			public void onSuccess() {
+				tips = new Tips(usr);
 				shell = new Shell();
 				shell.setPresenter(App.this);
 				shell.setUserName(usr.getName());
@@ -128,6 +126,7 @@ public class App implements EntryPoint, Shell.Presenter{
 			@Override
 			public void onFailure(Throwable reason) {
 				Window.alert("fatal " + reason.getLocalizedMessage());
+				log.log(Level.SEVERE, "app load failed", reason);
 			}
 		});
 	}
@@ -168,6 +167,14 @@ public class App implements EntryPoint, Shell.Presenter{
 		if(shell!=null){
 			shell.showinfo(msg);
 		}
+	}
+
+	public void showTipFor(String category) {
+		String tip = tips.getTip(category);
+		if(tip!=null){
+			showInfo(tip);
+		}
+		
 	}
 
 }

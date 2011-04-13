@@ -5,6 +5,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 public class MaterieViewImpl extends Composite implements MaterieView {
@@ -13,6 +14,8 @@ public class MaterieViewImpl extends Composite implements MaterieView {
 			.create(MaterieViewImplUiBinder.class);
 	@UiField
 	HTML materialeHTML;
+	@UiField
+	Label title;
 	
 	private Presenter presenter;
 
@@ -31,6 +34,11 @@ public class MaterieViewImpl extends Composite implements MaterieView {
 	@Override
 	public void setMateriale(String string) {
 		materialeHTML.setHTML(string);
+	}
+
+	@Override
+	public void setName(String name) {
+		title.setText(name);
 	}
 
 }

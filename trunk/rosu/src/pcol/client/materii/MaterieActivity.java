@@ -34,6 +34,7 @@ public class MaterieActivity extends AbstractActivity implements
 				materieView.setMateriale("Miller, Bradley, and David Ranum. Problem Solving "
 						+ "with Algorithms and Data Structures Using Python. Wilsonville, OR: "
 						+ "Franklin, Beedle and Associates,");
+				materieView.setName(place.getMaterieid());
 				panel.setWidget(materieView.asWidget());
 			}
 

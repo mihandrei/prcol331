@@ -2,8 +2,6 @@ package pcol.client.tweet;
 
 import java.util.Arrays;
 
-import pcol.client.TweetService;
-import pcol.client.TweetServiceAsync;
 import pcol.client.security.AppAsyncCallback;
 import pcol.shared.Tweet;
 
