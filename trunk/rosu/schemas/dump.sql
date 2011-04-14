@@ -42,6 +42,7 @@ CREATE TABLE `canale` (
 
 LOCK TABLES `canale` WRITE;
 /*!40000 ALTER TABLE `canale` DISABLE KEYS */;
+INSERT INTO `canale` VALUES ('MF331'),('mihai');
 /*!40000 ALTER TABLE `canale` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -70,33 +71,6 @@ CREATE TABLE `contracte_studiu` (
 LOCK TABLES `contracte_studiu` WRITE;
 /*!40000 ALTER TABLE `contracte_studiu` DISABLE KEYS */;
 /*!40000 ALTER TABLE `contracte_studiu` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `conturi_studenti`
---
-
-DROP TABLE IF EXISTS `conturi_studenti`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `conturi_studenti` (
-  `login_name` varchar(45) NOT NULL,
-  `id_student` int(11) NOT NULL,
-  PRIMARY KEY (`login_name`),
-  UNIQUE KEY `un_student_id_unique` (`id_student`),
-  KEY `fk_conturi_studenti_users1` (`login_name`),
-  CONSTRAINT `fk_conturi_studenti_studenti1` FOREIGN KEY (`id_student`) REFERENCES `studenti` (`nr_matr`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_conturi_studenti_users1` FOREIGN KEY (`login_name`) REFERENCES `users` (`login_name`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `conturi_studenti`
---
-
-LOCK TABLES `conturi_studenti` WRITE;
-/*!40000 ALTER TABLE `conturi_studenti` DISABLE KEYS */;
-/*!40000 ALTER TABLE `conturi_studenti` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -219,10 +193,12 @@ CREATE TABLE `mesaje` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `msg` text NOT NULL,
   `expeditor` varchar(45) NOT NULL,
+  `level` varchar(10) NOT NULL DEFAULT 'INFO',
+  `date` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_mesaje_users1` (`expeditor`),
   CONSTRAINT `fk_mesaje_users1` FOREIGN KEY (`expeditor`) REFERENCES `users` (`login_name`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -231,6 +207,7 @@ CREATE TABLE `mesaje` (
 
 LOCK TABLES `mesaje` WRITE;
 /*!40000 ALTER TABLE `mesaje` DISABLE KEYS */;
+INSERT INTO `mesaje` VALUES (1,'<p>Yesterday,<br>All those backups seemed a waste of pay.<br>Now my database has gone away.<br>Oh I believe in yesterday.</p>','mihai','INFO','2011-04-11 00:00:00'),(2,'You can never find general mechanical means <br>for predicting the acts of computing machines <br>It’s something that cannot be done. So we users <br>must find our own bugs. Our computers are losers! <br><a target=\"_blank\" href=\"http://www.lel.ed.ac.uk/~gpullum/loopsnoop.pdf\"> source </a>','mihai','INFO','2011-04-11 11:20:00'),(3,'I have no money, no resources, no hopes. I am the happiest man alive.','system','INFO','2011-04-11 11:20:00'),(4,'Debugging is twice as hard as writing the code in the first place.  Therefore, if you write the code as cleverly as possible, you are&ndash;by definition&ndash;not smart enough to debug it.','system','INFO','2011-04-11 11:20:00'),(5,'Atunci când sunt supărat, mă retrag între oile mele şi mă liniştesc','system','INFO','2011-04-11 11:20:00');
 /*!40000 ALTER TABLE `mesaje` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -258,6 +235,7 @@ CREATE TABLE `msg_chan` (
 
 LOCK TABLES `msg_chan` WRITE;
 /*!40000 ALTER TABLE `msg_chan` DISABLE KEYS */;
+INSERT INTO `msg_chan` VALUES (1,'MF331'),(2,'MF331'),(3,'mihai'),(4,'MF331'),(5,'MF331'),(5,'mihai');
 /*!40000 ALTER TABLE `msg_chan` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -432,6 +410,7 @@ CREATE TABLE `subscriptii` (
 
 LOCK TABLES `subscriptii` WRITE;
 /*!40000 ALTER TABLE `subscriptii` DISABLE KEYS */;
+INSERT INTO `subscriptii` VALUES ('MF331','didy'),('MF331','geza'),('MF331','mihai'),('mihai','mihai');
 /*!40000 ALTER TABLE `subscriptii` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -503,7 +482,7 @@ CREATE TABLE `users` (
   `salt` varchar(45) NOT NULL,
   `lastlogin` varchar(45) DEFAULT NULL,
   `lastip` varchar(45) DEFAULT NULL,
-  `persoana` int(11) NOT NULL,
+  `persoana` int(11) DEFAULT NULL,
   PRIMARY KEY (`login_name`),
   KEY `fk_users_persoane1` (`persoana`),
   CONSTRAINT `fk_users_persoane1` FOREIGN KEY (`persoana`) REFERENCES `persoane` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -516,7 +495,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('didy','didy','todo',NULL,NULL,3),('geza','geza','todo',NULL,NULL,2),('mihai','mihai','todo',NULL,NULL,1);
+INSERT INTO `users` VALUES ('didy','didy','todo',NULL,NULL,3),('geza','geza','todo',NULL,NULL,2),('mihai','mihai','todo',NULL,NULL,1),('system','golomoz never login golomoz','golomoz',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -529,4 +508,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-04-14 13:18:59
+-- Dump completed on 2011-04-15  2:08:58

@@ -26,6 +26,7 @@
 		.sketch { 
 			font-family: sans-serif;
 			font-size: 4em;
+			text-shadow: 0px 0px 6px white;
 		 }
 		
 		.status {
@@ -97,7 +98,7 @@
 						<g:InlineLabel ui:field="nrmatrlbl"/> &nbsp;|&nbsp;
 						<g:InlineLabel styleName="{style.logoutlbl}" ui:field="logoutlbl"> logout </g:InlineLabel>
 					</div>
-					<span class="{style.sketch}"> PCOL </span>
+					<span class="{style.sketch}"> Pc </span>
 					<g:Label styleName="{style.infotopbar}" ui:field="infobar"/> 
 				</div>
 			</g:HTMLPanel>

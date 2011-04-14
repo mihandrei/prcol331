@@ -1,5 +1,5 @@
 package pcol.server.domain;
-// Generated Apr 14, 2011 10:54:13 AM by Hibernate Tools 3.2.1.GA
+// Generated Apr 15, 2011 12:35:22 AM by Hibernate Tools 3.2.1.GA
 
 
 import javax.persistence.Column;

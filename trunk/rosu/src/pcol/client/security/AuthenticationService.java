@@ -17,7 +17,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
  * annotarea zice pe ce url asculta serviciul pe server
  * corespunde maparii de servlet din web.xml
  */
-@RemoteServiceRelativePath("auth")
+@RemoteServiceRelativePath("rpc/auth")
 public interface AuthenticationService extends RemoteService{
 	
 	User getUserBySid(String sessionID);
