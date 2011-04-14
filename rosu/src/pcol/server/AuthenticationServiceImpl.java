@@ -1,8 +1,14 @@
 package pcol.server;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpSession;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+
 import pcol.client.security.AuthenticationService;
+import pcol.server.domain.Users;
 import pcol.shared.User;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -39,12 +45,26 @@ public class AuthenticationServiceImpl extends RemoteServiceServlet implements A
 		HttpSession session = getThreadLocalRequest().getSession();
 		session.invalidate();
 	}
-	private User doAuthenticate(String usrname,String pwd){
-		if(usrname.equals("mihai") && pwd.equals("mihai")){
-			return new User("mihai", "andrei mihai daniel", 1040,
-					new String[]{"noutati","orar","teme","contract"}, "");
-		}else{
+	
+	private User doAuthenticate(String login,String pwd){
+		SessionFactory sf = HibernateUtil.getSessionFactory();
+		Session session = sf.openSession();
+		try {
+			session.beginTransaction();
+			Users user = (Users) session.get(Users.class, login); //da-mi userul cu numele asta
+			session.getTransaction().commit();
+			if( user!=null && pwd.equals(user.getPasswordHash())){
+				user.setLastlogin(new Date().toString());
+				session.update(user);
+				
+				return new User(login, 
+					user.getPersoane().getNume() + " " + user.getPersoane().getPrenume(),
+					user.getStudentis().iterator().next().getNrMatr(),new String[]{"noutati","orar","teme","contract"},"");
+			
+			}
 			return null;
+		} finally {
+			session.close();
 		}
 	}
 
