@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/proj_col</property>
+    <property name="hibernate.connection.username">pcol</property>
+    <property name="hibernate.connection.password">pcol</property>
+    <property name="hibernate.show_sql">true</property>
+
+    <mapping class="pcol.server.domain.Sectii"/>
+    <mapping class="pcol.server.domain.CuriculeId"/>
+    <mapping class="pcol.server.domain.Users"/>
+    <mapping class="pcol.server.domain.Facultati"/>
+    <mapping class="pcol.server.domain.Cursuri"/>
+    <mapping class="pcol.server.domain.ContracteStudiu"/>
+    <mapping class="pcol.server.domain.Persoane"/>
+    <mapping class="pcol.server.domain.Curicule"/>
+    <mapping class="pcol.server.domain.Studenti"/>
+    <mapping class="pcol.server.domain.TmStudentId"/>
+    <mapping class="pcol.server.domain.Cursuri"/>
+    <mapping class="pcol.server.domain.Canale"/>
+    <mapping class="pcol.server.domain.Persoane"/>
+    <mapping class="pcol.server.domain.TmStudent"/>
+    <mapping class="pcol.server.domain.Sectii"/>
+    <mapping class="pcol.server.domain.CuriculeId"/>
+    <mapping class="pcol.server.domain.Users"/>
+    <mapping class="pcol.server.domain.Teme"/>
+    <mapping class="pcol.server.domain.Grupe"/>
+    <mapping class="pcol.server.domain.Facultati"/>
+    <mapping class="pcol.server.domain.ContracteStudiu"/>
+    <mapping class="pcol.server.domain.Orar"/>
+    <mapping class="pcol.server.domain.Curicule"/>
+    <mapping class="pcol.server.domain.Mesaje"/>
+    <mapping class="pcol.server.domain.Studenti"/>
+    <mapping class="pcol.server.domain.Resurse"/>
+  </session-factory>
+</hibernate-configuration>
