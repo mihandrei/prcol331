@@ -8,6 +8,7 @@ import pcol.shared.AuthenticationException;
 
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.rpc.StatusCodeException;
 
 public abstract class AppAsyncCallback<T> implements AsyncCallback<T>{
 	private static Logger log = Logger.getLogger(AppAsyncCallback.class.getName()); 
@@ -16,9 +17,12 @@ public abstract class AppAsyncCallback<T> implements AsyncCallback<T>{
 	  if(caught instanceof AuthenticationException) { 
 		  App.getInstance().loginManager.onAuthenticationException();
 	  } 
-//    else if(caught instanceof AuthorizationException) { 
-//    	  you cannot access this resource
-//    } 
+    else if(caught instanceof StatusCodeException) { 
+    	StatusCodeException ex = (StatusCodeException) caught;
+    	if(ex.getStatusCode()==401){
+    		Window.alert("nu aveti dreptul sa efectuati aceasta operatie");
+    	}
+    } 
       try { 
            handleFailure(caught); 
       } 

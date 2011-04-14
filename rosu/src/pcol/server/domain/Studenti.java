@@ -1,5 +1,5 @@
 package pcol.server.domain;
-// Generated Apr 14, 2011 10:54:13 AM by Hibernate Tools 3.2.1.GA
+// Generated Apr 15, 2011 12:35:22 AM by Hibernate Tools 3.2.1.GA
 
 
 import java.util.HashSet;
@@ -12,7 +12,6 @@ import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -34,7 +33,6 @@ public class Studenti  implements java.io.Serializable {
      private int version;
      private Users users;
      private Grupe grupe;
-     private Set<Users> userses = new HashSet<Users>(0);
      private Set<TmStudent> tmStudents = new HashSet<TmStudent>(0);
      private Set<ContracteStudiu> contracteStudius = new HashSet<ContracteStudiu>(0);
 
@@ -46,10 +44,9 @@ public class Studenti  implements java.io.Serializable {
         this.users = users;
         this.grupe = grupe;
     }
-    public Studenti(Users users, Grupe grupe, Set<Users> userses, Set<TmStudent> tmStudents, Set<ContracteStudiu> contracteStudius) {
+    public Studenti(Users users, Grupe grupe, Set<TmStudent> tmStudents, Set<ContracteStudiu> contracteStudius) {
        this.users = users;
        this.grupe = grupe;
-       this.userses = userses;
        this.tmStudents = tmStudents;
        this.contracteStudius = contracteStudius;
     }
@@ -90,14 +87,6 @@ public class Studenti  implements java.io.Serializable {
     
     public void setGrupe(Grupe grupe) {
         this.grupe = grupe;
-    }
-@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="studentis")
-    public Set<Users> getUserses() {
-        return this.userses;
-    }
-    
-    public void setUserses(Set<Users> userses) {
-        this.userses = userses;
     }
 @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="studenti")
     public Set<TmStudent> getTmStudents() {
