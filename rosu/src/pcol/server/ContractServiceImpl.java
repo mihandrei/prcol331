@@ -1,6 +1,5 @@
 package pcol.server;
 
-import java.awt.GradientPaint;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -13,12 +12,11 @@ import pcol.server.domain.ContracteStudiu;
 import pcol.server.domain.ContracteStudiuId;
 import pcol.server.domain.CurGrup;
 import pcol.server.domain.CurGrupCours;
-import pcol.server.domain.Grade;
 import pcol.server.domain.Studenti;
 import pcol.server.domain.Users;
 import pcol.server.security.AuthRemoteServiceServlet;
 import pcol.shared.AuthenticationException;
-import pcol.shared.ContractItem;
+import pcol.shared.Contract;
 import pcol.shared.Course;
 import pcol.shared.CourseGroup;
 import pcol.shared.Curicul;
@@ -64,30 +62,41 @@ public class ContractServiceImpl extends AuthRemoteServiceServlet implements
 	}
 
 	@Override
-	public List<ContractItem> getContract(String sid) throws AuthenticationException{
-		return withUser(sid,new UserCall<List<ContractItem>>() {
+	public Contract getContract(String sid) throws AuthenticationException{
+		return withUser(sid,new UserCall<Contract>() {
 			@Override
-			public List<ContractItem> call(Users user, Session session) {
+			public Contract call(Users user, Session session) {
 				session.beginTransaction();
-				List<ContractItem> ret = new ArrayList<ContractItem>();
+				List<Integer> selection = new ArrayList<Integer>();
 				if(user.getStudentis().size() != 1){
 					throw new RuntimeException("userul nu e student");
 				}
 				Studenti student = user.getStudentis().iterator().next();
-				for(ContracteStudiu contr: student.getContracteStudius()){
-//					Query grq = session.createQuery("from Grade as g where g.nrmatr");
-					Float nota = null;
-					ContractItem ci = new ContractItem(contr.getId().getIdCurs(), nota);
-					ret.add(ci);
+				Query grq = session.createQuery(
+						" from  ContracteStudiu as cs " +
+						" where cs.id.nrmat = :nrmatr " +   
+						" and cs.id.contractVersion = ("+
+						" select max(c.id.contractVersion) from ContracteStudiu as c"+   
+						" where c.studenti.nrMatr=:nrmatr)")
+						.setParameter("nrmatr",student.getNrMatr());
+
+				int ver = 0;
+				for(ContracteStudiu contr:(List<ContracteStudiu>) grq.list()){
+					selection.add(contr.getId().getIdCurs());
+					ver = contr.getId().getContractVersion();
 				}
 				session.getTransaction().commit();
-				return ret;
+				
+				Contract ret = new Contract();
+				ret.selectedcourses = selection;
+				ret.version = ver;
+				return ret ;
 			}
 		});
 	}
 	@Override	
-	public Tuple<Curicul, List<ContractItem>> getContractAndCuricul(String sid) throws AuthenticationException{
-		return new Tuple<Curicul, List<ContractItem>>(getCuricula(sid),getContract(sid));
+	public Tuple<Curicul, Contract> getContractAndCuricul(String sid) throws AuthenticationException{
+		return new Tuple<Curicul,Contract>(getCuricula(sid),getContract(sid));
 	}
 
 	@Override
@@ -100,12 +109,19 @@ public class ContractServiceImpl extends AuthRemoteServiceServlet implements
 					throw new RuntimeException("userul nu e student");
 				}
 				Studenti student = user.getStudentis().iterator().next();
+				
+				//latest version
+				Integer contractVersion = (Integer) session.createQuery(
+						" select max(c.id.contractVersion) from ContracteStudiu as c"+   
+						" where c.studenti.nrMatr=:nrmatr)")
+						.setParameter("nrmatr",student.getNrMatr()).uniqueResult();
+				 
 				for(Integer idCurs : selectedCourseIds){
-//					student.getContracteStudius().add(contractitem);
-//					ContracteStudiuId csid = new ContracteStudiuId(student.getNrMatr(), idCurs);
-//					new ContracteStudiu(csid, student,);
+					ContracteStudiu newci = new ContracteStudiu();
+					newci.setId(new ContracteStudiuId(student.getNrMatr(), idCurs, contractVersion+1));
+					session.save(newci);
+//					student.getContracteStudius().add(newci);
 				}
-				//;
 				session.getTransaction().commit();
 				return null;
 			}
