@@ -26,7 +26,6 @@ public class TweetActivity extends AbstractActivity implements
 		public void onSuccess(List<Tweet> result) {
 			cached_tweetView.appendTweets(result);
 		}
-
 	};
 	
 	public TweetActivity() {
@@ -50,7 +49,7 @@ public class TweetActivity extends AbstractActivity implements
 					
 					cached_tweetView.setPresenter(TweetActivity.this);
 					cached_tweetView.clear();
-					rpc.getTweets(App.getInstance().loginManager.getUser(),5, tweetResponseHandler);
+					rpc.getTweets(App.getInstance().getSid(),5, tweetResponseHandler);
 					
 					panel.setWidget(cached_tweetView.asWidget());
 				}
@@ -64,7 +63,7 @@ public class TweetActivity extends AbstractActivity implements
 
 	@Override
 	public void getMoreTweets() {
-		rpc.getTweets(App.getInstance().loginManager.getUser(),5, tweetResponseHandler);
+		rpc.getTweets(App.getInstance().getSid(),5, tweetResponseHandler);
 	}
 
 }

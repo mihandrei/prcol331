@@ -36,24 +36,15 @@ public class LoginManager implements Presenter {
 		final String sessionID = Cookies.getCookie("sid");
 		if (sessionID != null) {
 			log.fine("request cookie login");
-			authService.getUserBySid(sessionID, new AsyncCallback<User>() {
+			authService.getUserBySid(sessionID, new AppAsyncCallback<User>() {
 				@Override
 				public void onSuccess(User usr) {
-					if(usr != null){
 						authToken = sessionID;
 						setcookie(authToken);
 						LoginManager.this.user=usr;
 						App.getInstance().getEventBus().fireEvent(new LoginEvent(usr));
-					}
-					else{
-						loginView.showscreen();
-					}	
 				}
 
-				@Override
-				public void onFailure(Throwable caught) {
-					handleAuthFailure(caught);
-				}
 			});
 		}else{
 			loginView.showscreen();
@@ -97,8 +88,9 @@ public class LoginManager implements Presenter {
 			}
 
 			@Override
-			public void onFailure(Throwable caught) {
-				handleAuthFailure(caught);
+			public void onFailure(Throwable ex) {
+				Window.alert(ex.getLocalizedMessage());
+				ex.printStackTrace();
 			}
 		});
 	}
@@ -109,11 +101,6 @@ public class LoginManager implements Presenter {
 		Cookies.setCookie("sid", sessionid, expires, null, "/", false);
 	}
 	
-	private void handleAuthFailure(Throwable ex){
-		Window.alert(ex.getLocalizedMessage());
-		ex.printStackTrace();
-	}
-
 	public User getUser() {
 		return user;
 	}

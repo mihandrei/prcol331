@@ -8,22 +8,22 @@ public class User implements IsSerializable, Serializable{
 	public User(){
 		
 	}
-	public User(String usr, String name, int nrmat, String[] authActivities,String sid) {
-		this.usr = usr;
+	public User(String loginName, String name, int nrmat, String[] authActivities,String sid) {
+		this.loginName = loginName;
 		this.name = name;
 		this.nrmat = nrmat;
 		this.authActivities = authActivities;
 		this.sid = sid;
 	}
 
-	private String usr;
+	private String loginName;
 	private String name;
 	private int nrmat;
 	private String[] authActivities;
 	private String sid;
 
-	public String getUsr(){
-		return usr;
+	public String getLoginName(){
+		return loginName;
 	}
 	
 	public String getName() {

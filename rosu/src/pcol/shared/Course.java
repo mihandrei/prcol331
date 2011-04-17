@@ -3,27 +3,25 @@ package pcol.shared;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class Course implements IsSerializable{
-	public String id;
-	public Float nota;
+	public int id;
 	public String name;
 	public Integer credits;
-	public Boolean inscris;
-
+	private String shortname;
+	
 	public Course(){
 		
 	}
 	
-	public Course(String id, String name, int credits, Float nota, boolean inscris) {
+	public Course(int id, String nume, String abreviere, int ncredite) {
 		this.id = id;
-		this.name=name;
-		this.credits=credits;
-		this.nota = nota;
-		this.inscris=inscris;
+		this.name=nume;
+		this.shortname =abreviere;
+		this.credits = ncredite;
 	}
-	
+
 	//clone se pare ca nu-i suporatat de gwt
 	public Course copy() {
-		return new Course(id,name,credits,nota,inscris);
+		return new Course(id,name,shortname,credits);
 	}
 	
 	
