@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
+        <property name="hibernate.check_nullability">false</property>
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.password">pcol</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/proj_col</property>
+        <property name="hibernate.connection.username">pcol</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
+        <property name="hibernate.search.autoregister_listeners">false</property>
+        <property name="hibernate.show_sql">true</property>
+        <mapping class="pcol.server.domain.ContracteStudiu" />
+        <mapping class="pcol.server.domain.TmStudent" />
+        <mapping class="pcol.server.domain.CurGrupCours" />
+        <mapping class="pcol.server.domain.OrgGroup" />
+        <mapping class="pcol.server.domain.Resource" />
+        <mapping class="pcol.server.domain.CurCourse" />
+        <mapping class="pcol.server.domain.Orar" />
+        <mapping class="pcol.server.domain.Users" />
+        <mapping class="pcol.server.domain.Studenti" />
+        <mapping class="pcol.server.domain.OrgFaculty" />
+        <mapping class="pcol.server.domain.Persoane" />
+        <mapping class="pcol.server.domain.MsgChannel" />
+        <mapping class="pcol.server.domain.CurGrup" />
+        <mapping class="pcol.server.domain.MsgMessage" />
+        <mapping class="pcol.server.domain.OrgSection" />
+        <mapping class="pcol.server.domain.Teme" />
+    </session-factory>
+</hibernate-configuration>
