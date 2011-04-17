@@ -17,12 +17,14 @@ public abstract class AppAsyncCallback<T> implements AsyncCallback<T>{
 	  if(caught instanceof AuthenticationException) { 
 		  App.getInstance().loginManager.onAuthenticationException();
 	  } 
-    else if(caught instanceof StatusCodeException) { 
-    	StatusCodeException ex = (StatusCodeException) caught;
-    	if(ex.getStatusCode()==401){
-    		Window.alert("nu aveti dreptul sa efectuati aceasta operatie");
-    	}
-    } 
+      else if(caught instanceof StatusCodeException) { 
+			StatusCodeException ex = (StatusCodeException) caught;
+			if(ex.getStatusCode()==401){
+				App.getInstance().loginManager.onAuthenticationException();
+			}else if(ex.getStatusCode()==403){
+				Window.alert("nu aveti dreptul sa efectuati aceasta operatie");
+			}
+       } 
       try { 
            handleFailure(caught); 
       } 

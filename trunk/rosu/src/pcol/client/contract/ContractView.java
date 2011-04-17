@@ -10,7 +10,6 @@ public interface ContractView extends IsWidget{
 
 	public interface Presenter {
 		void onSave();
-		void onCgChanged(CourseGroup old, CourseGroup cg);
 	}
 
 	void setPresenter(Presenter presenter);

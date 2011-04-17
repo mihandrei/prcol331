@@ -53,7 +53,7 @@ public class Provider {
     	if(resource.startsWith("/pcol/rpc/auth")){
     		return true;
     	}
-    	else if(resource.startsWith("/pcol/rpc/tweets")){
+    	else if(resource.startsWith("/pcol/rpc/tweets") || resource.startsWith("/pcol/rpc/contract")){
     		return user!=null;
     	}
         return false;

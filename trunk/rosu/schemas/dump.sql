@@ -24,29 +24,6 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/ `proj_col` /*!40100 DEFAULT CHARACTER S
 USE `proj_col`;
 
 --
--- Table structure for table `canale`
---
-
-DROP TABLE IF EXISTS `canale`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `canale` (
-  `id` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `canale`
---
-
-LOCK TABLES `canale` WRITE;
-/*!40000 ALTER TABLE `canale` DISABLE KEYS */;
-INSERT INTO `canale` VALUES ('MF331'),('mihai');
-/*!40000 ALTER TABLE `canale` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `contracte_studiu`
 --
 
@@ -54,13 +31,15 @@ DROP TABLE IF EXISTS `contracte_studiu`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `contracte_studiu` (
-  `nrmat` int(11) NOT NULL AUTO_INCREMENT,
+  `nrmat` int(11) NOT NULL,
   `id_curs` int(11) NOT NULL,
-  `nota` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`nrmat`),
+  `contract_version` int(11) NOT NULL,
+  `nota` float DEFAULT NULL,
+  `date` datetime DEFAULT NULL,
+  PRIMARY KEY (`nrmat`,`id_curs`,`contract_version`),
   KEY `fk_contracte_studiu_cursuri1` (`id_curs`),
-  CONSTRAINT `fk_contracte_studiu_studenti1` FOREIGN KEY (`nrmat`) REFERENCES `studenti` (`nr_matr`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_contracte_studiu_cursuri1` FOREIGN KEY (`id_curs`) REFERENCES `cursuri` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_contracte_studiu_cursuri1` FOREIGN KEY (`id_curs`) REFERENCES `cur_course` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_contracte_studiu_studenti1` FOREIGN KEY (`nrmat`) REFERENCES `studenti` (`nr_matr`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -70,126 +49,152 @@ CREATE TABLE `contracte_studiu` (
 
 LOCK TABLES `contracte_studiu` WRITE;
 /*!40000 ALTER TABLE `contracte_studiu` DISABLE KEYS */;
+INSERT INTO `contracte_studiu` VALUES (1040,1,1,4,'2009-04-01 00:00:00'),(1040,1,2,NULL,NULL);
 /*!40000 ALTER TABLE `contracte_studiu` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `curicule`
+-- Table structure for table `cur_course`
 --
 
-DROP TABLE IF EXISTS `curicule`;
+DROP TABLE IF EXISTS `cur_course`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `curicule` (
-  `curs` int(11) NOT NULL,
-  `sectie` int(11) NOT NULL,
-  `semestru` int(11) NOT NULL,
-  `credite` int(11) NOT NULL,
-  `tip` varchar(15) NOT NULL,
-  PRIMARY KEY (`curs`,`sectie`),
-  KEY `fk_curicule_cursuri1` (`curs`),
-  KEY `fk_curicule_sectii1` (`sectie`),
-  CONSTRAINT `fk_curicule_cursuri1` FOREIGN KEY (`curs`) REFERENCES `cursuri` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_curicule_sectii1` FOREIGN KEY (`sectie`) REFERENCES `sectii` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `curicule`
---
-
-LOCK TABLES `curicule` WRITE;
-/*!40000 ALTER TABLE `curicule` DISABLE KEYS */;
-/*!40000 ALTER TABLE `curicule` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `cursuri`
---
-
-DROP TABLE IF EXISTS `cursuri`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `cursuri` (
+CREATE TABLE `cur_course` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nume` varchar(255) NOT NULL,
-  `abreviere` varchar(12) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `abbrev` varchar(12) NOT NULL,
   `version` int(11) NOT NULL,
   `main_page` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_cursuri_resurse1` (`main_page`),
-  CONSTRAINT `fk_cursuri_resurse1` FOREIGN KEY (`main_page`) REFERENCES `resurse` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_cursuri_resurse1` FOREIGN KEY (`main_page`) REFERENCES `resource` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cur_course`
+--
+
+LOCK TABLES `cur_course` WRITE;
+/*!40000 ALTER TABLE `cur_course` DISABLE KEYS */;
+INSERT INTO `cur_course` VALUES (1,'Tehnici de optimizare','Optimizare',1,NULL),(5,'Inteligenta Artificiala','AI',1,NULL),(6,'Retele de calculatoare','retele',1,NULL),(7,'Programare orientata obiect','OOP',1,NULL),(8,'Ingineria sistemelor software','ISS',1,NULL),(9,'Algoritmi si structuri de date','Algoritmi',1,NULL),(10,'Metodologia redactarii unei lucrari stiintifice','Paper',1,NULL),(11,'Sisteme de operare','SO',1,NULL),(12,'Proiect colectiv','proj col',1,NULL),(13,'Branzeturi, metode industriale','BRZ',1,NULL),(14,'Metode moderne de abordare a cartofului','CRTF',1,NULL),(15,'Razboaiele luminii','lumi',1,NULL),(16,'despre gavitzapa','gravitzapa',1,NULL),(17,'kin dza dza','dza dza',1,NULL);
+/*!40000 ALTER TABLE `cur_course` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `cur_curicul`
+--
+
+DROP TABLE IF EXISTS `cur_curicul`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cur_curicul` (
+  `groupid` int(11) NOT NULL,
+  `section` int(11) NOT NULL,
+  PRIMARY KEY (`groupid`,`section`),
+  KEY `fk_curicule_sectii1` (`section`),
+  KEY `fk_cur_curicule_cur_grup1` (`groupid`),
+  CONSTRAINT `fk_curicule_sectii1` FOREIGN KEY (`section`) REFERENCES `org_section` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_cur_curicule_cur_grup1` FOREIGN KEY (`groupid`) REFERENCES `cur_grup` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `cursuri`
+-- Dumping data for table `cur_curicul`
 --
 
-LOCK TABLES `cursuri` WRITE;
-/*!40000 ALTER TABLE `cursuri` DISABLE KEYS */;
-/*!40000 ALTER TABLE `cursuri` ENABLE KEYS */;
+LOCK TABLES `cur_curicul` WRITE;
+/*!40000 ALTER TABLE `cur_curicul` DISABLE KEYS */;
+INSERT INTO `cur_curicul` VALUES (1,1),(2,1),(3,1),(6,1),(7,1);
+/*!40000 ALTER TABLE `cur_curicul` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `facultati`
+-- Table structure for table `cur_grup`
 --
 
-DROP TABLE IF EXISTS `facultati`;
+DROP TABLE IF EXISTS `cur_grup`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `facultati` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nume` varchar(45) NOT NULL,
-  `version` int(11) NOT NULL,
+CREATE TABLE `cur_grup` (
+  `id` int(11) NOT NULL,
+  `exclusiv` tinyint(1) NOT NULL,
+  `semester` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `facultati`
---
-
-LOCK TABLES `facultati` WRITE;
-/*!40000 ALTER TABLE `facultati` DISABLE KEYS */;
-INSERT INTO `facultati` VALUES (1,'matematica',1);
-/*!40000 ALTER TABLE `facultati` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `grupe`
---
-
-DROP TABLE IF EXISTS `grupe`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `grupe` (
-  `id` varchar(5) NOT NULL,
-  `sectie` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_grupe_sectii1` (`sectie`),
-  CONSTRAINT `fk_grupe_sectii1` FOREIGN KEY (`sectie`) REFERENCES `sectii` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `grupe`
+-- Dumping data for table `cur_grup`
 --
 
-LOCK TABLES `grupe` WRITE;
-/*!40000 ALTER TABLE `grupe` DISABLE KEYS */;
-INSERT INTO `grupe` VALUES ('mf331',1);
-/*!40000 ALTER TABLE `grupe` ENABLE KEYS */;
+LOCK TABLES `cur_grup` WRITE;
+/*!40000 ALTER TABLE `cur_grup` DISABLE KEYS */;
+INSERT INTO `cur_grup` VALUES (1,0,2),(2,0,4),(3,0,6),(6,1,4),(7,1,6);
+/*!40000 ALTER TABLE `cur_grup` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `mesaje`
+-- Table structure for table `cur_grup_cours`
 --
 
-DROP TABLE IF EXISTS `mesaje`;
+DROP TABLE IF EXISTS `cur_grup_cours`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `mesaje` (
+CREATE TABLE `cur_grup_cours` (
+  `groupid` int(11) NOT NULL,
+  `courseid` int(11) NOT NULL,
+  `ncredits` int(11) NOT NULL,
+  PRIMARY KEY (`groupid`,`courseid`),
+  KEY `fk_cur_grup_cours_cur_grup1` (`groupid`),
+  KEY `fk_cur_grup_cours_cur_course1` (`courseid`),
+  CONSTRAINT `fk_cur_grup_cours_cur_grup1` FOREIGN KEY (`groupid`) REFERENCES `cur_grup` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_cur_grup_cours_cur_course1` FOREIGN KEY (`courseid`) REFERENCES `cur_course` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cur_grup_cours`
+--
+
+LOCK TABLES `cur_grup_cours` WRITE;
+/*!40000 ALTER TABLE `cur_grup_cours` DISABLE KEYS */;
+INSERT INTO `cur_grup_cours` VALUES (1,7,6),(1,9,4),(2,11,5),(3,1,6),(3,5,6),(3,6,6),(3,8,6),(3,12,3),(6,13,4),(6,14,4),(6,15,4),(7,16,4),(7,17,4);
+/*!40000 ALTER TABLE `cur_grup_cours` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `msg_channel`
+--
+
+DROP TABLE IF EXISTS `msg_channel`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `msg_channel` (
+  `id` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `msg_channel`
+--
+
+LOCK TABLES `msg_channel` WRITE;
+/*!40000 ALTER TABLE `msg_channel` DISABLE KEYS */;
+INSERT INTO `msg_channel` VALUES ('MF331'),('mihai');
+/*!40000 ALTER TABLE `msg_channel` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `msg_message`
+--
+
+DROP TABLE IF EXISTS `msg_message`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `msg_message` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `msg` text NOT NULL,
   `expeditor` varchar(45) NOT NULL,
@@ -202,41 +207,69 @@ CREATE TABLE `mesaje` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `mesaje`
+-- Dumping data for table `msg_message`
 --
 
-LOCK TABLES `mesaje` WRITE;
-/*!40000 ALTER TABLE `mesaje` DISABLE KEYS */;
-INSERT INTO `mesaje` VALUES (1,'<p>Yesterday,<br>All those backups seemed a waste of pay.<br>Now my database has gone away.<br>Oh I believe in yesterday.</p>','mihai','INFO','2011-04-11 00:00:00'),(2,'You can never find general mechanical means <br>for predicting the acts of computing machines <br>It’s something that cannot be done. So we users <br>must find our own bugs. Our computers are losers! <br><a target=\"_blank\" href=\"http://www.lel.ed.ac.uk/~gpullum/loopsnoop.pdf\"> source </a>','mihai','INFO','2011-04-11 11:20:00'),(3,'I have no money, no resources, no hopes. I am the happiest man alive.','system','INFO','2011-04-11 11:20:00'),(4,'Debugging is twice as hard as writing the code in the first place.  Therefore, if you write the code as cleverly as possible, you are&ndash;by definition&ndash;not smart enough to debug it.','system','INFO','2011-04-11 11:20:00'),(5,'Atunci când sunt supărat, mă retrag între oile mele şi mă liniştesc','system','INFO','2011-04-11 11:20:00');
-/*!40000 ALTER TABLE `mesaje` ENABLE KEYS */;
+LOCK TABLES `msg_message` WRITE;
+/*!40000 ALTER TABLE `msg_message` DISABLE KEYS */;
+INSERT INTO `msg_message` VALUES (1,'<p>Yesterday,<br>All those backups seemed a waste of pay.<br>Now my database has gone away.<br>Oh I believe in yesterday.</p>','mihai','INFO','2011-04-17 00:00:00'),(2,'You can never find general mechanical means <br>for predicting the acts of computing machines <br>Itâ€™s something that cannot be done. So we users <br>must find our own bugs. Our computers are losers! <br><a target=\"_blank\" href=\"http://www.lel.ed.ac.uk/~gpullum/loopsnoop.pdf\"> source </a>','mihai','INFO','2011-04-11 11:20:00'),(3,'I have no money, no resources, no hopes. I am the happiest man alive.','system','INFO','2011-04-09 11:20:00'),(4,'Debugging is twice as hard as writing the code in the first place.  Therefore, if you write the code as cleverly as possible, you are&ndash;by definition&ndash;not smart enough to debug it.','system','INFO','2011-03-11 11:20:00'),(5,'Atunci cÃ¢nd sunt supÄƒrat, mÄƒ retrag Ã®ntre oile mele ÅŸi mÄƒ liniÅŸtesc','system','INFO','2010-04-11 11:20:00');
+/*!40000 ALTER TABLE `msg_message` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `msg_chan`
+-- Table structure for table `msg_message_channel`
 --
 
-DROP TABLE IF EXISTS `msg_chan`;
+DROP TABLE IF EXISTS `msg_message_channel`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `msg_chan` (
+CREATE TABLE `msg_message_channel` (
   `msgid` int(11) NOT NULL,
   `chanid` varchar(45) NOT NULL,
   PRIMARY KEY (`msgid`,`chanid`),
   KEY `fk_msg_chan_canale1` (`chanid`),
   KEY `fk_msg_chan_mesaje1` (`msgid`),
-  CONSTRAINT `fk_msg_chan_canale1` FOREIGN KEY (`chanid`) REFERENCES `canale` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_msg_chan_mesaje1` FOREIGN KEY (`msgid`) REFERENCES `mesaje` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_msg_chan_canale1` FOREIGN KEY (`chanid`) REFERENCES `msg_channel` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_msg_chan_mesaje1` FOREIGN KEY (`msgid`) REFERENCES `msg_message` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `msg_chan`
+-- Dumping data for table `msg_message_channel`
 --
 
-LOCK TABLES `msg_chan` WRITE;
-/*!40000 ALTER TABLE `msg_chan` DISABLE KEYS */;
-INSERT INTO `msg_chan` VALUES (1,'MF331'),(2,'MF331'),(3,'mihai'),(4,'MF331'),(5,'MF331'),(5,'mihai');
-/*!40000 ALTER TABLE `msg_chan` ENABLE KEYS */;
+LOCK TABLES `msg_message_channel` WRITE;
+/*!40000 ALTER TABLE `msg_message_channel` DISABLE KEYS */;
+INSERT INTO `msg_message_channel` VALUES (1,'MF331'),(2,'MF331'),(3,'mihai'),(4,'MF331'),(5,'MF331'),(5,'mihai');
+/*!40000 ALTER TABLE `msg_message_channel` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `msg_subscription`
+--
+
+DROP TABLE IF EXISTS `msg_subscription`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `msg_subscription` (
+  `login` varchar(45) NOT NULL,
+  `chanid` varchar(45) NOT NULL,
+  PRIMARY KEY (`login`,`chanid`),
+  KEY `fk_subscriptii_users1` (`login`),
+  KEY `fk_subscriptii_canale1` (`chanid`),
+  CONSTRAINT `fk_subscriptii_canale1` FOREIGN KEY (`chanid`) REFERENCES `msg_channel` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_subscriptii_users1` FOREIGN KEY (`login`) REFERENCES `users` (`login_name`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `msg_subscription`
+--
+
+LOCK TABLES `msg_subscription` WRITE;
+/*!40000 ALTER TABLE `msg_subscription` DISABLE KEYS */;
+INSERT INTO `msg_subscription` VALUES ('mihai','MF331'),('mihai','mihai');
+/*!40000 ALTER TABLE `msg_subscription` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -259,8 +292,8 @@ CREATE TABLE `orar` (
   PRIMARY KEY (`id`),
   KEY `fk_orar_grupe1` (`grupa`),
   KEY `fk_orar_cursuri1` (`curs_id`),
-  CONSTRAINT `fk_orar_grupe1` FOREIGN KEY (`grupa`) REFERENCES `grupe` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_orar_cursuri1` FOREIGN KEY (`curs_id`) REFERENCES `cursuri` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_orar_cursuri1` FOREIGN KEY (`curs_id`) REFERENCES `cur_course` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_orar_grupe1` FOREIGN KEY (`grupa`) REFERENCES `org_group` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -271,6 +304,83 @@ CREATE TABLE `orar` (
 LOCK TABLES `orar` WRITE;
 /*!40000 ALTER TABLE `orar` DISABLE KEYS */;
 /*!40000 ALTER TABLE `orar` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `org_faculty`
+--
+
+DROP TABLE IF EXISTS `org_faculty`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `org_faculty` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `org_faculty`
+--
+
+LOCK TABLES `org_faculty` WRITE;
+/*!40000 ALTER TABLE `org_faculty` DISABLE KEYS */;
+INSERT INTO `org_faculty` VALUES (1,'matematica');
+/*!40000 ALTER TABLE `org_faculty` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `org_group`
+--
+
+DROP TABLE IF EXISTS `org_group`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `org_group` (
+  `id` varchar(5) NOT NULL,
+  `section` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_grupe_sectii1` (`section`),
+  CONSTRAINT `fk_grupe_sectii1` FOREIGN KEY (`section`) REFERENCES `org_section` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `org_group`
+--
+
+LOCK TABLES `org_group` WRITE;
+/*!40000 ALTER TABLE `org_group` DISABLE KEYS */;
+INSERT INTO `org_group` VALUES ('mf331',1);
+/*!40000 ALTER TABLE `org_group` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `org_section`
+--
+
+DROP TABLE IF EXISTS `org_section`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `org_section` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `faculty` int(11) NOT NULL,
+  `name` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_sectii_facultati1` (`faculty`),
+  CONSTRAINT `fk_sectii_facultati1` FOREIGN KEY (`faculty`) REFERENCES `org_faculty` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `org_section`
+--
+
+LOCK TABLES `org_section` WRITE;
+/*!40000 ALTER TABLE `org_section` DISABLE KEYS */;
+INSERT INTO `org_section` VALUES (1,1,'mate-fizica');
+/*!40000 ALTER TABLE `org_section` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -304,13 +414,13 @@ INSERT INTO `persoane` VALUES (1,'1831104060023','251452','mihai daniel','andrei
 UNLOCK TABLES;
 
 --
--- Table structure for table `resurse`
+-- Table structure for table `resource`
 --
 
-DROP TABLE IF EXISTS `resurse`;
+DROP TABLE IF EXISTS `resource`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `resurse` (
+CREATE TABLE `resource` (
   `id` int(11) NOT NULL,
   `file_name` varchar(45) DEFAULT NULL,
   `wikitext` text,
@@ -320,40 +430,12 @@ CREATE TABLE `resurse` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `resurse`
+-- Dumping data for table `resource`
 --
 
-LOCK TABLES `resurse` WRITE;
-/*!40000 ALTER TABLE `resurse` DISABLE KEYS */;
-/*!40000 ALTER TABLE `resurse` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `sectii`
---
-
-DROP TABLE IF EXISTS `sectii`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `sectii` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `facultate` int(11) NOT NULL,
-  `nume` varchar(45) NOT NULL,
-  `version` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_sectii_facultati1` (`facultate`),
-  CONSTRAINT `fk_sectii_facultati1` FOREIGN KEY (`facultate`) REFERENCES `facultati` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `sectii`
---
-
-LOCK TABLES `sectii` WRITE;
-/*!40000 ALTER TABLE `sectii` DISABLE KEYS */;
-INSERT INTO `sectii` VALUES (1,1,'mate-fizica',1);
-/*!40000 ALTER TABLE `sectii` ENABLE KEYS */;
+LOCK TABLES `resource` WRITE;
+/*!40000 ALTER TABLE `resource` DISABLE KEYS */;
+/*!40000 ALTER TABLE `resource` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -371,7 +453,7 @@ CREATE TABLE `studenti` (
   PRIMARY KEY (`nr_matr`),
   UNIQUE KEY `uniq_login` (`login`),
   KEY `fk_studenti_grupe` (`grupaId`),
-  CONSTRAINT `fk_studenti_grupe` FOREIGN KEY (`grupaId`) REFERENCES `grupe` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_studenti_grupe` FOREIGN KEY (`grupaId`) REFERENCES `org_group` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_studenti_users` FOREIGN KEY (`login`) REFERENCES `users` (`login_name`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=1041 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -387,34 +469,6 @@ INSERT INTO `studenti` VALUES (1040,'mihai','mf331',0);
 UNLOCK TABLES;
 
 --
--- Table structure for table `subscriptii`
---
-
-DROP TABLE IF EXISTS `subscriptii`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `subscriptii` (
-  `id_canal` varchar(45) NOT NULL,
-  `login` varchar(45) NOT NULL,
-  PRIMARY KEY (`id_canal`,`login`),
-  KEY `fk_subscriptii_users1` (`login`),
-  KEY `fk_subscriptii_canale1` (`id_canal`),
-  CONSTRAINT `fk_subscriptii_users1` FOREIGN KEY (`login`) REFERENCES `users` (`login_name`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_subscriptii_canale1` FOREIGN KEY (`id_canal`) REFERENCES `canale` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `subscriptii`
---
-
-LOCK TABLES `subscriptii` WRITE;
-/*!40000 ALTER TABLE `subscriptii` DISABLE KEYS */;
-INSERT INTO `subscriptii` VALUES ('MF331','didy'),('MF331','geza'),('MF331','mihai'),('mihai','mihai');
-/*!40000 ALTER TABLE `subscriptii` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `teme`
 --
 
@@ -427,7 +481,7 @@ CREATE TABLE `teme` (
   `cerinte_page` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_teme_cursuri1` (`curs`),
-  CONSTRAINT `fk_teme_cursuri1` FOREIGN KEY (`curs`) REFERENCES `cursuri` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_teme_cursuri1` FOREIGN KEY (`curs`) REFERENCES `cur_course` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -455,8 +509,8 @@ CREATE TABLE `tm_student` (
   PRIMARY KEY (`tema`,`nrmatr`),
   KEY `fk_tm_student_teme1` (`tema`),
   KEY `fk_tm_student_studenti1` (`nrmatr`),
-  CONSTRAINT `fk_tm_student_teme1` FOREIGN KEY (`tema`) REFERENCES `teme` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_tm_student_studenti1` FOREIGN KEY (`nrmatr`) REFERENCES `studenti` (`nr_matr`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_tm_student_studenti1` FOREIGN KEY (`nrmatr`) REFERENCES `studenti` (`nr_matr`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tm_student_teme1` FOREIGN KEY (`tema`) REFERENCES `teme` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -508,4 +562,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-04-15  2:08:58
+-- Dump completed on 2011-04-17 22:29:08

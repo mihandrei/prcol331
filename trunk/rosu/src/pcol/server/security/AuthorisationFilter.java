@@ -37,7 +37,11 @@ public class AuthorisationFilter implements javax.servlet.Filter {
             Provider authProvider = Provider.getInstance();
 
             if (!authProvider.isAuthorised(user, rsrc)) {
-                response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+                if(user == null){
+                	response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+                }else{
+                	response.sendError(HttpServletResponse.SC_FORBIDDEN);
+                }
                 return;
             }
         }

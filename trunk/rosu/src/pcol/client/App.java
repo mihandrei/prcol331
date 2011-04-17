@@ -176,5 +176,12 @@ public class App implements EntryPoint, Shell.Presenter{
 		}
 		
 	}
+	
+	/**
+	 * @return session id -ul  asociat cu loginul curent
+	 */
+	public String getSid() {
+		return loginManager.getUser().getSid();
+	}
 
 }

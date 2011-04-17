@@ -1,70 +1,167 @@
 package pcol.client.contract;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import pcol.client.App;
-import pcol.client.contract.CourseGroupWidget.Presenter;
 import pcol.client.security.AppAsyncCallback;
-import pcol.client.tweet.TweetService;
-import pcol.client.tweet.TweetServiceAsync;
+import pcol.shared.ContractItem;
+import pcol.shared.Course;
 import pcol.shared.CourseGroup;
 import pcol.shared.Curicul;
+import pcol.shared.Tuple;
 
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 
 
 public class ContractActivity extends AbstractActivity implements
-		ContractView.Presenter {
+		ContractView.Presenter , CourseGroupWidget.Presenter{
 	
 	private static ContractView view;
 	private static ContractServiceAsync rpc = null;
 	
-	private int credittotal;
-	private boolean dirty;
-	private Curicul curicul;
-
-	public ContractActivity() {
+	private Set<Integer> initiallySelectedCourseIds;
+	private Set<Integer> selectedCourseIds;
 	
-	}
+	private Map<Integer, Course> courses;
 
-	private void addCgs(List<CourseGroup> cgs,String semid){
-		for(CourseGroup courseGroup:cgs){
+	private boolean isDirty(){
+		//may be null if rpc has not finished
+		if(initiallySelectedCourseIds==null) {
+			return false; 
+		}
 		
-			credittotal += getSelectedCredits(courseGroup);	
-			view.setCreditTotal(credittotal);
-		
-	        CourseGroupWidget cgw = new CourseGroupWidget();        
-	        Presenter cgwPresenter  = new CourseGroupPresenter(cgw);
-	        cgw.setPresenter(cgwPresenter);
-	        cgwPresenter.setParentPresenter(this);
-			cgwPresenter.setCourseGroup(courseGroup );
-			cgwPresenter.start();
-		
-			view.addToCategory(semid, Arrays.asList(cgw));
+		return ! initiallySelectedCourseIds.equals(selectedCourseIds);
+	}
+	
+	private int countCreditTotal(){
+		int total =0;
+	
+		for(int key:selectedCourseIds){
+			total+= courses.get(key).credits;
+		}
+		return total;
+	}
+	
+	private class GetCuriculAsyncCallBack extends AppAsyncCallback<Tuple<Curicul,List<ContractItem>>>{
+
+		@Override
+		public void onSuccess(Tuple<Curicul, List<ContractItem>> result) {
+			initiallySelectedCourseIds = new HashSet<Integer>(result.s.size());
+			courses = new HashMap<Integer, Course>();
+
+			Map<Integer, Float> note = new HashMap<Integer, Float>();
+			
+			for(ContractItem ci:result.s){
+				initiallySelectedCourseIds.add(ci.cursId);
+				note.put(ci.cursId,ci.nota);
+			}
+			selectedCourseIds = new HashSet<Integer>(initiallySelectedCourseIds);
+			
+			Curicul curicul = result.f;
+			for(int sem : curicul.cursuriPeSemestru.keySet()){
+				addCgs(curicul.cursuriPeSemestru.get(sem),note, "sem "+sem);
+			}
+			
+			view.setSaveEnabled(isDirty());
+			view.setCreditTotal(countCreditTotal());
+			App.getInstance().showTipFor("contract");
 		}
 	}
+
+	private void addCgs(List<CourseGroup> cgs, Map<Integer, Float> note, String semid){
+		List<CourseGroupWidget> widgets = new LinkedList<CourseGroupWidget>();
+		
+		for(CourseGroup cg:cgs){
+			CourseGroupWidget cgw = new CourseGroupWidget();  
+			cgw.setTitle(cg.name);
+			cgw.setPresenter(this);
+			
+			SelectionModel<Integer> selectionmodel;
+			if(cg.exclusive){
+				selectionmodel = new SingleSelectionModel<Integer>();
+				widgets.add(cgw);
+			}else{
+				selectionmodel = new MultipleSelectionModel<Integer>();
+				widgets.add(0, cgw); //ca sa fie obligatoriile primele 
+			}
+			
+			Collections.sort(cg.courses, new Comparator<Course>() {
+				@Override
+				public int compare(Course o1, Course o2) {
+					return o1.name.compareTo(o2.name);
+				}
+			});
+
+			for(Course c : cg.courses){
+				courses.put(c.id, c);
+			
+				Float nota = null;
+				
+				if (selectedCourseIds.contains(c.id)) {
+					selectionmodel.setSelected(c.id, true);
+					nota = note.get(c.id);
+				}
+					
+				cgw.addRowData(c.id, c.name, c.credits, nota);
+			}
+			cgw.setSelection(selectionmodel);
+		}
+		view.addToCategory(semid, widgets);
+		
+	}
+	
+	@Override
+	public void onSelectionChanged(CourseGroupWidget sender, Integer key) {
+		SelectionModel<Integer> selectionmodel = sender.getSelectionModel();
+		//deselect this course group in global model, chnage selection then add to global and widget  
+		selectedCourseIds.removeAll(selectionmodel.getSelected());
+		selectionmodel.setSelected(key, ! selectionmodel.isSelected(key));
+		selectedCourseIds.addAll(selectionmodel.getSelected());
+		sender.setSelection(selectionmodel);
+		
+		view.setSaveEnabled(isDirty());
+		
+		view.setCreditTotal(countCreditTotal());
+	}
+	
+	@Override
+	public void onSave() {
+		if(isDirty()){
+		rpc.submitContract(App.getInstance().getSid(),selectedCourseIds, new AppAsyncCallback<Void>() {
+			@Override
+			public void onSuccess(Void result) {
+				App.getInstance().showInfo("contractul a fost salvat");
+				initiallySelectedCourseIds = new HashSet<Integer>(selectedCourseIds);
+				view.setSaveEnabled(isDirty());
+			}
+		});
+		}
+	}
+
+	public String mayStop() {
+		if(isDirty()){
+			return "discard your changes?";
+		}
+	    return null;
+	}
+	
 	@Override
 	public void start(final AcceptsOneWidget panel, EventBus eventBus) {
 		GWT.runAsync(new RunAsyncCallback() {
-			private AsyncCallback<Curicul> getCuriculCallback = new AppAsyncCallback<Curicul>() {
-				@Override
-				public void onSuccess(Curicul c) {
-					curicul = c;
-					for(int sem : c.cursuriPeSemestru.keySet()){
-						addCgs(c.cursuriPeSemestru.get(sem), "sem "+sem);
-					}
-					dirty = false;
-					view.setSaveEnabled(dirty);
-					App.getInstance().showTipFor("contract");
-				}
-			};
+			private GetCuriculAsyncCallBack	getCuriculCallback = new GetCuriculAsyncCallBack();
 			
 			@Override
 			public void onSuccess() {
@@ -77,10 +174,8 @@ public class ContractActivity extends AbstractActivity implements
 				}
 				view.setPresenter(ContractActivity.this);
 				view.clearAllCategories();
-				credittotal = 0;
 				panel.setWidget(view);
-				rpc.getCuricula(App.getInstance().loginManager.getUser().getNrMatr(),
-						getCuriculCallback);
+				rpc.getContractAndCuricul(App.getInstance().getSid(),getCuriculCallback);
 			}
 			
 			@Override
@@ -90,40 +185,4 @@ public class ContractActivity extends AbstractActivity implements
 		});
 	}
 
-	@Override
-	public void onSave() {
-		rpc.submitContract(curicul, new AppAsyncCallback<Void>() {
-			@Override
-			public void onSuccess(Void result) {
-				App.getInstance().showInfo("contractul a fost salvat");
-				dirty = false;
-				view.setSaveEnabled(dirty);
-			}
-		});
-	}
-
-	private int getSelectedCredits(CourseGroup cg){
-		int credits = 0;
-		for(int i =0;i<cg.courses.size();i++){
-			if(cg.courses.get(i).inscris){
-				credits +=  cg.courses.get(i).credits;
-			}
-		}
-		return credits;
-	}
-	
-	public void onCgChanged(CourseGroup old, CourseGroup cg) {
-		dirty = true;
-		view.setSaveEnabled(dirty);
-		credittotal += getSelectedCredits(cg);
-		credittotal -= getSelectedCredits(old);
-		view.setCreditTotal(credittotal);
-	}
-
-	public String mayStop() {
-		if(dirty){
-			return "discard your changes?";
-		}
-	    return null;
-	}
 }

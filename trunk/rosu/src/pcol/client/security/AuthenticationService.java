@@ -1,5 +1,6 @@
 package pcol.client.security;
 
+import pcol.shared.AuthenticationException;
 import pcol.shared.User;
 
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -20,7 +21,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 @RemoteServiceRelativePath("rpc/auth")
 public interface AuthenticationService extends RemoteService{
 	
-	User getUserBySid(String sessionID);
+	User getUserBySid(String sessionID) throws AuthenticationException;
 
 	User authenticate(String usr, String pwd);
 
