@@ -1,6 +1,5 @@
 package pcol.client.contract;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -12,7 +11,7 @@ import java.util.Set;
 
 import pcol.client.App;
 import pcol.client.security.AppAsyncCallback;
-import pcol.shared.ContractItem;
+import pcol.shared.Contract;
 import pcol.shared.Course;
 import pcol.shared.CourseGroup;
 import pcol.shared.Curicul;
@@ -55,19 +54,16 @@ public class ContractActivity extends AbstractActivity implements
 		return total;
 	}
 	
-	private class GetCuriculAsyncCallBack extends AppAsyncCallback<Tuple<Curicul,List<ContractItem>>>{
+	private class GetCuriculAsyncCallBack extends AppAsyncCallback<Tuple<Curicul,Contract>>{
 
 		@Override
-		public void onSuccess(Tuple<Curicul, List<ContractItem>> result) {
-			initiallySelectedCourseIds = new HashSet<Integer>(result.s.size());
+		public void onSuccess(Tuple<Curicul, Contract> result) {
+			initiallySelectedCourseIds = new HashSet<Integer>(result.s.selectedcourses);
 			courses = new HashMap<Integer, Course>();
 
 			Map<Integer, Float> note = new HashMap<Integer, Float>();
 			
-			for(ContractItem ci:result.s){
-				initiallySelectedCourseIds.add(ci.cursId);
-				note.put(ci.cursId,ci.nota);
-			}
+//				note.put(ci.cursId,ci.nota);
 			selectedCourseIds = new HashSet<Integer>(initiallySelectedCourseIds);
 			
 			Curicul curicul = result.f;
