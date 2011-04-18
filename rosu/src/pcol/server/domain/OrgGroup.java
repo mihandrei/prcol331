@@ -2,7 +2,9 @@ package pcol.server.domain;
 
 // Generated Apr 17, 2011 10:03:09 PM by Hibernate Tools 3.4.0.CR1
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 /**
@@ -23,7 +26,7 @@ public class OrgGroup implements java.io.Serializable {
 	private String id;
 	private OrgSection orgSection;
 	private Set<Studenti> studentis = new HashSet<Studenti>(0);
-	private Set<Orar> orars = new HashSet<Orar>(0);
+	private List<Orar> orars = new ArrayList<Orar>(0);
 
 	public OrgGroup() {
 	}
@@ -34,7 +37,7 @@ public class OrgGroup implements java.io.Serializable {
 	}
 
 	public OrgGroup(String id, OrgSection orgSection, Set<Studenti> studentis,
-			Set<Orar> orars) {
+			List<Orar> orars) {
 		this.id = id;
 		this.orgSection = orgSection;
 		this.studentis = studentis;
@@ -70,12 +73,14 @@ public class OrgGroup implements java.io.Serializable {
 		this.studentis = studentis;
 	}
 
+	//vreau o ordine stabila 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "orgGroup")
-	public Set<Orar> getOrars() {
+	@OrderBy("id")
+	public List<Orar> getOrars() {
 		return this.orars;
 	}
 
-	public void setOrars(Set<Orar> orars) {
+	public void setOrars(List<Orar> orars) {
 		this.orars = orars;
 	}
 
