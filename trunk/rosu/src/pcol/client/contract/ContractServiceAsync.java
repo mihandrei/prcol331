@@ -1,9 +1,11 @@
 package pcol.client.contract;
 
+import java.util.List;
 import java.util.Set;
 
 import pcol.shared.Contract;
 import pcol.shared.Curicul;
+import pcol.shared.OrarDto;
 import pcol.shared.Tuple;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -20,6 +22,8 @@ public interface ContractServiceAsync {
 			AsyncCallback<Void> callback);
 
 	void getCuricula(String sid, AsyncCallback<Curicul> callback);
+
+	void getSchedule(String sid, AsyncCallback<List<OrarDto>> callback);
 
 
 }

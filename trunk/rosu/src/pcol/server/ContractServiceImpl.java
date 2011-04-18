@@ -12,6 +12,7 @@ import pcol.server.domain.ContracteStudiu;
 import pcol.server.domain.ContracteStudiuId;
 import pcol.server.domain.CurGrup;
 import pcol.server.domain.CurGrupCours;
+import pcol.server.domain.Orar;
 import pcol.server.domain.Studenti;
 import pcol.server.domain.Users;
 import pcol.server.security.AuthRemoteServiceServlet;
@@ -20,6 +21,7 @@ import pcol.shared.Contract;
 import pcol.shared.Course;
 import pcol.shared.CourseGroup;
 import pcol.shared.Curicul;
+import pcol.shared.OrarDto;
 import pcol.shared.Tuple;
 
 public class ContractServiceImpl extends AuthRemoteServiceServlet implements
@@ -124,6 +126,36 @@ public class ContractServiceImpl extends AuthRemoteServiceServlet implements
 				}
 				session.getTransaction().commit();
 				return null;
+			}
+		});
+		
+	}
+	
+	@Override
+	public List<OrarDto> getSchedule(String sid) throws AuthenticationException {
+		return withUser(sid,new UserCall<List<OrarDto>>() {
+			@Override
+			public List<OrarDto> call(Users user, Session session) {
+				session.beginTransaction();
+				if(user.getStudentis().size() != 1){
+					throw new RuntimeException("userul nu e student");
+				}
+				Studenti student = user.getStudentis().iterator().next();
+				
+				List<OrarDto> ret = new ArrayList<OrarDto>();
+				for(Orar orar : student.getOrgGroup().getOrars()){
+					ret.add(new OrarDto(orar.getOrgGroup().getId(),
+							orar.getCurCourse().getId(),
+							orar.getCurCourse().getAbbrev(),
+							orar.getTipActivitate(),
+							orar.getZi(),
+							orar.getSaptamana(),
+							orar.getStartOra(),
+							orar.getEndOra(),
+							orar.getSala()));
+				}
+				session.getTransaction().commit();
+				return ret;
 			}
 		});
 		

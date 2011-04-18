@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pcol.client.schedule.EventWidget.Range;
-import pcol.client.schedule.ScheduleItem.Week;
+import pcol.shared.OrarDto;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -56,18 +56,16 @@ public class WeekViewImpl extends Composite implements WeekView {
 	}
 
 	@Override
-	public void addEvent(ScheduleItem e) {
-		final int day = e.day.ordinal();
-
+	public void addEvent(OrarDto e) {
 		Range range = new Range();
-		range.startcol = day;
+		range.startcol = e.day - 1;
 		range.endcol = range.startcol+1;
-		range.startrow  = e.starthour - 7;
-		range.endrow = e.endhour - 7;
+		range.startrow  = e.startHour - 7;
+		range.endrow = e.endHour - 7;
 		
 		int overlaps = 0;
 		
-		for(EventWidget ew: dayWidgets.get(day)){
+		for(EventWidget ew: dayWidgets.get(e.day)){
 			Range r = ew.getRange();
 			//if intersects
 			if(range.startrow<r.endrow && range.endrow>r.startrow){
@@ -84,16 +82,27 @@ public class WeekViewImpl extends Composite implements WeekView {
 
 		ew.setRange(range);
 
-		String head = e.starthour + "-"+ e.endhour;
-		if(e.week==Week.EVEN){
+		String head = e.startHour + "-"+ e.endHour;
+		if(e.week==2){
 			head += " sapt.2";
-		}else if(e.week==Week.ODD){
+		}else if(e.week==1){
 			head += " sapt1";
 		}
-		ew.setTexts(head, e.name, e.type, e.sala);
+		
+		String token="";
+		//HACK: FIXME: decizia asta nu tre sa fie in view
+		if(e.activityType.equals("curs")){
+			token+="materie";
+		}else if(e.activityType.equals("sem")){
+			token+="materie";
+		}else if(e.activityType.equals("lab")){
+			token+="teme";
+		}
+		token+="/"+e.courseId;
+		ew.setTexts(token,head, e.abbrev, e.activityType,e.room);
 		ew.getElement().getStyle().setBackgroundColor("#EEEEFF");
 		
-		dayWidgets.get(day).add(ew);
+		dayWidgets.get(e.day).add(ew);
 		weekWrap.add(ew);
 	}
 

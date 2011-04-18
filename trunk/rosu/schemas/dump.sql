@@ -38,8 +38,8 @@ CREATE TABLE `contracte_studiu` (
   `date` datetime DEFAULT NULL,
   PRIMARY KEY (`nrmat`,`id_curs`,`contract_version`),
   KEY `fk_contracte_studiu_cursuri1` (`id_curs`),
-  CONSTRAINT `fk_contracte_studiu_cursuri1` FOREIGN KEY (`id_curs`) REFERENCES `cur_course` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_contracte_studiu_studenti1` FOREIGN KEY (`nrmat`) REFERENCES `studenti` (`nr_matr`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_contracte_studiu_studenti1` FOREIGN KEY (`nrmat`) REFERENCES `studenti` (`nr_matr`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_contracte_studiu_cursuri1` FOREIGN KEY (`id_curs`) REFERENCES `cur_course` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -49,7 +49,7 @@ CREATE TABLE `contracte_studiu` (
 
 LOCK TABLES `contracte_studiu` WRITE;
 /*!40000 ALTER TABLE `contracte_studiu` DISABLE KEYS */;
-INSERT INTO `contracte_studiu` VALUES (1040,1,1,4,'2009-04-01 00:00:00'),(1040,1,2,NULL,NULL);
+INSERT INTO `contracte_studiu` VALUES (1040,1,1,4,'2009-04-01 00:00:00'),(1040,1,2,5,'2009-09-01 00:00:00'),(1040,1,3,NULL,NULL),(1040,1,4,NULL,NULL),(1040,1,5,NULL,NULL),(1040,5,2,NULL,NULL),(1040,5,5,NULL,NULL),(1040,7,3,5,NULL),(1040,7,4,NULL,NULL),(1040,7,5,NULL,NULL),(1040,9,4,NULL,NULL),(1040,9,5,NULL,NULL),(1040,12,5,NULL,NULL),(1040,16,5,NULL,NULL);
 /*!40000 ALTER TABLE `contracte_studiu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -280,7 +280,7 @@ DROP TABLE IF EXISTS `orar`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `orar` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `grupa` varchar(5) NOT NULL,
   `curs_id` int(11) NOT NULL,
   `tip_activitate` varchar(45) NOT NULL,
@@ -294,7 +294,7 @@ CREATE TABLE `orar` (
   KEY `fk_orar_cursuri1` (`curs_id`),
   CONSTRAINT `fk_orar_cursuri1` FOREIGN KEY (`curs_id`) REFERENCES `cur_course` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_orar_grupe1` FOREIGN KEY (`grupa`) REFERENCES `org_group` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -303,6 +303,7 @@ CREATE TABLE `orar` (
 
 LOCK TABLES `orar` WRITE;
 /*!40000 ALTER TABLE `orar` DISABLE KEYS */;
+INSERT INTO `orar` VALUES (1,'mf331',1,'curs',1,0,14,16,'5/I'),(2,'mf331',1,'sem',1,2,16,18,'5/I'),(3,'mf331',6,'curs',2,0,8,10,'2/I'),(4,'mf311',7,'lab',2,1,8,10,'L336'),(5,'mf331',8,'curs',2,0,10,12,'2/I'),(6,'mf331',5,'curs',2,0,14,16,'2/I'),(7,'mf311',9,'curs',2,0,14,16,'7/I'),(8,'mf331',6,'lab',3,0,8,10,'L302'),(9,'mf331',8,'lab',3,1,10,12,'L339'),(10,'mf331',5,'lab',3,2,10,12,'L302'),(11,'mf331',12,'lab',3,0,12,14,'L307'),(12,'mf331',10,'curs',4,2,8,10,'5/I'),(13,'mf331',8,'sem',4,2,10,12,'7/I'),(14,'mf331',5,'sem',4,2,12,14,'5/I'),(15,'mf321',11,'curs',4,0,14,16,'C310'),(16,'mf321',11,'lab',4,0,16,18,'L339'),(17,'mf311',7,'curs',5,0,8,10,'C335'),(18,'mf311',7,'sem',5,1,14,16,'C509'),(19,'mf311',9,'sem',5,2,14,16,'C509'),(20,'mf311',7,'lab',5,2,16,18,'L307');
 /*!40000 ALTER TABLE `orar` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -352,7 +353,7 @@ CREATE TABLE `org_group` (
 
 LOCK TABLES `org_group` WRITE;
 /*!40000 ALTER TABLE `org_group` DISABLE KEYS */;
-INSERT INTO `org_group` VALUES ('mf331',1);
+INSERT INTO `org_group` VALUES ('mf311',1),('mf321',1),('mf331',1);
 /*!40000 ALTER TABLE `org_group` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -464,7 +465,7 @@ CREATE TABLE `studenti` (
 
 LOCK TABLES `studenti` WRITE;
 /*!40000 ALTER TABLE `studenti` DISABLE KEYS */;
-INSERT INTO `studenti` VALUES (1040,'mihai','mf331',0);
+INSERT INTO `studenti` VALUES (1040,'mihai','mf331',2);
 /*!40000 ALTER TABLE `studenti` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -562,4 +563,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-04-17 22:29:08
+-- Dump completed on 2011-04-18 13:01:37

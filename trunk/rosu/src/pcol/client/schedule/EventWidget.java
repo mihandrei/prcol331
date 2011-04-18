@@ -75,15 +75,11 @@ class EventWidget extends Composite {
 	}
 
 
-	public void setTexts(String header, String name, String typen, String salan){
+	public void setTexts(String targetToken, String header, String name, String typen, String salan){
 		eventTitle.setText(header);
 		nameLbl.setText(name);
 		cursHy.setText(typen);
-		//HACK:
-		if(typen.equals("curs")){
-			typen="materie";
-		}
-		cursHy.setTargetHistoryToken(typen+"/"+name);
+		cursHy.setTargetHistoryToken(targetToken);
 		salaHy.setText(salan);
 	}
 	
