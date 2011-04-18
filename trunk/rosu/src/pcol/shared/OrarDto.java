@@ -21,8 +21,8 @@ public class OrarDto implements IsSerializable {
 	public String room;
 	
 	public OrarDto(String groupId, Integer courseId, String abbrev,
-			String activityType, byte day, byte week, byte endHour,
-			byte starthour, String room) {
+			String activityType, byte day, byte week,byte starthour, byte endHour,
+			 String room) {
 		super();
 		this.groupId = groupId;
 		this.courseId = courseId;
