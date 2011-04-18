@@ -7,9 +7,9 @@
         <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
         <property name="hibernate.check_nullability">false</property>
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.connection.password">pcol</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/proj_col</property>
-        <property name="hibernate.connection.username">pcol</property>
+        <property name="hibernate.connection.password">rosu</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/proj_rosu</property>
+        <property name="hibernate.connection.username">rosu</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
         <property name="hibernate.search.autoregister_listeners">false</property>
         <property name="hibernate.show_sql">true</property>
