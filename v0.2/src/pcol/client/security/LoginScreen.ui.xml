@@ -1,0 +1,51 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+		
+		.panel td { /*background-color: #AAAABB;*/ /*width:100%;*/
+		}
+		
+		.col {
+			text-align: right;
+			padding: 0.5em;
+		}
+		
+		.badauth {
+			color: red;
+		}
+		
+		.progp {
+			background-color: orange;
+		}
+	</ui:style>
+	<g:HTMLPanel styleName="{style.panel}">
+		<table>
+			<tr>
+				<td class="{style.col}">user</td>
+				<td>
+					<g:TextBox ui:field="usr" width="14em" />
+				</td>
+			</tr>
+			<tr>
+				<td>password</td>
+				<td>
+					<g:PasswordTextBox ui:field="pwd" width="14em" />
+				</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td>
+					<g:Button text="login" ui:field="button" />
+				</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td>
+					<g:Label text="bad username or password" ui:field="badauth"
+						styleName="{style.badauth}" />
+				</td>
+			</tr>
+		</table>
+	</g:HTMLPanel>
+</ui:UiBinder> 
