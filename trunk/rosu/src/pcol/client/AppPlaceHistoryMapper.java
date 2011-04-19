@@ -10,6 +10,7 @@ import pcol.client.materii.MateriiPlace;
 import pcol.client.schedule.SchedulePlace;
 import pcol.client.teme.TemePlace;
 import pcol.client.tweet.TweetPlace;
+import pcol.client.useradmin.UsrAdminPlace;
 
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceHistoryMapper;
@@ -58,6 +59,9 @@ public class AppPlaceHistoryMapper implements PlaceHistoryMapper {
 		
 		tokenizers.put("orar", new SchedulePlace.Tokenizer());
 		placetokens.put(SchedulePlace.class, "orar");
+		
+		tokenizers.put("usradmin", new UsrAdminPlace.Tokenizer());
+		placetokens.put(UsrAdminPlace.class, "usradmin");
 	}
 
 	@Override

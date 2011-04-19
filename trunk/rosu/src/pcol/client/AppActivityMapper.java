@@ -12,6 +12,8 @@ import pcol.client.teme.TemeActivity;
 import pcol.client.teme.TemePlace;
 import pcol.client.tweet.TweetActivity;
 import pcol.client.tweet.TweetPlace;
+import pcol.client.useradmin.UsrAdminActivity;
+import pcol.client.useradmin.UsrAdminPlace;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.activity.shared.ActivityMapper;
@@ -47,6 +49,8 @@ public class AppActivityMapper implements ActivityMapper {
 			return new TemeActivity();
 		}else if (place instanceof SchedulePlace){
 			return new ScheduleActivity();
+		}else if (place instanceof UsrAdminPlace){
+			return new UsrAdminActivity();
 		}
 		return null;
 	}
