@@ -1,0 +1,62 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+		
+	</ui:style>
+	<g:HTMLPanel>
+		<g:Grid width="361px" height="292px">
+			<g:row>
+				<g:customCell>
+					<g:Label text="nume"/>
+				</g:customCell>
+				<g:customCell>
+					<g:TextBox ui:field="txtnume"/>
+				</g:customCell>
+			</g:row>
+			<g:row>
+				<g:customCell>
+					<g:Label text="numar matricol"/>
+				</g:customCell>
+				<g:customCell>
+					<g:TextBox ui:field="txtnrmatr"/>
+				</g:customCell>
+			</g:row>
+			<g:row>
+				<g:customCell>
+					<g:Label text="an"/>
+				</g:customCell>
+				<g:customCell>
+					<g:TextBox ui:field="txtan"/>
+				</g:customCell>
+			</g:row>
+			<g:row>
+				<g:customCell>
+					<g:Label text="sectie"/>
+				</g:customCell>
+				<g:customCell>
+					<g:TextBox ui:field="txtsectie"/>
+				</g:customCell>
+			</g:row>
+			<g:row>
+				<g:customCell>
+					<g:Label text="grupa" width="73px"/>
+				</g:customCell>
+				<g:customCell>
+					<g:TextBox ui:field="txtgrupa"/>
+				</g:customCell>
+			</g:row>
+			<g:row>
+				<g:customCell>
+					<g:Label text="cont"/>
+				</g:customCell>
+				<g:customCell>
+					<g:TextBox ui:field="txtcont"/>
+				</g:customCell>
+				<g:customCell>
+					<g:Button text="inmatriculare" ui:field="inmatriculare"/>
+				</g:customCell>
+			</g:row>
+		</g:Grid>
+	</g:HTMLPanel>
+</ui:UiBinder> 
