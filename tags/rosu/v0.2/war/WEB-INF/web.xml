@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	version="2.5">
+
+	<welcome-file-list>
+		<welcome-file>pcol.html</welcome-file>
+	</welcome-file-list>
+	
+	<session-config>
+        <session-timeout>
+            50
+        </session-timeout>
+    </session-config>
+    
+    
+	<filter>
+        <filter-name>AuthorisationFilter</filter-name>
+        <filter-class>pcol.server.security.AuthorisationFilter</filter-class>
+    </filter>
+    
+    <filter-mapping>
+        <filter-name>AuthorisationFilter</filter-name>
+        <url-pattern>/pcol/rpc/*</url-pattern>
+    </filter-mapping>
+    
+	<servlet>
+		<servlet-name>AuthenticationServiceImpl</servlet-name>
+		<servlet-class>pcol.server.security.AuthenticationServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>AuthenticationServiceImpl</servlet-name>
+		<url-pattern>/pcol/rpc/auth</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>TweetServiceImpl</servlet-name>
+		<servlet-class>pcol.server.TweetServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>TweetServiceImpl</servlet-name>
+		<url-pattern>/pcol/rpc/tweets</url-pattern>
+	</servlet-mapping>
+
+	
+	<servlet>
+		<servlet-name>ContractServiceImpl</servlet-name>
+		<servlet-class>pcol.server.ContractServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ContractServiceImpl</servlet-name>
+		<url-pattern>/pcol/rpc/contract</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>UsrAdminServiceImpl</servlet-name>
+		<servlet-class>pcol.server.UsrAdminServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>UsrAdminServiceImpl</servlet-name>
+		<url-pattern>/pcol/rpc/useradmin</url-pattern>
+	</servlet-mapping>
+</web-app>

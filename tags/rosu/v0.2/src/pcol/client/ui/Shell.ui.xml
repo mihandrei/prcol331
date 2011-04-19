@@ -1,0 +1,125 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+	xmlns:g='urn:import:com.google.gwt.user.client.ui'
+	xmlns:pw='urn:import:pcol.client.widgets'>
+
+	<ui:style type="pcol.client.ui.Shell.Style">
+		.dockp{
+			min-width:49em;/*move to rootlayoutpanel style to get scroll*/
+			min-height:40em;
+			font-family: 'Helvetica', Unicode MS, Arial, sans-serif;
+			background-color:#505050; /*f0f0f0*/			
+		}
+		
+		.bar {
+			/*background-color: #505050;*/
+			/*border-bottom: white solid 1px;*/
+			padding: 0.5em 0.5em 0.5em 1.5em;
+			color:white;			
+		}
+		
+		.bbar{
+			padding: 0.5em;
+			text-align:center;
+		}
+
+		.sketch { 
+			font-family: sans-serif;
+			font-size: 4em;
+			text-shadow: 0px 0px 6px white;
+		 }
+		
+		.status {
+			float: right;
+			background-color:#404040;
+			border: solid 1px #454545;
+			padding:1em;
+		}
+		
+		.content {
+			border-radius: 5px 5px 5px 5px;
+			border-style: solid;
+			border-width: 0.5em;
+		}
+		
+		.navItem {
+			padding: 0.75em 0.25em 0.75em 0.25em;
+			margin-bottom: 0.5em;
+			margin-left: 0.5em;
+			color: #F0F0F0;
+			background-color:#A0A0A0;
+
+			border-radius: 5px 0px 0px 5px;			
+			font-size:130%;
+			font-weight:bold;
+			text-align: center;
+			text-shadow:0 1px 0 #404040;
+			cursor: pointer;
+		}
+		
+		.navItemSmall{
+			padding: 0.1em 0.5em 0.1em 0.5em;
+			margin-bottom: 2px;
+		}
+		
+		.navItem:hover{
+			color:white;	
+		}
+		.navItemSel{			
+			margin-left:0em;	
+			color:white;
+		}
+		
+		.nav{
+			margin-top: 2.5em;
+			/*margin-left:0em;*/
+		}
+		
+		.logoutlbl{
+			cursor:pointer;
+		}
+		.infotopbar{
+			position:absolute;
+			left:150px;
+			bottom:5px;
+			
+			background-color:#FFF550;
+			color:black;
+			padding : 1px 10px;
+			border-radius:2px;
+		}
+	</ui:style>
+	<g:DockLayoutPanel unit='PX' styleName="{style.dockp}" ui:field="dock">
+		<g:north size='60'>
+			<g:HTMLPanel>
+				<div class="{style.bar}">
+					<div class="{style.status}">
+						<g:InlineLabel ui:field="usernamelbl"/>&nbsp;|&nbsp;
+						<g:InlineLabel ui:field="nrmatrlbl"/> &nbsp;|&nbsp;
+						<g:InlineLabel styleName="{style.logoutlbl}" ui:field="logoutlbl"> logout </g:InlineLabel>
+					</div>
+					<span class="{style.sketch}"> Pc </span>
+					<g:Label styleName="{style.infotopbar}" ui:field="infobar"/> 
+				</div>
+			</g:HTMLPanel>
+		</g:north>
+		
+		<g:south size="30">
+			<g:HTMLPanel>
+				<div  class="{style.bbar}">
+					331&nbsp;|&nbsp;simple is beautiful&nbsp;|&nbsp;&copy;&nbsp;ana lugojana stie karate
+				</div>
+			</g:HTMLPanel>
+		</g:south>
+		
+		<g:west size="100">
+			<g:FlowPanel ui:field="tabc" styleName="{style.nav}">
+			</g:FlowPanel>
+		</g:west>
+		<g:center style="margin:1em">
+			<pw:SimpleLayoutPanel ui:field="container" styleName="{style.content}"/>
+		</g:center>
+		
+	</g:DockLayoutPanel>
+	
+</ui:UiBinder>
