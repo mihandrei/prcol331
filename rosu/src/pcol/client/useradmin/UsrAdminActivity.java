@@ -17,7 +17,7 @@ public class UsrAdminActivity extends AbstractActivity implements UsrAdminView.P
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
 		view.setPresenter(this);
 		panel.setWidget(view.asWidget());
-		
+		App.getInstance().showTipFor("inmatriculare");
 	}
 
 	@Override

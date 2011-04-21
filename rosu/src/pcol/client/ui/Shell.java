@@ -49,7 +49,8 @@ public class Shell extends Composite implements HasSelectionHandlers<String> {
 				"#C2CFD6", "#D6C2C2", "#D6D3C2" });
 		public static Pallette NICE = new Pallette( 
 				new String[] { "#FFD800", "#0095FF", "#F20D0D", "#A1E619" });
-
+		public static Pallette LESS = new Pallette( 
+				new String[] { "#F20D0D", "#0095FF","#FFD800", "#E4F070","#C2CFD6" });
 		private String[] scolor;
 
 		public Pallette(String[] colors) {
@@ -100,6 +101,8 @@ public class Shell extends Composite implements HasSelectionHandlers<String> {
 	Style style;
 	@UiField
 	Label infobar;
+	@UiField 
+	Label heartdiv;
 
 	interface Style extends CssResource {
 		String navItem();
@@ -113,8 +116,10 @@ public class Shell extends Composite implements HasSelectionHandlers<String> {
 	private List<Label> widgets = new ArrayList<Label>();
 
 	private int selectedidx = -1;
-	private Pallette pallete = Pallette.NICE;
-
+	private Pallette pallete = Pallette.LESS;
+	FadeAnimation infobarAni;
+	FadeAnimation heartAni;
+	
 	private Presenter presenter;
 
 	interface Binder extends UiBinder<Widget, Shell> {
@@ -123,6 +128,8 @@ public class Shell extends Composite implements HasSelectionHandlers<String> {
 	public Shell() {
 		initWidget(uiBinder.createAndBindUi(this));
 		infobar.setVisible(false);
+		infobarAni = new FadeAnimation(infobar);
+		heartAni = new FadeAnimation(heartdiv);
 	}
 
 	public void setPresenter(Presenter p) {
@@ -218,19 +225,39 @@ public class Shell extends Composite implements HasSelectionHandlers<String> {
 		presenter.onLogout();
 	}
 	
+	private  static  class FadeAnimation extends Animation{
+		private Widget w;
+		FadeAnimation(Widget w){
+			this.w=w;
+		}
+		@Override
+		protected void onUpdate(double progress) {
+			w.getElement().getStyle().setOpacity(1-progress);
+		}
+		@Override
+		protected void onComplete() {
+			w.setVisible(false);
+			w.getElement().getStyle().setOpacity(1);
+		}
+	}
+	
+	
+	
 	public void showinfo(String msg){
+		infobarAni.cancel();
 		infobar.setText(msg);
 		infobar.setVisible(true);
-		new Animation() {
-			@Override
-			protected void onUpdate(double progress) {
-				infobar.getElement().getStyle().setOpacity(1-progress);
-			}
-			@Override
-			protected void onComplete() {
-				infobar.setVisible(false);
-				infobar.getElement().getStyle().setOpacity(1);
-			}
-		}.run(1000,Duration.currentTimeMillis()+4000);
+		infobarAni.run(1000,Duration.currentTimeMillis()+4000);
+	}
+
+	public void heartBeat() {
+		heartAni.cancel();
+		heartdiv.setVisible(true);
+		heartAni.run(2500);
+	}
+
+	public void heartBeatMissed() {
+		// TODO Auto-generated method stub
+		
 	}
 }
