@@ -6,7 +6,6 @@ import java.util.logging.Logger;
 
 import pcol.client.contract.ContractPlace;
 import pcol.client.materii.MateriePlace;
-import pcol.client.materii.MateriiPlace;
 import pcol.client.schedule.SchedulePlace;
 import pcol.client.teme.TemePlace;
 import pcol.client.tweet.TweetPlace;
@@ -47,9 +46,6 @@ public class AppPlaceHistoryMapper implements PlaceHistoryMapper {
 		
 		tokenizers.put("teme", new TemePlace.Tokenizer());
 		placetokens.put(TemePlace.class, "teme");
-		
-		tokenizers.put("materii", new MateriiPlace.Tokenizer());
-		placetokens.put(MateriiPlace.class, "materii");
 		
 		tokenizers.put("materie", new MateriePlace.Tokenizer());
 		placetokens.put(MateriePlace.class, "materie");

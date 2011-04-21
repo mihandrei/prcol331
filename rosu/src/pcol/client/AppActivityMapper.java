@@ -4,8 +4,6 @@ import pcol.client.contract.ContractActivity;
 import pcol.client.contract.ContractPlace;
 import pcol.client.materii.MaterieActivity;
 import pcol.client.materii.MateriePlace;
-import pcol.client.materii.MateriiActivity;
-import pcol.client.materii.MateriiPlace;
 import pcol.client.schedule.ScheduleActivity;
 import pcol.client.schedule.SchedulePlace;
 import pcol.client.teme.TemeActivity;
@@ -41,8 +39,7 @@ public class AppActivityMapper implements ActivityMapper {
 			return new TweetActivity();
 		else if (place instanceof ContractPlace)
 			return new ContractActivity();
-		else if (place instanceof MateriiPlace)
-			return new MateriiActivity();
+		
 		else if (place instanceof MateriePlace)
 			return new MaterieActivity((MateriePlace)place);
 		else if(place instanceof TemePlace){

@@ -8,7 +8,10 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.Label;
-
+/**
+ * Aplicatia instantiaza clasa asta cand userul navigheaza la #usradmin
+ * si invoca startul de mai jos.
+ */
 public class UsrAdminActivity extends AbstractActivity implements UsrAdminView.Presenter{
 	static UsrAdminView view = new UsrAdminBinder();
 	static UsrServiceAsync rpc = GWT.create(UsrService.class);
@@ -36,7 +39,5 @@ public class UsrAdminActivity extends AbstractActivity implements UsrAdminView.P
 		});
 		
 	}
-
-	
 
 }
