@@ -2,13 +2,27 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style>
+		.err{
+			color: red;
+		}
 		
+		.grid{
+			background-color:#FA7744;
+			padding:2em;
+		}
+		.grid td{
+			padding:0.5em;
+		}
+		
+		.eticheta{
+			text-align: right;
+			}
 	</ui:style>
 	<g:HTMLPanel>
-		<g:Grid width="361px" height="292px">
+		<g:Grid styleName="{style.grid}" ui:field="gridnext">
 			<g:row>
 				<g:customCell>
-					<g:Label text="nume"/>
+					<g:Label styleName="{style.eticheta}" text="nume"/>
 				</g:customCell>
 				<g:customCell>
 					<g:TextBox ui:field="txtnume"/>
@@ -16,23 +30,32 @@
 			</g:row>
 			<g:row>
 				<g:customCell>
-					<g:Label text="numar matricol"/>
+					<g:Label styleName="{style.eticheta}" text="numar matricol"/>
 				</g:customCell>
 				<g:customCell>
 					<g:TextBox ui:field="txtnrmatr"/>
 				</g:customCell>
+				<g:customCell>
+					<g:Label text="&lt;- trebuie sa fie un numar"
+					 ui:field="errnrmatr" styleName="{style.err}"/>
+				</g:customCell>
 			</g:row>
 			<g:row>
 				<g:customCell>
-					<g:Label text="an"/>
+					<g:Label styleName="{style.eticheta}" text="an"/>
 				</g:customCell>
 				<g:customCell>
 					<g:TextBox ui:field="txtan"/>
 				</g:customCell>
+								<g:customCell>
+					<g:Label text="&lt;- trebuie sa fie un numar"
+					 ui:field="erran" styleName="{style.err}"/>
+				</g:customCell>
+				
 			</g:row>
 			<g:row>
 				<g:customCell>
-					<g:Label text="sectie"/>
+					<g:Label styleName="{style.eticheta}" text="sectie"/>
 				</g:customCell>
 				<g:customCell>
 					<g:TextBox ui:field="txtsectie"/>
@@ -40,21 +63,55 @@
 			</g:row>
 			<g:row>
 				<g:customCell>
-					<g:Label text="grupa" width="73px"/>
+					<g:Label styleName="{style.eticheta}" text="grupa"/>
 				</g:customCell>
 				<g:customCell>
 					<g:TextBox ui:field="txtgrupa"/>
 				</g:customCell>
+								<g:customCell>
+					<g:Label text="&lt;- trebuie sa fie un numar"
+					 ui:field="errgrupa" styleName="{style.err}"/>
+				</g:customCell>
+				
 			</g:row>
 			<g:row>
 				<g:customCell>
-					<g:Label text="cont"/>
+					<g:Button text="Next" ui:field="Next"/>
+				</g:customCell>
+			</g:row>
+		</g:Grid>
+		
+		<g:Grid styleName="{style.grid}" ui:field="gridlogin">
+			<g:row>
+				<g:customCell>
+					<g:Label text="user"/>
 				</g:customCell>
 				<g:customCell>
-					<g:TextBox ui:field="txtcont"/>
+					<g:TextBox ui:field="txtuser"/>
+				</g:customCell>
+			</g:row>
+			
+			<g:row>
+				<g:customCell>
+					<g:Label  styleName="{style.eticheta}" text="parola"/>
 				</g:customCell>
 				<g:customCell>
-					<g:Button text="inmatriculare" ui:field="inmatriculare"/>
+					<g:PasswordTextBox ui:field="txtparola"/>
+				</g:customCell>
+			</g:row>
+			
+			<g:row>
+				<g:customCell>
+					<g:Label  styleName="{style.eticheta}" text="parola"/>
+				</g:customCell>
+				<g:customCell>
+					<g:PasswordTextBox ui:field="txtparola2"/>
+				</g:customCell>
+			</g:row>
+			
+			<g:row>
+				<g:customCell>
+					<g:Button text="Inmatriculeaza" ui:field="inmatriculeaza"/>
 				</g:customCell>
 			</g:row>
 		</g:Grid>
