@@ -59,7 +59,7 @@ public class ContractServiceImpl extends AuthRemoteServiceServlet implements
 				}
 				session.getTransaction().commit();
 				return ret;			
-			}
+			}//lalalaa
 		});
 	}
 

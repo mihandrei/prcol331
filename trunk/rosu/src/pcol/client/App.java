@@ -3,6 +3,8 @@ package pcol.client;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import pcol.client.security.AuthenticationService;
+import pcol.client.security.AuthenticationServiceAsync;
 import pcol.client.security.LoginEvent;
 import pcol.client.security.LoginManager;
 import pcol.client.tweet.TweetPlace;
@@ -25,7 +27,9 @@ import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceChangeEvent;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.place.shared.PlaceHistoryHandler;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 
 public class App implements EntryPoint, Shell.Presenter{
@@ -45,6 +49,8 @@ public class App implements EntryPoint, Shell.Presenter{
 	
 	private PlaceHistoryHandler historyHandler;
 	private Tips tips;
+	
+	private AuthenticationServiceAsync authService = GWT.create(AuthenticationService.class);
 
 	/** 
 	 *  init activity/places framework and wires navigation ui to history changes
@@ -88,6 +94,24 @@ public class App implements EntryPoint, Shell.Presenter{
 				shell.selectTabByToken(tabname);
 			}
 		});
+		
+		new Timer(){
+			@Override
+			public void run() {
+				authService.ping(new AsyncCallback<Void>() {
+					@Override
+					public void onSuccess(Void result) {
+						shell.heartBeat();
+					}
+					
+					@Override
+					public void onFailure(Throwable caught) {
+						shell.heartBeatMissed();
+					}
+				});
+				
+			}
+		}.scheduleRepeating(1000*10);
 	}
 
 	private void loadAppAsync(final User usr){
@@ -100,9 +124,13 @@ public class App implements EntryPoint, Shell.Presenter{
 				shell.setUserName(usr.getName());
 				shell.setNrMatr(usr.getNrMatr());
 				shell.setNrMatr(usr.getNrMatr());
-				for(String s: usr.getAuthorizedActivities()){
-					shell.addTab(s);
-					//shell.addsmalltab(s); <- daca in loc de string intorc UserNavPref {name, relevance}
+				String[] tabnames = usr.getAuthorizedActivities();
+				for(int i=0;i<tabnames.length;i++){
+					if(i<3){
+						shell.addTab(tabnames[i]);
+					}else{
+						shell.addSmallTab(tabnames[i]);// <- daca in loc de string intorc UserNavPref {name, relevance}
+					}
 				}
 				
 				initAppFlow();

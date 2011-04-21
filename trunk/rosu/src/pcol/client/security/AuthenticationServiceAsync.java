@@ -12,4 +12,5 @@ public interface AuthenticationServiceAsync {
 
 	void logout(AsyncCallback<Void> callback);
 
+	void ping(AsyncCallback<Void> callback);
 }

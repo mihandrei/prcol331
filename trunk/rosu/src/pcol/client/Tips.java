@@ -10,7 +10,8 @@ import pcol.shared.User;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class Tips {
-
+	int nture = 0;
+	int MAXTURE = 3;
 	private Map<String,List> map;
 
 	public Tips(User usr) {
@@ -23,6 +24,9 @@ public class Tips {
 				"tip: se poate da click pe tot randul"));
 		map.put("teme",Arrays.asList(1,
 				"in constructie"	));
+		map.put("inmatriculare",Arrays.asList(1,
+				"in constructie"));
+
 	}
 
 	public String getTip(String category) {
@@ -32,6 +36,9 @@ public class Tips {
 			if(curtip<tips.size()){
 				tips.set(0, curtip+1);
 				return (String) tips.get(curtip);
+			}else if(nture<MAXTURE){
+				tips.set(0,1);
+				nture++;
 			}
 		}
 		return null;

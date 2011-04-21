@@ -26,4 +26,6 @@ public interface AuthenticationService extends RemoteService{
 	User authenticate(String usr, String pwd);
 
 	void logout();
+	
+	void ping();
 }

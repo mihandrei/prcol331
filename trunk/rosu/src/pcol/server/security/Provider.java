@@ -32,7 +32,7 @@ public class Provider {
 					 int nrmatr = user.getStudentis().iterator().next().getNrMatr();
 					 return new User(login, 
 							 user.getPersoane().getNume() + " " + user.getPersoane().getPrenume(),
-							 nrmatr,new String[]{"noutati","orar","teme","contract"},"");
+							 nrmatr,new String[]{"noutati","orar","teme","contract","inmatriculare"},"");
 				}else{ 
 					 return new User(login, 
 							 user.getPersoane().getNume() + " " + user.getPersoane().getPrenume(),

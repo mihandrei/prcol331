@@ -5,6 +5,7 @@ import pcol.client.materii.MateriePlace;
 import pcol.client.schedule.SchedulePlace;
 import pcol.client.teme.TemePlace;
 import pcol.client.tweet.TweetPlace;
+import pcol.client.useradmin.UsrAdminPlace;
 
 import com.google.gwt.place.shared.Place;
 
@@ -21,6 +22,8 @@ public class ShellTabMapper {
 			return "teme";
 		}else if (place instanceof SchedulePlace){
 			return "orar";
+		}else if (place instanceof UsrAdminPlace){
+			return "inmatriculare";
 		}else {
 			return "";
 		}
@@ -31,10 +34,12 @@ public class ShellTabMapper {
 			return new TweetPlace();
 		}else if(selectedItem.equals("contract")){
 			return new ContractPlace();
-		}if(selectedItem.equals("orar")){
+		}else if(selectedItem.equals("orar")){
 			return new SchedulePlace();
-		}if(selectedItem.equals("teme")){
+		}else if(selectedItem.equals("teme")){
 			return new TemePlace();
+		}else if(selectedItem.equals("inmatriculare")){
+			return new UsrAdminPlace();
 		}else{
 			return null;
 		}

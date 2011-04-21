@@ -34,5 +34,11 @@ public class AuthenticationServiceImpl extends AuthRemoteServiceServlet implemen
 		HttpSession session = getThreadLocalRequest().getSession();
 		session.invalidate();
 	}
+
+	@Override
+	public void ping() {
+		
+		
+	}
 	
 }
