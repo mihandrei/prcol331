@@ -21,6 +21,7 @@ public class AuthRemoteServiceServlet extends RemoteServiceServlet{
 			return (User)session.getAttribute(Provider.SESSION_USER);
 		}else{
 			//aici se ajunge in caz de cross request
+			//sau in cazul unui login automat cu cookie expirata
 			throw new AuthenticationException();
 		}
 	}

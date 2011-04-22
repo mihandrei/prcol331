@@ -2,44 +2,16 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
 	xmlns:g='urn:import:com.google.gwt.user.client.ui'
 	xmlns:pw='urn:import:pcol.client.widgets'>
-
+    
+    <ui:with field='main' type='pcol.client.ui.AppResources'/>
+	
 	<ui:style type="pcol.client.ui.Shell.Style">
-		.dockp{
-			min-width:49em;/*move to rootlayoutpanel style to get scroll*/
-			min-height:40em;
-			font-family: 'Helvetica', Unicode MS, Arial, sans-serif;
-			background-color:#505050; /*f0f0f0*/			
-		}
-		
-		.bar {
-			/*background-color: #505050;*/
-			/*border-bottom: white solid 1px;*/
-			padding: 0.5em 0.5em 0.5em 1.5em;
-			color:white;			
-		}
-		
-		.bbar{
-			padding: 0.5em;
-			text-align:center;
-		}
-
-		.sketch { 
-			font-family: sans-serif;
-			font-size: 4em;
-			text-shadow: 0px 0px 6px white;
-		 }
 		
 		.status {
 			float: right;
 			background-color:#404040;
 			border: solid 1px #454545;
 			padding:1em;
-		}
-		
-		.content {
-			border-radius: 5px 5px 5px 5px;
-			border-style: solid;
-			border-width: 0.5em;
 		}
 		
 		.navItem {
@@ -91,6 +63,9 @@
 			padding : 4px 15px;
 			border-radius:2px;
 		}
+		.infoerr{
+			background-color:#FF5550;
+		}
 		.pulse{
 			position:absolute;
 			right:20px;
@@ -100,16 +75,16 @@
 			height:15px;
 		}
 	</ui:style>
-	<g:DockLayoutPanel unit='PX' styleName="{style.dockp}" ui:field="dock">
+	<g:DockLayoutPanel unit='PX' styleName="{main.style.dockp}" ui:field="dock">
 		<g:north size='60'>
 			<g:HTMLPanel>
-				<div class="{style.bar}">
+				<div class="{main.style.bar}">
 					<div class="{style.status}">
 						<g:InlineLabel ui:field="usernamelbl"/>&nbsp;|&nbsp;
 						<g:InlineLabel ui:field="nrmatrlbl"/> &nbsp;|&nbsp;
 						<g:InlineLabel styleName="{style.logoutlbl}" ui:field="logoutlbl"> logout </g:InlineLabel>
 					</div>
-					<span class="{style.sketch}"> Pc </span>
+					<span class="{main.style.sketch}"> Pc </span>
 					<g:Label styleName="{style.infotopbar}" ui:field="infobar"/> 
 				</div>
 			</g:HTMLPanel>
@@ -117,7 +92,7 @@
 		
 		<g:south size="30">
 			<g:HTMLPanel>
-				<div  class="{style.bbar}">
+				<div  class="{main.style.bbar}">
 					331&nbsp;|&nbsp;simple is beautiful&nbsp;|&nbsp;&copy;&nbsp;ana lugojana stie karate
 					<g:Label ui:field="heartdiv" styleName="{style.pulse}">*</g:Label>
 				</div>
@@ -129,7 +104,7 @@
 			</g:FlowPanel>
 		</g:west>
 		<g:center style="margin:1em">
-			<pw:SimpleLayoutPanel ui:field="container" styleName="{style.content}"/>
+			<pw:SimpleLayoutPanel ui:field="container" styleName="{main.style.content}"/>
 		</g:center>
 		
 	</g:DockLayoutPanel>

@@ -1,12 +1,11 @@
-package pcol.client.security;
+package pcol.client.ui;
 
 import com.google.gwt.user.client.ui.IsWidget;
 
-public interface LoginView extends IsWidget{
+public interface ReLoginView extends IsWidget{
 
 		public interface Presenter {
-
-			void login(String usr, String pwd);
+			void relogin(String pwd);
 		}
 
 		void setPresenter(Presenter p);

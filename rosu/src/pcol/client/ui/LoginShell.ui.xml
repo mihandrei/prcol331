@@ -1,0 +1,111 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:with field='main' type='pcol.client.ui.AppResources' />
+	<ui:style>
+		.badauth {
+			color: #FF7060;
+		}
+		
+		.loginp {
+			background-color: white;
+			padding: 1em;
+			color: #606060;
+			font-size: 1.1em;
+			border-radius: 5px 5px 0px 0px;
+		}
+		
+		.loginp * {
+			margin: 5px;
+		}
+		
+		.tbox {
+			font-size: 1.5em;
+			width: 240px;
+			padding: 5px;
+			margin-bottom: 20px;
+			color: black;
+		}
+		
+		.center {
+			text-shadow:0 1px #dadada;
+			border-right: none;
+			border-radius: 5px 0px 0px 5px;
+			background-color: #bababa;
+			margin: 28px 0px 0px 0px;
+			padding: 2em;
+		}
+		
+		.line {
+			margin: 30px 0px;
+			color: #a0a0a0;
+		}	
+	</ui:style>
+	<g:DockLayoutPanel unit='PX' styleName="{main.style.dockp}"
+		ui:field="dock">
+		<g:north size='60'>
+			<g:HTMLPanel>
+				<div class="{main.style.bar}">
+					<span class="{main.style.sketch}"> Pc </span>
+				</div>
+			</g:HTMLPanel>
+		</g:north>
+
+		<g:south size="30">
+			<g:HTMLPanel>
+				<div class="{main.style.bbar}">
+					331&nbsp;|&nbsp;simple is
+					beautiful&nbsp;|&nbsp;&copy;&nbsp;ana lugojana stie karate
+				</div>
+			</g:HTMLPanel>
+		</g:south>
+
+		<g:east size="300">
+			<g:HTMLPanel styleName="{style.loginp}">
+				<div>
+					<g:Label text="Utilizator" />
+					<g:TextBox ui:field="usr" styleName="{style.tbox}" />
+				</div>
+				<div>
+					<g:Label text="Parola" />
+					<g:PasswordTextBox ui:field="pwd" styleName="{style.tbox}" />
+				</div>
+				<div>
+					<g:Button text="login" ui:field="button" />
+					<g:InlineLabel text="utilizator sau parola gresita" ui:field="badauth"
+						styleName="{style.badauth}" />
+				</div>
+				<hr class="{style.line}" />
+				<p>
+					nu va puteti loga? 
+				</p>
+			</g:HTMLPanel>
+		</g:east>
+
+		<g:center>
+			<g:HTMLPanel styleName="{style.center}">
+			<h1> En route </h1>
+			<p>
+				3stie e o aplicatie de management a studentilor
+			</p>
+			<p>
+			    versiunea curenta : rosu , instabila
+			</p>
+			<h1> &lt;code: </h1>
+			<p>
+				<a href="http://code.google.com/p/prcol331/">http://code.google.com/p/prcol331/</a>
+			</p>
+			<p>
+			tags:
+			<ul>
+			<li>Html,css</li>
+			<li>GWT 2.2</li>
+			<li>Hibernate</li>
+			<li>mysql</li></ul>
+			</p>
+			</g:HTMLPanel>
+		</g:center>
+
+	</g:DockLayoutPanel>
+
+</ui:UiBinder> 

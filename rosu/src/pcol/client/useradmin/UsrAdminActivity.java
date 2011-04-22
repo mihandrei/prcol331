@@ -1,13 +1,12 @@
 package pcol.client.useradmin;
 
-import pcol.client.App;
+import pcol.client.AppLoader;
 
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
-import com.google.gwt.user.client.ui.Label;
 /**
  * Aplicatia instantiaza clasa asta cand userul navigheaza la #usradmin
  * si invoca startul de mai jos.
@@ -20,7 +19,7 @@ public class UsrAdminActivity extends AbstractActivity implements UsrAdminView.P
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
 		view.setPresenter(this);
 		panel.setWidget(view.asWidget());
-		App.getInstance().showTipFor("inmatriculare");
+		AppLoader.getApp().showTipFor("inmatriculare");
 	}
 
 	@Override
@@ -29,7 +28,7 @@ public class UsrAdminActivity extends AbstractActivity implements UsrAdminView.P
 			
 			@Override
 			public void onSuccess(Void result) {
-				App.getInstance().showInfo("saved");
+				AppLoader.getApp().showInfo("saved");
 			}
 			
 			@Override
