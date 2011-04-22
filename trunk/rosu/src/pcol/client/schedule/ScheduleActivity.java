@@ -2,7 +2,7 @@ package pcol.client.schedule;
 
 import java.util.List;
 
-import pcol.client.App;
+import pcol.client.AppLoader;
 import pcol.client.contract.ContractService;
 import pcol.client.contract.ContractServiceAsync;
 import pcol.client.security.AppAsyncCallback;
@@ -40,7 +40,7 @@ public class ScheduleActivity extends AbstractActivity implements
 					firstrun = false;
 					view.setPresenter(ScheduleActivity.this);
 					view.clear();
-					rpc.getSchedule(App.getInstance().getSid(), new AppAsyncCallback<List<OrarDto>>() {
+					rpc.getSchedule(AppLoader.getApp().getSid(), new AppAsyncCallback<List<OrarDto>>() {
 						@Override
 						public void onSuccess(List<OrarDto> result) {
 							for(OrarDto o:result){
@@ -52,7 +52,7 @@ public class ScheduleActivity extends AbstractActivity implements
 				}
 				panel.setWidget(view.asWidget());
 
-				App.getInstance().showTipFor("orar");
+				AppLoader.getApp().showTipFor("orar");
 			}
 
 			@Override

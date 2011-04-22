@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import pcol.client.App;
+import pcol.client.AppLoader;
 import pcol.client.teme.AssignmentOverview.Status;
 
 import com.google.gwt.activity.shared.AbstractActivity;
@@ -39,7 +39,7 @@ public class TemeActivity extends AbstractActivity implements
 							ao.deadline);
 				}
 				panel.setWidget(view);
-				App.getInstance().showTipFor("teme");
+				AppLoader.getApp().showTipFor("teme");
 			}
 
 			@Override

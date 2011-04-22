@@ -8,8 +8,16 @@ public interface AppResources extends ClientBundle {
 	public final static AppResources INSTANCE = GWT.create(AppResources.class);
 
 	public interface AppResourcesCss extends CssResource {
+		String dockp();
+		String bar();
+		String sketch();
+		String content();
+		String bbar();
 	}
 
+//	@Source("Logo.jpg")
+//	  ImageResource logo();
+	
 	@Source("pcol.css")
-	AppResourcesCss pcolcss();
+	AppResourcesCss style();
 }

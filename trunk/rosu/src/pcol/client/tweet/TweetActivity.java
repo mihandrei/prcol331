@@ -1,9 +1,8 @@
 package pcol.client.tweet;
 
-import java.util.Arrays;
 import java.util.List;
 
-import pcol.client.App;
+import pcol.client.AppLoader;
 import pcol.client.security.AppAsyncCallback;
 import pcol.shared.Tweet;
 
@@ -49,7 +48,7 @@ public class TweetActivity extends AbstractActivity implements
 					
 					cached_tweetView.setPresenter(TweetActivity.this);
 					cached_tweetView.clear();
-					rpc.getTweets(App.getInstance().getSid(),5, tweetResponseHandler);
+					rpc.getTweets(AppLoader.getApp().getSid(),5, tweetResponseHandler);
 					
 					panel.setWidget(cached_tweetView.asWidget());
 				}
@@ -63,7 +62,7 @@ public class TweetActivity extends AbstractActivity implements
 
 	@Override
 	public void getMoreTweets() {
-		rpc.getTweets(App.getInstance().getSid(),5, tweetResponseHandler);
+		rpc.getTweets(AppLoader.getApp().getSid(),5, tweetResponseHandler);
 	}
 
 }

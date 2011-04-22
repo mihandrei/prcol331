@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Set;
 
 import pcol.client.App;
+import pcol.client.AppLoader;
 import pcol.client.security.AppAsyncCallback;
 import pcol.shared.Contract;
 import pcol.shared.Course;
@@ -73,7 +74,7 @@ public class ContractActivity extends AbstractActivity implements
 			
 			view.setSaveEnabled(isDirty());
 			view.setCreditTotal(countCreditTotal());
-			App.getInstance().showTipFor("contract");
+			AppLoader.getApp().showTipFor("contract");
 		}
 	}
 
@@ -136,10 +137,10 @@ public class ContractActivity extends AbstractActivity implements
 	@Override
 	public void onSave() {
 		if(isDirty()){
-		rpc.submitContract(App.getInstance().getSid(),selectedCourseIds, new AppAsyncCallback<Void>() {
+		rpc.submitContract(AppLoader.getApp().getSid(),selectedCourseIds, new AppAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void result) {
-				App.getInstance().showInfo("contractul a fost salvat");
+				AppLoader.getApp().showInfo("contractul a fost salvat");
 				initiallySelectedCourseIds = new HashSet<Integer>(selectedCourseIds);
 				view.setSaveEnabled(isDirty());
 			}
@@ -171,7 +172,7 @@ public class ContractActivity extends AbstractActivity implements
 				view.setPresenter(ContractActivity.this);
 				view.clearAllCategories();
 				panel.setWidget(view);
-				rpc.getContractAndCuricul(App.getInstance().getSid(),getCuriculCallback);
+				rpc.getContractAndCuricul(AppLoader.getApp().getSid(),getCuriculCallback);
 			}
 			
 			@Override

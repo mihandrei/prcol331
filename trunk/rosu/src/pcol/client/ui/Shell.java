@@ -35,7 +35,7 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class Shell extends Composite implements HasSelectionHandlers<String> {
 	static {
-	    AppResources.INSTANCE.pcolcss().ensureInjected();  
+	    AppResources.INSTANCE.style().ensureInjected();  
 	}
 	
 	public interface Presenter {
@@ -110,6 +110,8 @@ public class Shell extends Composite implements HasSelectionHandlers<String> {
 		String navItemSel();
 
 		String navItemSmall();
+
+		String infoerr();
 	}
 
 	private List<String> links = new ArrayList<String>();
@@ -244,8 +246,21 @@ public class Shell extends Composite implements HasSelectionHandlers<String> {
 	
 	
 	public void showinfo(String msg){
+		showinfo(msg,false);
+	}
+	
+	public void showerror(String msg){
+		showinfo(msg,true);
+	}
+
+	public void showinfo(String msg, boolean err) {
 		infobarAni.cancel();
 		infobar.setText(msg);
+		if(err){
+			infobar.addStyleName(style.infoerr());
+		}else{
+			infobar.removeStyleName(style.infoerr());
+		}
 		infobar.setVisible(true);
 		infobarAni.run(1000,Duration.currentTimeMillis()+4000);
 	}
@@ -260,4 +275,5 @@ public class Shell extends Composite implements HasSelectionHandlers<String> {
 		// TODO Auto-generated method stub
 		
 	}
+
 }

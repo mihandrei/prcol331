@@ -4,10 +4,12 @@ import java.util.Date;
 import java.util.logging.Logger;
 
 import pcol.client.App;
-import pcol.client.security.LoginView.Presenter;
+import pcol.client.ui.ReLoginView.Presenter;
+import pcol.shared.AuthenticationException;
 import pcol.shared.User;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -17,45 +19,50 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
  *  pe cand se termina posteaza pe eventbus un loginevent
  * @author miha
  */
-public class LoginManager implements Presenter {
+public class LoginManager{
 	private static final Logger log = Logger.getLogger(LoginManager.class.getName());
 	private User user;
-	private LoginView loginView  =  new LoginScreen();
 	private String authToken = null;
 	private AuthenticationServiceAsync authService = GWT.create(AuthenticationService.class);
+	private EventBus eventBus;
 	
-	public LoginManager(){
-		loginView.setPresenter(this);
+	public LoginManager(EventBus eventBus){
+		this.eventBus=eventBus;
 	}
 	
 	/**
 	 * incearca login automat daca sesiunea de lucru e inca activa
-	 * Altfel arata formul de login
+	 * lanseaza un AutoLoginEvent pe bus. parametrul user e null daca 
+	 * autologinul a esuat
 	 */
 	public void requestInitialLogin(){
 		final String sessionID = Cookies.getCookie("sid");
 		if (sessionID != null) {
 			log.fine("request cookie login");
-			authService.getUserBySid(sessionID, new AppAsyncCallback<User>() {
+			authService.getUserBySid(sessionID, new AsyncCallback<User>() {
 				@Override
 				public void onSuccess(User usr) {
-						authToken = sessionID;
-						setcookie(authToken);
-						LoginManager.this.user=usr;
-						App.getInstance().getEventBus().fireEvent(new LoginEvent(usr));
+					authToken = sessionID;
+					setcookie(authToken);
+					LoginManager.this.user=usr;
+					eventBus.fireEvent(new AutoLoginEvent(usr));
 				}
 
+				@Override
+				public void onFailure(Throwable ex) {
+					if(ex instanceof AuthenticationException) { 
+						eventBus.fireEvent(new AutoLoginEvent(null));
+					}else{
+						Window.alert(ex.getLocalizedMessage());
+						ex.printStackTrace();
+					}
+				}
 			});
 		}else{
-			loginView.showscreen();
+			eventBus.fireEvent(new AutoLoginEvent(null));
 		}
 	}
 	
-	public void onAuthenticationException(){
-		//presupunem ca o expirat sesiunea, cerem relog
-		loginView.showscreen();
-	}
-
 	public void logout() {
 		authService.logout(new AsyncCallback<Void>() {
 			@Override
@@ -67,23 +74,19 @@ public class LoginManager implements Presenter {
 			}
 		});
 		Cookies.removeCookie("sid");
-		loginView.reset();
 	}
 
-	@Override
 	public void login(String usr, String pwd) {
 		authService.authenticate(usr,pwd,new AsyncCallback<User>() {
 			@Override
 			public void onSuccess(User user) {
-				// TODO Auto-generated method stub
 				if(user!=null){
 					authToken = user.getSid();
 					setcookie(authToken);
 					LoginManager.this.user = user;
-					loginView.hide();
-					App.getInstance().getEventBus().fireEventFromSource(new LoginEvent(user), this);
+					eventBus.fireEvent(new LoginEvent(user));
 				}else{
-					loginView.showLoginError();
+					eventBus.fireEvent(new LoginEvent(null));
 				}
 			}
 
@@ -93,6 +96,10 @@ public class LoginManager implements Presenter {
 				ex.printStackTrace();
 			}
 		});
+	}
+	
+	public void relogin(String pwd){
+		login(user.getLoginName(),pwd);
 	}
 	
 	private void setcookie(String sessionid){
