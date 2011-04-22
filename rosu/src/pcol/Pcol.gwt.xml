@@ -16,5 +16,5 @@
 	<source path='client' />
 	<source path='shared' />
 
-	<entry-point class="pcol.client.App" />
+	<entry-point class="pcol.client.AppLoader"></entry-point>
 </module>
