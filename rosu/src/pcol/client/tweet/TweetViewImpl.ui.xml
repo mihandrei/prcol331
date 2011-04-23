@@ -9,7 +9,7 @@
 	</ui:style>
 	<g:ScrollPanel ui:field="scrollPanel" styleName="{style.scrollpanel}">
 		<g:HTMLPanel>
-			<g:FlexTable width="100%" height="200px" ui:field="tbl" />
+			<g:FlexTable width="100%" ui:field="tbl" />
 			<g:Button ui:field="button" text="more" />
 		</g:HTMLPanel>
 	</g:ScrollPanel>

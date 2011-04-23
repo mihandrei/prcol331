@@ -2,6 +2,9 @@ package pcol.client;
 
 import java.util.logging.Logger;
 
+import pcol.client.config.AdminActivityConfig;
+import pcol.client.config.AdminPlaceConfig;
+import pcol.client.config.TabPlaceMapper;
 import pcol.client.security.AppDoneEvent;
 import pcol.client.security.AuthenticationService;
 import pcol.client.security.AuthenticationServiceAsync;
@@ -21,11 +24,13 @@ import com.google.gwt.dom.client.Document;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceChangeEvent;
 import com.google.gwt.place.shared.PlaceChangeRequestEvent;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.place.shared.PlaceHistoryHandler;
+import com.google.gwt.place.shared.PlaceHistoryMapper;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -44,8 +49,14 @@ public final class App implements Shell.Presenter{
 	private Tips tips;
 	
 	private AuthenticationServiceAsync authService = GWT.create(AuthenticationService.class);
+
+	private HandlerRegistration historyRegistration;
 	
-	protected App(EventBus eventBus, final LoginManager loginManager, String[] authorizedTabs){
+	protected App(EventBus eventBus, final LoginManager loginManager,
+			PlaceHistoryMapper placeConfig,
+			Place defaultPlace, 
+			final TabPlaceMapper tabMapper,
+			ActivityMapper activityConfig){
 		this.eventBus = eventBus;
 		this.tips = new Tips(loginManager.getUser());
 		placeController = new PlaceController(eventBus);
@@ -56,11 +67,11 @@ public final class App implements Shell.Presenter{
 		shell.setUserName(loginManager.getUser().getName());
 		shell.setNrMatr(loginManager.getUser().getNrMatr());
 		
-		for(int i=0;i<authorizedTabs.length;i++){
-			if(i<3){
-				shell.addTab(authorizedTabs[i]);
+		for(int i=0;i<tabMapper.getTabs().size();i++){
+			if(i<3){// <- hardcode: daca in loc de string intorc UserNavPref {name, relevance}
+				shell.addTab(tabMapper.getTabs().get(i));
 			}else{
-				shell.addSmallTab(authorizedTabs[i]);// <- daca in loc de string intorc UserNavPref {name, relevance}
+				shell.addSmallTab(tabMapper.getTabs().get(i));
 			}
 		}
 		
@@ -85,7 +96,7 @@ public final class App implements Shell.Presenter{
 			}
 		 });
 		
-		initAppFlow();
+		initAppFlow(placeConfig,defaultPlace,tabMapper,activityConfig);
 	}
 
 	protected void start(){
@@ -112,29 +123,27 @@ public final class App implements Shell.Presenter{
 	 *  init activity/places framework and wires navigation ui to history changes
 	 *  registeres handlers
 	 */
-	private void initAppFlow(){
-		//si daca-i in functie de user?
-		Place defaultPlace = new TweetPlace.Tokenizer().getPlace("");
-		final AppPlaceHistoryMapper historyMapper = new AppPlaceHistoryMapper();
-		final ShellTabMapper tabplaceMapper = new ShellTabMapper();
+	private void initAppFlow(PlaceHistoryMapper placeConfig,
+			Place defaultPlace, 
+			final TabPlaceMapper tabMapper,
+			ActivityMapper activityConfig){
 		
-		historyHandler = new PlaceHistoryHandler(historyMapper);
-		historyHandler.register(placeController, eventBus, defaultPlace);
+		historyHandler = new PlaceHistoryHandler(placeConfig);
+		historyRegistration = historyHandler.register(placeController, eventBus, defaultPlace);
 		
 		//pot sa am mai multi acctivitymanageri si mappere coresp
 		//fiecare manager se ocupa de display-ul lui
 		//Dar inn cazuri generice gen breadcrumb cred ca-i mai bine sa aculte 
 		//placechangeeventuri ( ca activvitattiile ar fi boring ar selecta
 		//un tab hardcodat in activitate
-		final ActivityMapper activityMapper = new AppActivityMapper();
 		final ActivityManager activityManager = new ActivityManager(
-				activityMapper, eventBus);
+				activityConfig, eventBus);
 		activityManager.setDisplay(shell.getContainer());
 
 		shell.addSelectionHandler(new SelectionHandler<String>() {
 			@Override
 			public void onSelection(SelectionEvent<String> event) {
-				Place p = tabplaceMapper.getPlace(event.getSelectedItem());
+				Place p = tabMapper.getPlace(event.getSelectedItem());
 				if(p!=null){
 					placeController.goTo(p);
 				}
@@ -146,7 +155,7 @@ public final class App implements Shell.Presenter{
 			@Override
 			public void onPlaceChange(PlaceChangeEvent event) {
 				Place pl = event.getNewPlace();
-				String tabname = tabplaceMapper.getTab(pl);
+				String tabname = tabMapper.getTab(pl);
 				Document.get().setTitle("pcol - " + tabname);
 				shell.selectTabByToken(tabname);
 			}
@@ -180,7 +189,11 @@ public final class App implements Shell.Presenter{
 	    eventBus.fireEvent(willChange);
 		String warning = willChange.getWarning();
 		 if (warning == null || Window.confirm(warning)) {
+			 //loginmanagerul sa invalideze credentiale
 			 loginManager.logout();
+			 //daca nu-l deregistrez o sa aculte pe bus placechangeeventuri, si o sa vrea sa le mapeze			 
+			 historyRegistration.removeHandler();
+			 //notifica apploaderul si alte ca am incheiat
 			 eventBus.fireEvent(new AppDoneEvent());
 		 }
 	}
