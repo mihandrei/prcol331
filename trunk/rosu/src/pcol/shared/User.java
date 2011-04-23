@@ -5,22 +5,30 @@ import java.io.Serializable;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class User implements IsSerializable, Serializable{
-	public User(){
-		
-	}
-	public User(String loginName, String name, int nrmat, String[] authActivities,String sid) {
-		this.loginName = loginName;
-		this.name = name;
-		this.nrmat = nrmat;
-		this.authActivities = authActivities;
-		this.sid = sid;
-	}
-
+	private Role role;
 	private String loginName;
 	private String name;
 	private int nrmat;
-	private String[] authActivities;
 	private String sid;
+
+	public enum Role{
+		STUDENT,
+		ADMIN,
+		PROFESOR
+	}
+	
+	public User(){
+		
+	}
+
+	public User(String loginName, String name, int nrmat, Role role,String sid) {
+		this.loginName = loginName;
+		this.name = name;
+		this.nrmat = nrmat;
+		this.role=role;
+		this.sid = sid;
+	}
+
 
 	public String getLoginName(){
 		return loginName;
@@ -34,8 +42,8 @@ public class User implements IsSerializable, Serializable{
 		return nrmat;
 	}
 
-	public String[] getAuthorizedActivities() {
-		return authActivities;
+	public Role getRole() {
+		return role;
 	}
 
 	public String getSid() {

@@ -91,4 +91,10 @@ public class LoginShell extends Composite {
 		pwd.setText("");
 		enableControls();
 	}
+	
+	@Override
+	protected void onLoad() {
+		super.onLoad();
+		usr.setFocus(true);
+	}
 }

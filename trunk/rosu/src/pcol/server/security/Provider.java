@@ -28,15 +28,16 @@ public class Provider {
 				session.update(user);
 				
 				//daca-i student
+				//FIXME:hardcoded roles
 				if(user.getStudentis().iterator().hasNext()){ 
 					 int nrmatr = user.getStudentis().iterator().next().getNrMatr();
 					 return new User(login, 
 							 user.getPersoane().getNume() + " " + user.getPersoane().getPrenume(),
-							 nrmatr,new String[]{"noutati","orar","teme","contract","inmatriculare"},"");
+							 nrmatr,User.Role.STUDENT,"");
 				}else{ 
 					 return new User(login, 
 							 user.getPersoane().getNume() + " " + user.getPersoane().getPrenume(),
-							 0, new String[]{},"");
+							 0, User.Role.ADMIN ,"");
 
 				}
 			
