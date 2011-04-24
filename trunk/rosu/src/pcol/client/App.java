@@ -51,6 +51,8 @@ public final class App implements Shell.Presenter{
 	private AuthenticationServiceAsync authService = GWT.create(AuthenticationService.class);
 
 	private HandlerRegistration historyRegistration;
+
+	private ActivityManager activityManager;
 	
 	protected App(EventBus eventBus, final LoginManager loginManager,
 			PlaceHistoryMapper placeConfig,
@@ -136,7 +138,7 @@ public final class App implements Shell.Presenter{
 		//Dar inn cazuri generice gen breadcrumb cred ca-i mai bine sa aculte 
 		//placechangeeventuri ( ca activvitattiile ar fi boring ar selecta
 		//un tab hardcodat in activitate
-		final ActivityManager activityManager = new ActivityManager(
+		activityManager = new ActivityManager(
 				activityConfig, eventBus);
 		activityManager.setDisplay(shell.getContainer());
 
@@ -189,10 +191,15 @@ public final class App implements Shell.Presenter{
 	    eventBus.fireEvent(willChange);
 		String warning = willChange.getWarning();
 		 if (warning == null || Window.confirm(warning)) {
-			 //loginmanagerul sa invalideze credentiale
+			 //loginmanagerul sa invalideze credentiale (sid & cookie)
 			 loginManager.logout();
 			 //daca nu-l deregistrez o sa aculte pe bus placechangeeventuri, si o sa vrea sa le mapeze			 
 			 historyRegistration.removeHandler();
+			 //daca nu inca mai asculta place change-uri si o sa intrebe activitatea curenta daca maystop
+			 //repara bugul : cand dau relogin contractactivity intreaba daca maystop (pt ca e o navigare 
+			 //de la PLace.NOWHERE la contractplace, se pare ca acctivitatile sunt intrebate mereu daca 
+			 //maystop si daca nu se pleaca de la place-ul lor
+			 activityManager.setDisplay(null);
 			 //notifica apploaderul si alte ca am incheiat
 			 eventBus.fireEvent(new AppDoneEvent());
 		 }

@@ -79,6 +79,11 @@
 				<p>
 					nu va puteti loga? 
 				</p>
+				<ul>
+					<li>rol student : mihai,mihai</li>
+					<li>rol admin : didy,didy</li>
+					<li>rol prof : TODO</li>
+				</ul>
 			</g:HTMLPanel>
 		</g:east>
 
