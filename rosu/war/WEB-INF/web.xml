@@ -8,24 +8,23 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	<welcome-file-list>
 		<welcome-file>pcol.html</welcome-file>
 	</welcome-file-list>
-	
+
 	<session-config>
-        <session-timeout>
-            50
-        </session-timeout>
-    </session-config>
-    
-    
+		<session-timeout>5</session-timeout>
+	</session-config>
+
+	<!-- sist de autorizare -->
 	<filter>
-        <filter-name>AuthorisationFilter</filter-name>
-        <filter-class>pcol.server.security.AuthorisationFilter</filter-class>
-    </filter>
-    
-    <filter-mapping>
-        <filter-name>AuthorisationFilter</filter-name>
-        <url-pattern>/pcol/rpc/*</url-pattern>
-    </filter-mapping>
-    
+		<filter-name>AuthorisationFilter</filter-name>
+		<filter-class>pcol.server.security.AuthorisationFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>AuthorisationFilter</filter-name>
+		<url-pattern>/pcol/rpc/*</url-pattern>
+	</filter-mapping>
+
+	<!-- servicii gwt -->
 	<servlet>
 		<servlet-name>AuthenticationServiceImpl</servlet-name>
 		<servlet-class>pcol.server.security.AuthenticationServiceImpl</servlet-class>
@@ -35,8 +34,8 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<servlet-name>AuthenticationServiceImpl</servlet-name>
 		<url-pattern>/pcol/rpc/auth</url-pattern>
 	</servlet-mapping>
-	
-	
+
+
 	<servlet>
 		<servlet-name>TweetServiceImpl</servlet-name>
 		<servlet-class>pcol.server.TweetServiceImpl</servlet-class>
@@ -47,7 +46,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<url-pattern>/pcol/rpc/tweets</url-pattern>
 	</servlet-mapping>
 
-	
+
 	<servlet>
 		<servlet-name>ContractServiceImpl</servlet-name>
 		<servlet-class>pcol.server.ContractServiceImpl</servlet-class>
@@ -57,7 +56,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<servlet-name>ContractServiceImpl</servlet-name>
 		<url-pattern>/pcol/rpc/contract</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>UsrAdminServiceImpl</servlet-name>
 		<servlet-class>pcol.server.UsrAdminServiceImpl</servlet-class>
@@ -66,5 +65,15 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	<servlet-mapping>
 		<servlet-name>UsrAdminServiceImpl</servlet-name>
 		<url-pattern>/pcol/rpc/useradmin</url-pattern>
+	</servlet-mapping>
+
+	<!-- upload -->
+	<servlet>
+		<servlet-name>FileUpload</servlet-name>
+		<servlet-class>pcol.server.FileUpload</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FileUpload</servlet-name>
+		<url-pattern>/pcol/upload</url-pattern>
 	</servlet-mapping>
 </web-app>

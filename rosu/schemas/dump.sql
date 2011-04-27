@@ -38,8 +38,8 @@ CREATE TABLE `contracte_studiu` (
   `date` datetime DEFAULT NULL,
   PRIMARY KEY (`nrmat`,`id_curs`,`contract_version`),
   KEY `fk_contracte_studiu_cursuri1` (`id_curs`),
-  CONSTRAINT `fk_contracte_studiu_studenti1` FOREIGN KEY (`nrmat`) REFERENCES `studenti` (`nr_matr`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_contracte_studiu_cursuri1` FOREIGN KEY (`id_curs`) REFERENCES `cur_course` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_contracte_studiu_cursuri1` FOREIGN KEY (`id_curs`) REFERENCES `cur_course` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_contracte_studiu_studenti1` FOREIGN KEY (`nrmat`) REFERENCES `studenti` (`nr_matr`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -149,8 +149,8 @@ CREATE TABLE `cur_grup_cours` (
   PRIMARY KEY (`groupid`,`courseid`),
   KEY `fk_cur_grup_cours_cur_grup1` (`groupid`),
   KEY `fk_cur_grup_cours_cur_course1` (`courseid`),
-  CONSTRAINT `fk_cur_grup_cours_cur_grup1` FOREIGN KEY (`groupid`) REFERENCES `cur_grup` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_cur_grup_cours_cur_course1` FOREIGN KEY (`courseid`) REFERENCES `cur_course` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_cur_grup_cours_cur_course1` FOREIGN KEY (`courseid`) REFERENCES `cur_course` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_cur_grup_cours_cur_grup1` FOREIGN KEY (`groupid`) REFERENCES `cur_grup` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -212,7 +212,7 @@ CREATE TABLE `msg_message` (
 
 LOCK TABLES `msg_message` WRITE;
 /*!40000 ALTER TABLE `msg_message` DISABLE KEYS */;
-INSERT INTO `msg_message` VALUES (1,'<p>Yesterday,<br>All those backups seemed a waste of pay.<br>Now my database has gone away.<br>Oh I believe in yesterday.</p>','mihai','INFO','2011-04-17 00:00:00'),(2,'You can never find general mechanical means <br>for predicting the acts of computing machines <br>Itâ€™s something that cannot be done. So we users <br>must find our own bugs. Our computers are losers! <br><a target=\"_blank\" href=\"http://www.lel.ed.ac.uk/~gpullum/loopsnoop.pdf\"> source </a>','mihai','INFO','2011-04-11 11:20:00'),(3,'I have no money, no resources, no hopes. I am the happiest man alive.','system','INFO','2011-04-09 11:20:00'),(4,'Debugging is twice as hard as writing the code in the first place.  Therefore, if you write the code as cleverly as possible, you are&ndash;by definition&ndash;not smart enough to debug it.','system','INFO','2011-03-11 11:20:00'),(5,'Atunci cÃ¢nd sunt supÄƒrat, mÄƒ retrag Ã®ntre oile mele ÅŸi mÄƒ liniÅŸtesc','system','INFO','2010-04-11 11:20:00');
+INSERT INTO `msg_message` VALUES (1,'<p>Yesterday,<br>All those backups seemed a waste of pay.<br>Now my database has gone away.<br>Oh I believe in yesterday.</p>','mihai','INFO','2011-04-17 00:00:00'),(2,'You can never find general mechanical means <br>for predicting the acts of computing machines <br>ItÃ¢â‚¬â„¢s something that cannot be done. So we users <br>must find our own bugs. Our computers are losers! <br><a target=\"_blank\" href=\"http://www.lel.ed.ac.uk/~gpullum/loopsnoop.pdf\"> source </a>','mihai','INFO','2011-04-11 11:20:00'),(3,'I have no money, no resources, no hopes. I am the happiest man alive.','system','INFO','2011-04-09 11:20:00'),(4,'Debugging is twice as hard as writing the code in the first place.  Therefore, if you write the code as cleverly as possible, you are&ndash;by definition&ndash;not smart enough to debug it.','system','INFO','2011-03-11 11:20:00'),(5,'Atunci cÃƒÂ¢nd sunt supÃ„Æ’rat, mÃ„Æ’ retrag ÃƒÂ®ntre oile mele Ã…Å¸i mÃ„Æ’ liniÃ…Å¸tesc','system','INFO','2010-04-11 11:20:00');
 /*!40000 ALTER TABLE `msg_message` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -422,12 +422,12 @@ DROP TABLE IF EXISTS `resource`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `resource` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `file_name` varchar(45) DEFAULT NULL,
   `wikitext` text,
   `type` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -436,6 +436,7 @@ CREATE TABLE `resource` (
 
 LOCK TABLES `resource` WRITE;
 /*!40000 ALTER TABLE `resource` DISABLE KEYS */;
+INSERT INTO `resource` VALUES (12,'eclipse.ini',NULL,'f'),(13,'epl-v10.html',NULL,'f'),(14,'epl-v10.html(0)',NULL,'f'),(15,'readme_eclipse.htmlsas',NULL,'f'),(16,'pcollog.xmlq',NULL,'f'),(17,'makeGoaurce.cmd',NULL,'f');
 /*!40000 ALTER TABLE `resource` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -563,4 +564,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-04-18 13:01:37
+-- Dump completed on 2011-04-27 14:04:27
