@@ -127,7 +127,7 @@ public class FileUpload extends HttpServlet {
 
 		try {
 			session.beginTransaction();
-			Resource r = new Resource(file.getName(),null,"f",null);
+			Resource r = new Resource(file.getName(),denumire);
 			session.persist(r);
 			copyStream(in, out);
 			session.getTransaction().commit();

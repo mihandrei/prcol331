@@ -6,7 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import pcol.server.HibernateUtil;
-import pcol.server.domain.Users;
+import pcol.server.domain.Logins;
 import pcol.shared.User;
 
 /**
@@ -22,7 +22,7 @@ public class Provider {
 		Session session = sf.openSession();
 		try {
 			session.beginTransaction();
-			Users user = (Users) session.get(Users.class, login); //da-mi userul cu numele asta
+			Logins user = (Logins) session.get(Logins.class, login); //da-mi userul cu numele asta
 			if( user!=null && pwd.equals(user.getPasswordHash())){
 				user.setLastlogin(new Date().toString());
 				session.update(user);

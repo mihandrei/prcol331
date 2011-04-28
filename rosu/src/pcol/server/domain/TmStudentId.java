@@ -1,6 +1,6 @@
 package pcol.server.domain;
 
-// Generated Apr 17, 2011 10:03:09 PM by Hibernate Tools 3.4.0.CR1
+// Generated Apr 28, 2011 8:02:06 AM by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -11,24 +11,24 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class TmStudentId implements java.io.Serializable {
 
-	private int tema;
+	private int temaId;
 	private int nrmatr;
 
 	public TmStudentId() {
 	}
 
-	public TmStudentId(int tema, int nrmatr) {
-		this.tema = tema;
+	public TmStudentId(int temaId, int nrmatr) {
+		this.temaId = temaId;
 		this.nrmatr = nrmatr;
 	}
 
-	@Column(name = "tema", nullable = false)
-	public int getTema() {
-		return this.tema;
+	@Column(name = "temaId", nullable = false)
+	public int getTemaId() {
+		return this.temaId;
 	}
 
-	public void setTema(int tema) {
-		this.tema = tema;
+	public void setTemaId(int temaId) {
+		this.temaId = temaId;
 	}
 
 	@Column(name = "nrmatr", nullable = false)
@@ -49,14 +49,14 @@ public class TmStudentId implements java.io.Serializable {
 			return false;
 		TmStudentId castOther = (TmStudentId) other;
 
-		return (this.getTema() == castOther.getTema())
+		return (this.getTemaId() == castOther.getTemaId())
 				&& (this.getNrmatr() == castOther.getNrmatr());
 	}
 
 	public int hashCode() {
 		int result = 17;
 
-		result = 37 * result + this.getTema();
+		result = 37 * result + this.getTemaId();
 		result = 37 * result + this.getNrmatr();
 		return result;
 	}

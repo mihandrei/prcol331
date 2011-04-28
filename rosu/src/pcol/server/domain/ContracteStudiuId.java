@@ -1,6 +1,6 @@
 package pcol.server.domain;
 
-// Generated Apr 17, 2011 10:03:09 PM by Hibernate Tools 3.4.0.CR1
+// Generated Apr 28, 2011 8:02:06 AM by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -12,15 +12,15 @@ import javax.persistence.Embeddable;
 public class ContracteStudiuId implements java.io.Serializable {
 
 	private int nrmat;
-	private int idCurs;
+	private int curiculId;
 	private int contractVersion;
 
 	public ContracteStudiuId() {
 	}
 
-	public ContracteStudiuId(int nrmat, int idCurs, int contractVersion) {
+	public ContracteStudiuId(int nrmat, int curiculId, int contractVersion) {
 		this.nrmat = nrmat;
-		this.idCurs = idCurs;
+		this.curiculId = curiculId;
 		this.contractVersion = contractVersion;
 	}
 
@@ -33,13 +33,13 @@ public class ContracteStudiuId implements java.io.Serializable {
 		this.nrmat = nrmat;
 	}
 
-	@Column(name = "id_curs", nullable = false)
-	public int getIdCurs() {
-		return this.idCurs;
+	@Column(name = "curiculId", nullable = false)
+	public int getCuriculId() {
+		return this.curiculId;
 	}
 
-	public void setIdCurs(int idCurs) {
-		this.idCurs = idCurs;
+	public void setCuriculId(int curiculId) {
+		this.curiculId = curiculId;
 	}
 
 	@Column(name = "contract_version", nullable = false)
@@ -61,7 +61,7 @@ public class ContracteStudiuId implements java.io.Serializable {
 		ContracteStudiuId castOther = (ContracteStudiuId) other;
 
 		return (this.getNrmat() == castOther.getNrmat())
-				&& (this.getIdCurs() == castOther.getIdCurs())
+				&& (this.getCuriculId() == castOther.getCuriculId())
 				&& (this.getContractVersion() == castOther.getContractVersion());
 	}
 
@@ -69,7 +69,7 @@ public class ContracteStudiuId implements java.io.Serializable {
 		int result = 17;
 
 		result = 37 * result + this.getNrmat();
-		result = 37 * result + this.getIdCurs();
+		result = 37 * result + this.getCuriculId();
 		result = 37 * result + this.getContractVersion();
 		return result;
 	}
