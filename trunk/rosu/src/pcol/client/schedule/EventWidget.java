@@ -87,4 +87,7 @@ class EventWidget extends Composite {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 
+	public void setHeaderColor(String col){
+		eventTitle.getElement().getStyle().setBackgroundColor(col);
+	}
 }

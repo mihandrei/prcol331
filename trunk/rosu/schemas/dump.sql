@@ -427,7 +427,7 @@ CREATE TABLE `resource` (
   `wikitext` text,
   `type` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -436,7 +436,7 @@ CREATE TABLE `resource` (
 
 LOCK TABLES `resource` WRITE;
 /*!40000 ALTER TABLE `resource` DISABLE KEYS */;
-INSERT INTO `resource` VALUES (12,'eclipse.ini',NULL,'f'),(13,'epl-v10.html',NULL,'f'),(14,'epl-v10.html(0)',NULL,'f'),(15,'readme_eclipse.htmlsas',NULL,'f'),(16,'pcollog.xmlq',NULL,'f'),(17,'makeGoaurce.cmd',NULL,'f');
+INSERT INTO `resource` VALUES (12,'eclipse.ini',NULL,'f'),(13,'epl-v10.html',NULL,'f'),(14,'epl-v10.html(0)',NULL,'f'),(15,'readme_eclipse.htmlsas',NULL,'f'),(16,'pcollog.xmlq',NULL,'f'),(17,'makeGoaurce.cmd',NULL,'f'),(19,'(0)',NULL,'f'),(20,'(1)',NULL,'f'),(21,'pcollog.xml',NULL,'f');
 /*!40000 ALTER TABLE `resource` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -564,4 +564,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-04-27 14:04:27
+-- Dump completed on 2011-04-28  9:48:50

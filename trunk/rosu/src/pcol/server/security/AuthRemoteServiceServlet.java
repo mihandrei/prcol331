@@ -6,7 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import pcol.server.HibernateUtil;
-import pcol.server.domain.Users;
+import pcol.server.domain.Logins;
 import pcol.shared.AuthenticationException;
 import pcol.shared.User;
 
@@ -27,7 +27,7 @@ public class AuthRemoteServiceServlet extends RemoteServiceServlet{
 	}
 	
 	protected interface UserCall<V>{
-		V call(Users usr,Session s);
+		V call(Logins usr,Session s);
 	}
 	
 	protected <V> V withUser(String sid, UserCall<V> fn) throws AuthenticationException {
@@ -37,7 +37,7 @@ public class AuthRemoteServiceServlet extends RemoteServiceServlet{
 		Session session = sf.openSession();
 		try {
 			session.beginTransaction();
-			Users user = (Users) session.get(Users.class, usr.getLoginName());
+			Logins user = (Logins) session.get(Logins.class, usr.getLoginName());
 //fixme:	if( user==null) o sters careva userul, business fct care sterge usr tre sa expire loginurile
 			session.getTransaction().commit();
 			

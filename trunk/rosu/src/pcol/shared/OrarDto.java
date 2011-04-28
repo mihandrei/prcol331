@@ -10,7 +10,7 @@ public class OrarDto implements IsSerializable {
 //		  MON, TUE, WED, THU, FRI, SAT, SUN
 //	}
 	
-	public String groupId;
+	public Integer groupId;
 	public Integer courseId;
 	public String abbrev;
 	public String activityType;
@@ -20,7 +20,7 @@ public class OrarDto implements IsSerializable {
 	public byte startHour;
 	public String room;
 	
-	public OrarDto(String groupId, Integer courseId, String abbrev,
+	public OrarDto(int groupId, Integer courseId, String abbrev,
 			String activityType, byte day, byte week,byte starthour, byte endHour,
 			 String room) {
 		super();
@@ -38,6 +38,5 @@ public class OrarDto implements IsSerializable {
 	public OrarDto(){
 		
 	}
-	
 
 }

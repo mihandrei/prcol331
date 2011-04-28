@@ -1,7 +1,9 @@
 package pcol.client.schedule;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import pcol.client.schedule.EventWidget.Range;
 import pcol.shared.OrarDto;
@@ -34,7 +36,14 @@ import com.google.gwt.user.client.ui.Widget;
  * @author miha
  */
 public class WeekViewImpl extends Composite implements WeekView {
-
+	private static class Pallete{
+		private final static String[] p = new String[]{"#3377FF","#9077FF","#10C0F0"};
+		int idx = -1;
+		String next(){
+			idx = (idx +1) % p.length;
+			return p[idx];
+		}
+	}
 	private static final int NCOLS = 5;
 
 	private static AbsUiBinder uiBinder = GWT.create(AbsUiBinder.class);
@@ -45,7 +54,12 @@ public class WeekViewImpl extends Composite implements WeekView {
 	@UiField
 	HTMLPanel weekWrap;
 
+	/** lista tuturor widgeturilor pentru o zi*/
 	private List<List<EventWidget>> dayWidgets;
+	
+	/** culori pt calindare*/
+	Pallete pallete = new Pallete();
+	private Map<Integer,String> calendarPalleteIndex = new HashMap<Integer,String>();
 	
 	public WeekViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -65,7 +79,7 @@ public class WeekViewImpl extends Composite implements WeekView {
 		
 		int overlaps = 0;
 		
-		for(EventWidget ew: dayWidgets.get(e.day)){
+		for(EventWidget ew: dayWidgets.get(e.day-1)){
 			Range r = ew.getRange();
 			//if intersects
 			if(range.startrow<r.endrow && range.endrow>r.startrow){
@@ -101,8 +115,16 @@ public class WeekViewImpl extends Composite implements WeekView {
 		token+="/"+e.courseId;
 		ew.setTexts(token,head, e.abbrev, e.activityType,e.room);
 		ew.getElement().getStyle().setBackgroundColor("#EEEEFF");
+	
+//		colorare TODO: muta intr-o metoda
+		String calColor = calendarPalleteIndex.get(e.groupId);
+		if(calColor == null){
+			calColor = pallete.next();
+			calendarPalleteIndex.put(e.groupId, calColor);
+		}
+		ew.setHeaderColor(calColor);
 		
-		dayWidgets.get(e.day).add(ew);
+		dayWidgets.get(e.day-1).add(ew);
 		weekWrap.add(ew);
 	}
 
