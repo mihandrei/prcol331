@@ -79,6 +79,9 @@ public class UsrAdminBinder extends Composite implements UsrAdminView{
 				}
 			    
 			    gridnext.setVisible(false);
+			    txtuser.setValue("");
+				txtparola.setValue("");
+				txtparola2.setValue("");
 			    gridlogin.setVisible(true);
 			}
 		});
@@ -93,7 +96,17 @@ public class UsrAdminBinder extends Composite implements UsrAdminView{
 				}else{
 //					show error label
 				}
+				gridnext.setVisible(true);
+				// Clean sign up text fields
+				 txtnume.setValue("");
+				 txtnrmatr.setValue("");
+				 txtan.setValue("");
+				 txtsectie.setValue("");
+				 txtgrupa.setValue("");
+				
+			    gridlogin.setVisible(false);
 			}
+			
 		});
 	}
 
