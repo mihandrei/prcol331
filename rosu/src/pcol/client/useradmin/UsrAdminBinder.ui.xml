@@ -84,7 +84,7 @@
 		<g:Grid styleName="{style.grid}" ui:field="gridlogin">
 			<g:row>
 				<g:customCell>
-					<g:Label text="user"/>
+					<g:Label styleName="{style.eticheta}" text="user"/>
 				</g:customCell>
 				<g:customCell>
 					<g:TextBox ui:field="txtuser"/>
