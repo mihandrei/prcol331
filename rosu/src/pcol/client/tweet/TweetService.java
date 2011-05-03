@@ -13,4 +13,5 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 public interface TweetService extends RemoteService {
 	
 	List<Tweet> getTweets(String sid, int limit)throws AuthenticationException;
+	void sendTweet(String sid, String mesaj, String destinatie);
 }
