@@ -1,5 +1,7 @@
 package pcol.client.config;
 
+import pcol.client.tweet.TweetActivity;
+import pcol.client.tweet.TweetPlace;
 import pcol.client.useradmin.UsrAdminActivity;
 import pcol.client.useradmin.UsrAdminPlace;
 
@@ -12,14 +14,16 @@ import com.google.gwt.place.shared.Place;
  * @author miha
  *
  */
-public class AdminActivityConfig implements ActivityMapper {
+public class ProfActivityConfig implements ActivityMapper {
 
-	public AdminActivityConfig() {
+	public ProfActivityConfig() {
 	}
 
 	@Override
 	public Activity getActivity(Place place) {
-		if (place instanceof UsrAdminPlace){
+		if (place instanceof TweetPlace){
+			return new TweetActivity();
+		}else if (place instanceof UsrAdminPlace){
 			return new UsrAdminActivity();
 		}
 		return null;

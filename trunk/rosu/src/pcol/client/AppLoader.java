@@ -6,6 +6,9 @@ import java.util.logging.Logger;
 import pcol.client.config.AdminActivityConfig;
 import pcol.client.config.AdminPlaceConfig;
 import pcol.client.config.AdminTabConfig;
+import pcol.client.config.ProfActivityConfig;
+import pcol.client.config.ProfPlaceConfig;
+import pcol.client.config.ProfTabConfig;
 import pcol.client.config.StudentActivityConfig;
 import pcol.client.config.StudentPlaceConfig;
 import pcol.client.config.StudentTabConfig;
@@ -121,6 +124,11 @@ public class AppLoader implements EntryPoint, LoginShell.Presenter{
 					defPlace = new UsrAdminPlace();
 					tabConf = new AdminTabConfig();
 					activityConf = new AdminActivityConfig();
+				}else if(usr.getRole() == Role.PROFESOR){
+					placeConf = new ProfPlaceConfig();
+					defPlace = new UsrAdminPlace();
+					tabConf = new ProfTabConfig();
+					activityConf = new ProfActivityConfig();
 				}else{
 					Window.alert("tip de utilizator neasteptat :" + usr.getRole());
 					return;
