@@ -22,25 +22,24 @@ public class Provider {
 		Session session = sf.openSession();
 		try {
 			session.beginTransaction();
-			Logins user = (Logins) session.get(Logins.class, login); //da-mi userul cu numele asta
+			//da-mi userul cu numele asta
+			Logins user = (Logins) session.get(Logins.class, login); 
 			if( user!=null && pwd.equals(user.getPasswordHash())){
 				user.setLastlogin(new Date().toString());
 				session.update(user);
 				
+				String namestr = user.getPersoane().getNume() + " " + user.getPersoane().getPrenume();
 				//daca-i student
 				//FIXME:hardcoded roles
+				//FIXME: User are nr matricol!
 				if(user.getStudentis().iterator().hasNext()){ 
 					 int nrmatr = user.getStudentis().iterator().next().getNrMatr();
-					 return new User(login, 
-							 user.getPersoane().getNume() + " " + user.getPersoane().getPrenume(),
-							 nrmatr,User.Role.STUDENT,"");
+					 return new User(login, namestr, nrmatr,User.Role.STUDENT,"");
+				}else if(user.getProfesoris().iterator().hasNext()){
+					return new User(login,namestr,0,User.Role.PROFESOR,"");
 				}else{ 
-					 return new User(login, 
-							 user.getPersoane().getNume() + " " + user.getPersoane().getPrenume(),
-							 0, User.Role.ADMIN ,"");
-
+					 return new User(login, namestr, 0, User.Role.ADMIN ,"");
 				}
-			
 			}
 			session.getTransaction().commit();
 			return null;
