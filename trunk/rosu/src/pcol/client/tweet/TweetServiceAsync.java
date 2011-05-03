@@ -11,4 +11,7 @@ public interface TweetServiceAsync {
 
 	void getTweets(String sid, int limit, AsyncCallback<List<Tweet>> callback);
 
+	void sendTweet(String sid, String mesaj, String destinatie,
+			AsyncCallback<Void> callback);
+
 }

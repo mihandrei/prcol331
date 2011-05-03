@@ -45,4 +45,10 @@ public class TweetServiceImpl extends AuthRemoteServiceServlet implements
 			}
 		});
 	}
+
+	@Override
+	public void sendTweet(String sid, String mesaj, String destinatie) {
+		// TODO Auto-generated method stub
+		
+	}
 }
