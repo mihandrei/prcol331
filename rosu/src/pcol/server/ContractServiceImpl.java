@@ -14,6 +14,7 @@ import pcol.server.domain.ContracteStudiuId;
 //import pcol.server.domain.CurGrupCours;
 import pcol.server.domain.Orar;
 import pcol.server.domain.OrgGroup;
+import pcol.server.domain.OrgSection;
 import pcol.server.domain.Studenti;
 import pcol.server.domain.Logins;
 import pcol.server.security.AuthRemoteServiceServlet;
@@ -42,24 +43,27 @@ public class ContractServiceImpl extends AuthRemoteServiceServlet implements
 				}
 				Studenti student = user.getStudentis().iterator().next();
 				Curicul ret = new Curicul();
-				// for(CurGrup curicule:
-				// student.getOrgGroup().getOrgSection().getCurGrups()){
-				// //grupam dupa semestre
-				// int semestru = curicule.getSemester();
-				// if(!ret.cursuriPeSemestru.containsKey(semestru)){
-				// ret.cursuriPeSemestru.put(semestru, new
-				// ArrayList<CourseGroup>());
-				// }
-				// CourseGroup cg = new CourseGroup();
-				// cg.exclusive = curicule.isExclusiv();
-				// cg.name = cg.exclusive?"optionale":"obligatorii";
-				// for(CurGrupCours grc: curicule.getCurGrupCourses()){
-				// cg.courses.add(new Course(grc.getCurCourse().getId(),
-				// grc.getCurCourse().getName(),
-				// grc.getCurCourse().getAbbrev(),
-				// grc.getNcredits()));
-				// }
-				// ret.cursuriPeSemestru.get(semestru).add(cg);
+				for (OrgGroup gr : student.getOrgGroups()) {
+					OrgSection os = gr.getOrgSection();
+					for (pcol.server.domain.Curicul cur : os.getCuriculs()) {
+						int semestru = cur.getSemester();
+						if (!ret.cursuriPeSemestru.containsKey(semestru)) {
+							ret.cursuriPeSemestru.put(semestru,
+									new ArrayList<CourseGroup>());
+							CourseGroup cg = new CourseGroup();
+							// cg.exclusive = cur.isExclusiv();
+							cg.name = cg.exclusive ? "optionale"
+									: "obligatorii";
+							cg.courses.add(new Course(cur.getCurCourse()
+									.getId(), cur.getCurCourse().getName(), cur
+									.getCurCourse().getAbbrev(), cur
+									.getNcredite()));
+							ret.cursuriPeSemestru.get(semestru).add(cg);
+
+						}
+					}
+				}
+
 				// }
 				session.getTransaction().commit();
 				return ret;
@@ -88,11 +92,10 @@ public class ContractServiceImpl extends AuthRemoteServiceServlet implements
 						.setParameter("nrmatr", student.getNrMatr());
 
 				int ver = 0;
-				// for(ContracteStudiu contr:(List<ContracteStudiu>)
-				// grq.list()){
-				// selection.add(contr.getId().getIdCurs());
-				// ver = contr.getId().getContractVersion();
-				// }
+				for (ContracteStudiu contr : (List<ContracteStudiu>) grq.list()) {
+					selection.add(contr.getId().getCuriculId());
+					ver = contr.getId().getContractVersion();
+				}
 				session.getTransaction().commit();
 
 				Contract ret = new Contract();
@@ -134,7 +137,7 @@ public class ContractServiceImpl extends AuthRemoteServiceServlet implements
 					newci.setId(new ContracteStudiuId(student.getNrMatr(),
 							idCurs, contractVersion + 1));
 					session.save(newci);
-					// student.getContracteStudius().add(newci);
+					student.getContracteStudius().add(newci);
 				}
 				session.getTransaction().commit();
 				return null;

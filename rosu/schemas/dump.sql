@@ -2,7 +2,7 @@
 --
 -- Host: localhost    Database: proj_col
 -- ------------------------------------------------------
--- Server version	5.5.9
+-- Server version	5.5.11
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -38,8 +38,8 @@ CREATE TABLE `contracte_studiu` (
   `date` datetime DEFAULT NULL,
   PRIMARY KEY (`nrmat`,`curiculId`,`contract_version`),
   KEY `fk_contracte_studiu_curicul1` (`curiculId`),
-  CONSTRAINT `fk_contracte_studiu_studenti1` FOREIGN KEY (`nrmat`) REFERENCES `studenti` (`nr_matr`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_contracte_studiu_curicul1` FOREIGN KEY (`curiculId`) REFERENCES `curicul` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_contracte_studiu_curicul1` FOREIGN KEY (`curiculId`) REFERENCES `curicul` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_contracte_studiu_studenti1` FOREIGN KEY (`nrmat`) REFERENCES `studenti` (`nr_matr`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -99,9 +99,9 @@ CREATE TABLE `curicul` (
   PRIMARY KEY (`id`),
   KEY `fk_curicul_org_section1` (`sectieId`),
   KEY `fk_curicul_cur_course1` (`courseId`),
-  CONSTRAINT `fk_curicul_org_section1` FOREIGN KEY (`sectieId`) REFERENCES `org_section` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_curicul_cur_course1` FOREIGN KEY (`courseId`) REFERENCES `cur_course` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  CONSTRAINT `fk_curicul_cur_course1` FOREIGN KEY (`courseId`) REFERENCES `cur_course` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_curicul_org_section1` FOREIGN KEY (`sectieId`) REFERENCES `org_section` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -110,6 +110,7 @@ CREATE TABLE `curicul` (
 
 LOCK TABLES `curicul` WRITE;
 /*!40000 ALTER TABLE `curicul` DISABLE KEYS */;
+INSERT INTO `curicul` VALUES (1,1,1,0,4,2,1);
 /*!40000 ALTER TABLE `curicul` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -236,8 +237,8 @@ CREATE TABLE `msg_subscription` (
   PRIMARY KEY (`login`,`chanid`),
   KEY `fk_subscriptii_users1` (`login`),
   KEY `fk_subscriptii_canale1` (`chanid`),
-  CONSTRAINT `fk_subscriptii_users1` FOREIGN KEY (`login`) REFERENCES `logins` (`login_name`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_subscriptii_canale1` FOREIGN KEY (`chanid`) REFERENCES `msg_channel` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_subscriptii_canale1` FOREIGN KEY (`chanid`) REFERENCES `msg_channel` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_subscriptii_users1` FOREIGN KEY (`login`) REFERENCES `logins` (`login_name`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -298,8 +299,8 @@ CREATE TABLE `orar` (
   PRIMARY KEY (`id`),
   KEY `fk_orar_grupe1` (`grupa`),
   KEY `fk_orar_cursuri1` (`curs_id`),
-  CONSTRAINT `fk_orar_grupe1` FOREIGN KEY (`grupa`) REFERENCES `org_group` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_orar_cursuri1` FOREIGN KEY (`curs_id`) REFERENCES `cur_course` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_orar_cursuri1` FOREIGN KEY (`curs_id`) REFERENCES `cur_course` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_orar_grupe1` FOREIGN KEY (`grupa`) REFERENCES `org_group` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -541,8 +542,8 @@ CREATE TABLE `studenti_grupe` (
   PRIMARY KEY (`nrmatr`,`groupid`),
   KEY `fk_studenti_grupe_org_group1` (`groupid`),
   KEY `fk_studenti_grupe_studenti1` (`nrmatr`),
-  CONSTRAINT `fk_studenti_grupe_studenti1` FOREIGN KEY (`nrmatr`) REFERENCES `studenti` (`nr_matr`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_studenti_grupe_org_group1` FOREIGN KEY (`groupid`) REFERENCES `org_group` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_studenti_grupe_org_group1` FOREIGN KEY (`groupid`) REFERENCES `org_group` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_studenti_grupe_studenti1` FOREIGN KEY (`nrmatr`) REFERENCES `studenti` (`nr_matr`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -600,8 +601,8 @@ CREATE TABLE `tm_student` (
   PRIMARY KEY (`temaId`,`nrmatr`),
   KEY `fk_tm_student_teme1` (`temaId`),
   KEY `fk_tm_student_studenti1` (`nrmatr`),
-  CONSTRAINT `fk_tm_student_teme1` FOREIGN KEY (`temaId`) REFERENCES `teme` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_tm_student_studenti1` FOREIGN KEY (`nrmatr`) REFERENCES `studenti` (`nr_matr`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_tm_student_studenti1` FOREIGN KEY (`nrmatr`) REFERENCES `studenti` (`nr_matr`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tm_student_teme1` FOREIGN KEY (`temaId`) REFERENCES `teme` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -623,4 +624,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-04-28 15:45:05
+-- Dump completed on 2011-05-03 21:11:21
