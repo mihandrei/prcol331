@@ -1,0 +1,40 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+		.indent1 {
+			margin-left: 8px;
+		}
+		
+		.sw {
+			background-color: white;
+			margin-bottom: 1px;
+			padding:8px;
+		}
+		
+		.sw h2 {
+			margin-top:3px;
+			margin-bottom:3px;
+			font-size: medium;
+		}
+	</ui:style>
+	<g:HTMLPanel>
+		<div class="{style.sw}">
+			<h2>Teme</h2>
+			<g:FlowPanel ui:field="temelinks" styleName="{style.indent1}" />
+		</div>
+		<div class="{style.sw}">
+			<h2>Note</h2>
+			<g:FlowPanel ui:field="notelinks" styleName="{style.indent1}" />
+		</div>
+		<div class="{style.sw}">
+			<h2>Setari</h2>
+			<div class="{style.indent1}">
+				<g:Hyperlink text="editeaza descrierea cursului"
+					ui:field="descLink" />
+				<g:Hyperlink text="editeaza materiale de curs" ui:field="materialeLink" />
+				<g:Hyperlink text="editeaza suita de teme" ui:field="temeLink" />
+			</div>
+		</div>
+	</g:HTMLPanel>
+</ui:UiBinder> 

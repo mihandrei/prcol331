@@ -1,0 +1,38 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+		.cont{
+			margin:1em;
+		}
+		.el {
+			border: solid 1px;
+			width: 400px;
+			height: 180px;
+			padding:2px;
+		}
+		
+		.btn {
+			margin-top: 4px;
+			margin-right: 4px;
+		}
+	</ui:style>
+	<g:HTMLPanel styleName="{style.cont}">
+		<g:HTMLPanel ui:field="editPanel">
+			<g:Label
+				text="puteti follosi urmatoarele tag-uri html : h1 .. h6, b, i, hr, ul, ol, li"
+				width="400px" ui:field="taghint" />
+			<g:TextArea ui:field="txtInput" characterWidth="30"
+				visibleLines="10"  addStyleNames="{style.el}" />
+			<div>
+				<g:Button ui:field="button" addStyleNames="{style.btn}">vizualizeaza</g:Button>
+			</div>
+		</g:HTMLPanel>
+		<g:FlowPanel ui:field="previewPanel" visible="false">
+			<g:Label text="&nbsp;" width="400px"  />
+			<g:HTML ui:field="previewPane" addStyleNames="{style.el}"></g:HTML>
+			<g:Button ui:field="btnEdit" addStyleNames="{style.btn}">editeaza</g:Button>
+			<g:Button ui:field="btnsave" addStyleNames="{style.btn}">salveaza</g:Button>
+		</g:FlowPanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 
