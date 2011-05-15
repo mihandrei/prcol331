@@ -21,3 +21,7 @@
   and 
   cs.nota is not null
  group by cs.id.idCurs 
+ 
+ select g from OrgGroup as g
+inner join g.orgSection.curiculs c 
+where c.curCourse.id = 1

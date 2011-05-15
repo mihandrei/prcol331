@@ -1,6 +1,6 @@
 package pcol.server.domain;
 
-// Generated Apr 28, 2011 8:02:06 AM by Hibernate Tools 3.4.0.CR1
+// Generated May 15, 2011 7:09:00 PM by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;

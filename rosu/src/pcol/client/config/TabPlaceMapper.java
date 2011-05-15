@@ -10,9 +10,12 @@ public class TabPlaceMapper {
 	public static class Tab{
 		public String name;
 		public String historyToken;
-		public Tab(String name, String historyToken) {
+		public boolean small = false;
+		
+		public Tab(String name, String historyToken,boolean small) {
 			this.name = name;
 			this.historyToken = historyToken;
+			this.small=small;
 		}
 	}
 	

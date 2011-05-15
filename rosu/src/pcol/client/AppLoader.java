@@ -131,7 +131,7 @@ public class AppLoader implements EntryPoint, LoginShell.Presenter{
 					activityConf = new AdminActivityConfig();
 				}else if(usr.getRole() == Role.PROFESOR){
 					placeConf = new ProfPlaceConfig();
-					defPlace = new UsrAdminPlace();
+					defPlace = new TweetPlace();
 					tabConf = new ProfTabConfig(placeConf);
 					activityConf = new ProfActivityConfig();
 				}else{

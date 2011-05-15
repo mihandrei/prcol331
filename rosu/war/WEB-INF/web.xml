@@ -66,6 +66,16 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<servlet-name>UsrAdminServiceImpl</servlet-name>
 		<url-pattern>/pcol/rpc/useradmin</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>MateriiServiceImpl</servlet-name>
+		<servlet-class>pcol.server.MateriiServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>MateriiServiceImpl</servlet-name>
+		<url-pattern>/pcol/rpc/materii</url-pattern>
+	</servlet-mapping>
 
 	<!-- upload -->
 	<servlet>

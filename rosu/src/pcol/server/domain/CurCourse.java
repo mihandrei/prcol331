@@ -1,6 +1,6 @@
 package pcol.server.domain;
 
-// Generated Apr 28, 2011 8:02:06 AM by Hibernate Tools 3.4.0.CR1
+// Generated May 15, 2011 7:09:00 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -26,7 +26,7 @@ public class CurCourse implements java.io.Serializable {
 	private Profesori profesori;
 	private String name;
 	private String abbrev;
-	private String sylabusFileName;
+	private String description;
 	private Set<Resource> resources = new HashSet<Resource>(0);
 	private Set<SchemaNotare> schemaNotares = new HashSet<SchemaNotare>(0);
 	private Set<Teme> temes = new HashSet<Teme>(0);
@@ -43,13 +43,13 @@ public class CurCourse implements java.io.Serializable {
 	}
 
 	public CurCourse(Profesori profesori, String name, String abbrev,
-			String sylabusFileName, Set<Resource> resources,
+			String description, Set<Resource> resources,
 			Set<SchemaNotare> schemaNotares, Set<Teme> temes,
 			Set<Curicul> curiculs, Set<Orar> orars) {
 		this.profesori = profesori;
 		this.name = name;
 		this.abbrev = abbrev;
-		this.sylabusFileName = sylabusFileName;
+		this.description = description;
 		this.resources = resources;
 		this.schemaNotares = schemaNotares;
 		this.temes = temes;
@@ -96,13 +96,13 @@ public class CurCourse implements java.io.Serializable {
 		this.abbrev = abbrev;
 	}
 
-	@Column(name = "sylabus_file_name")
-	public String getSylabusFileName() {
-		return this.sylabusFileName;
+	@Column(name = "description", length = 65535)
+	public String getDescription() {
+		return this.description;
 	}
 
-	public void setSylabusFileName(String sylabusFileName) {
-		this.sylabusFileName = sylabusFileName;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "curCourse")

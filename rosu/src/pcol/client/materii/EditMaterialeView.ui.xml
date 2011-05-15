@@ -1,0 +1,43 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+		.tbl {
+			border-collapse: collapse;
+			font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+		}
+		
+		.tbl td {
+			border-bottom: solid 1px #CCCCCC;
+			padding: 0.5em;
+		}
+		
+		.tbl tr:hover {
+			background-color: #E0E0E0;
+		}
+		
+		.c1 {
+			width: 15em;
+		}
+	</ui:style>
+	<g:HTMLPanel>
+		<g:FlexTable ui:field="temeList" styleName="{style.tbl}" />
+		<table>
+			<tr>
+				<td class="{style.c1}">
+					<g:TextBox ui:field="denumireTbox" />
+				</td>
+				<td>
+					<g:InlineLabel ui:field="resName" />
+					<g:FormPanel ui:field="form">
+						<g:FileUpload ui:field="upl" />
+					</g:FormPanel>
+				</td>
+				<td>
+					<g:Button ui:field="button">adauga tema</g:Button>
+				</td>
+			</tr>
+		</table>
+
+	</g:HTMLPanel>
+</ui:UiBinder> 

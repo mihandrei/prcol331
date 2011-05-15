@@ -73,11 +73,7 @@ public final class App implements Shell.Presenter{
 		
 		for(int i=0;i<tabMapper.getTabs().size();i++){
 			Tab tab = tabMapper.getTabs().get(i);
-			if(i<3){// <- hardcode: daca in loc de string intorc UserNavPref {name, relevance}
-				shell.addTab(tab.name,tab.historyToken,false);
-			}else{
-				shell.addTab(tab.name,tab.historyToken,true);
-			}
+			shell.addTab(tab.name,tab.historyToken,tab.small);
 		}
 		
 		this.reloginview = new ReLoginDialog();
@@ -105,7 +101,7 @@ public final class App implements Shell.Presenter{
 	}
 
 	protected void start(){
-		startHeartBeat();
+//		startHeartBeat();
 		
 		//WARN: here be matze (every abstraction is leaky, tuluai cat de relevant ii win32 event loop)
 		//eventbus inregistreaza handlerele asyncronish 

@@ -1,5 +1,11 @@
 package pcol.client.config;
 
+import pcol.client.materii.EditDescriereActivity;
+import pcol.client.materii.EditDescrierePlace;
+import pcol.client.materii.EditMaterialeActivity;
+import pcol.client.materii.EditMaterialePlace;
+import pcol.client.materii.ProfOverviewActivity;
+import pcol.client.materii.ProfOverviewPlace;
 import pcol.client.tweet.TweetActivity;
 import pcol.client.tweet.TweetPlace;
 import pcol.client.useradmin.UsrAdminActivity;
@@ -9,11 +15,6 @@ import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.activity.shared.ActivityMapper;
 import com.google.gwt.place.shared.Place;
 
-/**
- * clasa de configurare; ar putea fi construita din ceva fisier de config
- * @author miha
- *
- */
 public class ProfActivityConfig implements ActivityMapper {
 
 	public ProfActivityConfig() {
@@ -23,8 +24,12 @@ public class ProfActivityConfig implements ActivityMapper {
 	public Activity getActivity(Place place) {
 		if (place instanceof TweetPlace){
 			return new TweetActivity();
-		}else if (place instanceof UsrAdminPlace){
-			return new UsrAdminActivity();
+		}else if (place instanceof ProfOverviewPlace){
+			return new ProfOverviewActivity((ProfOverviewPlace)place);
+		}else if (place instanceof EditDescrierePlace){
+			return new EditDescriereActivity((EditDescrierePlace)place);
+		}else if (place instanceof EditMaterialePlace){
+			return new EditMaterialeActivity((EditMaterialePlace)place);
 		}
 		return null;
 	}
