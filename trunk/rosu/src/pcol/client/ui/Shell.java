@@ -18,8 +18,10 @@ import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
@@ -115,7 +117,7 @@ public class Shell extends Composite implements HasSelectionHandlers<String> {
 	}
 
 	private List<String> links = new ArrayList<String>();
-	private List<Label> widgets = new ArrayList<Label>();
+	private List<Widget> widgets = new ArrayList<Widget>();
 
 	private int selectedidx = -1;
 	private Pallette pallete = Pallette.LESS;
@@ -186,26 +188,18 @@ public class Shell extends Composite implements HasSelectionHandlers<String> {
 		
 	}
 
-	public void addTab(String tab) {
+	public void addTab(String name,String token,boolean small) {
 		//TODO: considera sa inlocuiesti label cu hyperlink
-		Label lbl = new Label(tab);
-		lbl.setStylePrimaryName(style.navItem());
-		lbl.addClickHandler(clickHandler);
+		Anchor link = new Anchor(name, "#"+token);
+		link.setStylePrimaryName(style.navItem());
+		if(small){
+			link.addStyleName(style.navItemSmall());
+		}
+		link.addClickHandler(clickHandler);
 
-		links.add(tab);
-		widgets.add(lbl);
-		tabc.add(lbl);
-	}
-	
-	public void addSmallTab(String tab){
-		Label lbl = new Label(tab);
-		lbl.setStylePrimaryName(style.navItem());
-		lbl.addStyleName(style.navItemSmall());
-		lbl.addClickHandler(clickHandler);
-		
-		links.add(tab);
-		widgets.add(lbl);
-		tabc.add(lbl);
+		links.add(token);
+		widgets.add(link);
+		tabc.add(link);
 	}
 	
 	public void selectTabByToken(String token) {

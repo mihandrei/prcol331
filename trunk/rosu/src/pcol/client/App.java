@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import pcol.client.config.AdminActivityConfig;
 import pcol.client.config.AdminPlaceConfig;
 import pcol.client.config.TabPlaceMapper;
+import pcol.client.config.TabPlaceMapper.Tab;
 import pcol.client.security.AppDoneEvent;
 import pcol.client.security.AuthenticationService;
 import pcol.client.security.AuthenticationServiceAsync;
@@ -31,6 +32,7 @@ import com.google.gwt.place.shared.PlaceChangeRequestEvent;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.place.shared.PlaceHistoryHandler;
 import com.google.gwt.place.shared.PlaceHistoryMapper;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -70,10 +72,11 @@ public final class App implements Shell.Presenter{
 		shell.setNrMatr(loginManager.getUser().getNrMatr());
 		
 		for(int i=0;i<tabMapper.getTabs().size();i++){
+			Tab tab = tabMapper.getTabs().get(i);
 			if(i<3){// <- hardcode: daca in loc de string intorc UserNavPref {name, relevance}
-				shell.addTab(tabMapper.getTabs().get(i));
+				shell.addTab(tab.name,tab.historyToken,false);
 			}else{
-				shell.addSmallTab(tabMapper.getTabs().get(i));
+				shell.addTab(tab.name,tab.historyToken,true);
 			}
 		}
 		
@@ -145,10 +148,7 @@ public final class App implements Shell.Presenter{
 		shell.addSelectionHandler(new SelectionHandler<String>() {
 			@Override
 			public void onSelection(SelectionEvent<String> event) {
-				Place p = tabMapper.getPlace(event.getSelectedItem());
-				if(p!=null){
-					placeController.goTo(p);
-				}
+				History.newItem(event.getSelectedItem());
 			}
 		});
 		

@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
@@ -32,7 +33,7 @@ import pcol.server.domain.Resource;
 public class FileUpload extends HttpServlet {
 	private static final String DENUMIRE = "denumire";
 	private static final String UPLOADS = "uploads";
-	private static final int MAXFILESIZE = 1024 * 1024 * 10;// 10 megs
+	private static final int MAXFILESIZE = 1024 * 1024 * 1;// 10 megs
 	
 	private static Logger log = Logger.getLogger(FileUpload.class.getName());
 
@@ -42,7 +43,10 @@ public class FileUpload extends HttpServlet {
 		if (ServletFileUpload.isMultipartContent(request)) {
 			ServletFileUpload upload = new ServletFileUpload();
 			String denumire = null;
-
+			//in gwt rasponsul ajunge intr-un iframe
+			//fara content type browserele imbraca in <pre> sau alt tag raspunsul
+			response.setContentType("text/html");
+			
 			// parseaza multipartu
 			FileItemIterator iter;
 			try {
@@ -66,11 +70,18 @@ public class FileUpload extends HttpServlet {
 						if (denumire == null || denumire.trim().isEmpty()) {
 							denumire = FilenameUtils.getName(filename);;
 						}
-						processIstream(denumire, stream);
+						String resName = processIstream(denumire, stream);
+						
+						PrintWriter out = response.getWriter();
+						out.print("ok:"+resName);
+						out.close();
 					}
 				}
-			} catch (FileUploadException e) {
-				throw new ServletException(e);
+			} catch (Exception ex) {
+				PrintWriter out = response.getWriter();
+				out.print("err:");
+				ex.printStackTrace(out);
+				out.close();
 			}
 
 		}
@@ -117,7 +128,7 @@ public class FileUpload extends HttpServlet {
 		}
 	}
 
-	private void processIstream(String denumire, InputStream in)
+	private String processIstream(String denumire, InputStream in)
 			throws IOException {
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session session = sf.openSession();
@@ -131,6 +142,7 @@ public class FileUpload extends HttpServlet {
 			session.persist(r);
 			copyStream(in, out);
 			session.getTransaction().commit();
+			return r.getNumefisier();
 		}catch (HibernateException ex){
 			file.delete();
 			session.getTransaction().rollback();
