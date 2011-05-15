@@ -52,7 +52,12 @@ public class AppLoader implements EntryPoint, LoginShell.Presenter{
 	public AppLoader(){
 		
 	}
-				
+	private void ensureLoginShell(){
+		if(shell==null){
+			shell=new LoginShell();
+			shell.setPresenter(AppLoader.this);
+		}
+	}
 	@Override
 	public void onModuleLoad() {
 		autoLoginReg = eventBus.addHandler(AutoLoginEvent.TYPE, new AutoLoginEvent.Handler() {
@@ -61,8 +66,7 @@ public class AppLoader implements EntryPoint, LoginShell.Presenter{
 				if(event.getUser()!=null){
 					loadAppAsync(event.getUser());
 				}else{
-					shell=new LoginShell();
-					shell.setPresenter(AppLoader.this);
+					ensureLoginShell();
 					RootLayoutPanel.get().add(shell);
 				}
 				autoLoginReg.removeHandler();
@@ -76,6 +80,7 @@ public class AppLoader implements EntryPoint, LoginShell.Presenter{
 			@Override
 			public void onAppTerminated(AppDoneEvent event) {
 				RootLayoutPanel.get().clear();
+				ensureLoginShell();
 				shell.reset();
 				RootLayoutPanel.get().add(shell);
 				listenForLoginOnce();
