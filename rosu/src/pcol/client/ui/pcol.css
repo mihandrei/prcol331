@@ -13,7 +13,10 @@ a {
 a:visited {
 	color: darkblue;
 }
-
+textarea {
+			white-space: nowrap;
+			overflow: auto;
+		}
 .tabpanelnav .gwt-TabLayoutPanelTab {
 	margin-right: 0.5em;
 	padding: 0.25em 0.5em 0.25em 0.5em;

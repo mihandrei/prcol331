@@ -117,17 +117,17 @@ public class AppLoader implements EntryPoint, LoginShell.Presenter{
 				if(usr.getRole() == Role.STUDENT ){
 					placeConf = new StudentPlaceConfig();
 					defPlace = new TweetPlace();
-					tabConf = new StudentTabConfig();
+					tabConf = new StudentTabConfig(placeConf);
 					activityConf = new StudentActivityConfig();
 				}else if(usr.getRole() == Role.ADMIN){
 					placeConf = new AdminPlaceConfig();
 					defPlace = new UsrAdminPlace();
-					tabConf = new AdminTabConfig();
+					tabConf = new AdminTabConfig(placeConf);
 					activityConf = new AdminActivityConfig();
 				}else if(usr.getRole() == Role.PROFESOR){
 					placeConf = new ProfPlaceConfig();
 					defPlace = new UsrAdminPlace();
-					tabConf = new ProfTabConfig();
+					tabConf = new ProfTabConfig(placeConf);
 					activityConf = new ProfActivityConfig();
 				}else{
 					Window.alert("tip de utilizator neasteptat :" + usr.getRole());
