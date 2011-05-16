@@ -1,6 +1,6 @@
 package pcol.server.domain;
 
-// Generated May 15, 2011 7:09:00 PM by Hibernate Tools 3.4.0.CR1
+// Generated May 16, 2011 4:19:35 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -27,21 +27,24 @@ public class OrgGroup implements java.io.Serializable {
 	private Integer id;
 	private OrgSection orgSection;
 	private String nume;
+	private int an;
 	private Set<Studenti> studentis = new HashSet<Studenti>(0);
 	private Set<Orar> orars = new HashSet<Orar>(0);
 
 	public OrgGroup() {
 	}
 
-	public OrgGroup(OrgSection orgSection, String nume) {
+	public OrgGroup(OrgSection orgSection, String nume, int an) {
 		this.orgSection = orgSection;
 		this.nume = nume;
+		this.an = an;
 	}
 
-	public OrgGroup(OrgSection orgSection, String nume,
+	public OrgGroup(OrgSection orgSection, String nume, int an,
 			Set<Studenti> studentis, Set<Orar> orars) {
 		this.orgSection = orgSection;
 		this.nume = nume;
+		this.an = an;
 		this.studentis = studentis;
 		this.orars = orars;
 	}
@@ -74,6 +77,15 @@ public class OrgGroup implements java.io.Serializable {
 
 	public void setNume(String nume) {
 		this.nume = nume;
+	}
+
+	@Column(name = "an", nullable = false)
+	public int getAn() {
+		return this.an;
+	}
+
+	public void setAn(int an) {
+		this.an = an;
 	}
 
 	@ManyToMany(fetch = FetchType.LAZY)

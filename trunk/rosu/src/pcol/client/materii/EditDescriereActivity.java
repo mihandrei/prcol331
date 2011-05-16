@@ -27,13 +27,13 @@ public class EditDescriereActivity extends AbstractActivity{
 			shell = new MaterieShell();
 			shell.panel.setWidget(view);
 			shell.backlink.setText("<- innapoi la sumar");
-			shell.backlink.setTargetHistoryToken("materie/"+place.getMaterieid());
 		}
 		
 		if(rpc == null){
 			rpc = GWT.create(MateriiService.class);
 		}
 
+		shell.backlink.setTargetHistoryToken("materie/"+place.getMaterieid());
 		view.setPresenter(this);
 		rpc.getCourseDescription(place.getMaterieid(),new AppAsyncCallback<String>() {
 			

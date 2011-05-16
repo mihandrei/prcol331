@@ -9,6 +9,7 @@ import org.hibernate.SessionFactory;
 
 import pcol.client.materii.MateriiService;
 import pcol.server.domain.CurCourse;
+import pcol.server.domain.Curicul;
 import pcol.server.domain.Logins;
 import pcol.server.domain.OrgGroup;
 import pcol.server.domain.Profesori;
@@ -45,11 +46,11 @@ public class MateriiServiceImpl extends AuthRemoteServiceServlet implements Mate
 		Session session = sf.openSession();
 		try {
 			session.beginTransaction();
-			
 			Query grq = session
-			.createQuery("select g from OrgGroup as g "+
-						 "inner join g.orgSection.curiculs as c "+ 
-						 "where c.curCourse.id = :id ")
+			.createQuery("select gr from OrgGroup as gr , Curicul as c "+
+					"where gr.an = c.an and " +
+					"gr.orgSection.id = c.orgSection.id "+
+					"and c.curCourse.id = :id")
 			.setParameter("id", courseid);
 
 			List<Group> ret = new ArrayList<Group>();
