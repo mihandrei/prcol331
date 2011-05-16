@@ -7,32 +7,30 @@
 		}
 		.el {
 			border: solid 1px;
-			width: 400px;
-			height: 180px;
+			width: 100%;
+			height: 400px;
 			padding:2px;
+			overflow:scroll;
 		}
 		
 		.btn {
-			margin-top: 4px;
+			margin-bottom: 4px;
 			margin-right: 4px;
 		}
 	</ui:style>
 	<g:HTMLPanel styleName="{style.cont}">
 		<g:HTMLPanel ui:field="editPanel">
+				<g:Button ui:field="button" addStyleNames="{style.btn}">vizualizeaza</g:Button>
 			<g:Label
 				text="puteti follosi urmatoarele tag-uri html : h1 .. h6, b, i, hr, ul, ol, li"
 				width="400px" ui:field="taghint" />
 			<g:TextArea ui:field="txtInput" characterWidth="30"
 				visibleLines="10"  addStyleNames="{style.el}" />
-			<div>
-				<g:Button ui:field="button" addStyleNames="{style.btn}">vizualizeaza</g:Button>
-			</div>
 		</g:HTMLPanel>
 		<g:FlowPanel ui:field="previewPanel" visible="false">
-			<g:Label text="&nbsp;" width="400px"  />
-			<g:HTML ui:field="previewPane" addStyleNames="{style.el}"></g:HTML>
 			<g:Button ui:field="btnEdit" addStyleNames="{style.btn}">editeaza</g:Button>
 			<g:Button ui:field="btnsave" addStyleNames="{style.btn}">salveaza</g:Button>
+			<g:HTML ui:field="previewPane" addStyleNames="{style.el}"></g:HTML>
 		</g:FlowPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 

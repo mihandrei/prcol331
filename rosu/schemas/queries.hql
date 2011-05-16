@@ -22,6 +22,6 @@
   cs.nota is not null
  group by cs.id.idCurs 
  
- select g from OrgGroup as g
-inner join g.orgSection.curiculs c 
-where c.curCourse.id = 1
+select gr from OrgGroup as gr , Curicul as c 
+where gr.an = c.an and gr.orgSection.id = c.orgSection.id 
+and c.curCourse.id = 1

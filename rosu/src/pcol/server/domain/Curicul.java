@@ -1,6 +1,6 @@
 package pcol.server.domain;
 
-// Generated May 15, 2011 7:09:00 PM by Hibernate Tools 3.4.0.CR1
+// Generated May 16, 2011 4:19:35 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -29,6 +29,7 @@ public class Curicul implements java.io.Serializable {
 	private int tip;
 	private int ncredite;
 	private int semester;
+	private int an;
 	private Set<ContracteStudiu> contracteStudius = new HashSet<ContracteStudiu>(
 			0);
 
@@ -36,16 +37,17 @@ public class Curicul implements java.io.Serializable {
 	}
 
 	public Curicul(CurCourse curCourse, OrgSection orgSection, int tip,
-			int ncredite, int semester) {
+			int ncredite, int semester, int an) {
 		this.curCourse = curCourse;
 		this.orgSection = orgSection;
 		this.tip = tip;
 		this.ncredite = ncredite;
 		this.semester = semester;
+		this.an = an;
 	}
 
 	public Curicul(CurCourse curCourse, OrgSection orgSection,
-			Integer optionalGroup, int tip, int ncredite, int semester,
+			Integer optionalGroup, int tip, int ncredite, int semester, int an,
 			Set<ContracteStudiu> contracteStudius) {
 		this.curCourse = curCourse;
 		this.orgSection = orgSection;
@@ -53,6 +55,7 @@ public class Curicul implements java.io.Serializable {
 		this.tip = tip;
 		this.ncredite = ncredite;
 		this.semester = semester;
+		this.an = an;
 		this.contracteStudius = contracteStudius;
 	}
 
@@ -121,6 +124,15 @@ public class Curicul implements java.io.Serializable {
 
 	public void setSemester(int semester) {
 		this.semester = semester;
+	}
+
+	@Column(name = "an", nullable = false)
+	public int getAn() {
+		return this.an;
+	}
+
+	public void setAn(int an) {
+		this.an = an;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "curicul")

@@ -2,7 +2,7 @@
 --
 -- Host: localhost    Database: proj_col
 -- ------------------------------------------------------
--- Server version	5.5.11
+-- Server version	5.5.9
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -64,7 +64,7 @@ CREATE TABLE `cur_course` (
   `name` varchar(255) NOT NULL,
   `abbrev` varchar(12) NOT NULL,
   `profId` int(11) NOT NULL,
-  `sylabus_file_name` varchar(255) DEFAULT NULL,
+  `description` text,
   PRIMARY KEY (`id`),
   KEY `fk_cur_course_profesori1` (`profId`),
   CONSTRAINT `fk_cur_course_profesori1` FOREIGN KEY (`profId`) REFERENCES `profesori` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -77,7 +77,7 @@ CREATE TABLE `cur_course` (
 
 LOCK TABLES `cur_course` WRITE;
 /*!40000 ALTER TABLE `cur_course` DISABLE KEYS */;
-INSERT INTO `cur_course` VALUES (1,'Tehnici de optimizare','Optimizare',1,NULL),(5,'Inteligenta Artificiala','AI',1,NULL),(6,'Retele de calculatoare','retele',1,NULL),(7,'Programare orientata obiect','OOP',1,NULL),(8,'Ingineria sistemelor software','ISS',1,NULL),(9,'Algoritmi si structuri de date','Algoritmi',1,NULL),(10,'Metodologia redactarii unei lucrari stiintifice','Paper',1,NULL),(11,'Sisteme de operare','SO',1,NULL),(12,'Proiect colectiv','proj col',1,NULL),(13,'Branzeturi, metode industriale','BRZ',1,NULL),(14,'Metode moderne de abordare a cartofului','CRTF',1,NULL),(15,'Razboaiele luminii','lumi',1,NULL),(16,'despre gavitzapa','gravitzapa',1,NULL),(17,'kin dza dza','dza dza',1,NULL);
+INSERT INTO `cur_course` VALUES (1,'Tehnici de optimizare','Optimizare',1,'ava'),(5,'Inteligenta Artificiala','AI',1,NULL),(6,'Retele de calculatoare','retele',1,NULL),(7,'Programare orientata obiect','OOP',1,NULL),(8,'Ingineria sistemelor software','ISS',1,NULL),(9,'Algoritmi si structuri de date','Algoritmi',1,NULL),(10,'Metodologia redactarii unei lucrari stiintifice','Paper',1,NULL),(11,'Sisteme de operare','SO',1,NULL),(12,'Proiect colectiv','proj col',1,NULL),(13,'Branzeturi, metode industriale','BRZ',1,NULL),(14,'Metode moderne de abordare a cartofului','CRTF',1,NULL),(15,'Razboaiele luminii','lumi',1,NULL),(16,'despre gavitzapa','gravitzapa',1,NULL),(17,'kin dza dza','dza dza',1,NULL);
 /*!40000 ALTER TABLE `cur_course` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -95,13 +95,14 @@ CREATE TABLE `curicul` (
   `tip` int(11) NOT NULL,
   `ncredite` int(11) NOT NULL,
   `semester` int(11) NOT NULL,
+  `an` int(11) NOT NULL,
   `id` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`),
   KEY `fk_curicul_org_section1` (`sectieId`),
   KEY `fk_curicul_cur_course1` (`courseId`),
-  CONSTRAINT `fk_curicul_cur_course1` FOREIGN KEY (`courseId`) REFERENCES `cur_course` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_curicul_org_section1` FOREIGN KEY (`sectieId`) REFERENCES `org_section` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  CONSTRAINT `fk_curicul_org_section1` FOREIGN KEY (`sectieId`) REFERENCES `org_section` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_curicul_cur_course1` FOREIGN KEY (`courseId`) REFERENCES `cur_course` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -110,7 +111,7 @@ CREATE TABLE `curicul` (
 
 LOCK TABLES `curicul` WRITE;
 /*!40000 ALTER TABLE `curicul` DISABLE KEYS */;
-INSERT INTO `curicul` VALUES (1,1,1,0,4,2,1);
+INSERT INTO `curicul` VALUES (1,1,1,0,4,2,2,1),(1,5,NULL,0,4,2,3,2);
 /*!40000 ALTER TABLE `curicul` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -349,6 +350,7 @@ CREATE TABLE `org_group` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `section` int(11) NOT NULL,
   `nume` varchar(45) NOT NULL,
+  `an` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_grupe_sectii1` (`section`),
   CONSTRAINT `fk_grupe_sectii1` FOREIGN KEY (`section`) REFERENCES `org_section` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -361,7 +363,7 @@ CREATE TABLE `org_group` (
 
 LOCK TABLES `org_group` WRITE;
 /*!40000 ALTER TABLE `org_group` DISABLE KEYS */;
-INSERT INTO `org_group` VALUES (1,1,'mf331'),(2,1,'mf321'),(3,1,'mf311');
+INSERT INTO `org_group` VALUES (1,1,'mf331',3),(2,1,'mf321',2),(3,1,'mf311',1);
 /*!40000 ALTER TABLE `org_group` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -463,7 +465,7 @@ CREATE TABLE `resource` (
   PRIMARY KEY (`id`),
   KEY `fk_resource_cur_course1` (`couseId`),
   CONSTRAINT `fk_resource_cur_course1` FOREIGN KEY (`couseId`) REFERENCES `cur_course` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -472,6 +474,7 @@ CREATE TABLE `resource` (
 
 LOCK TABLES `resource` WRITE;
 /*!40000 ALTER TABLE `resource` DISABLE KEYS */;
+INSERT INTO `resource` VALUES (1,5,'use case prof.txt','use case prof.txt'),(2,1,'mess.txt','mess.txt');
 /*!40000 ALTER TABLE `resource` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -567,7 +570,7 @@ DROP TABLE IF EXISTS `teme`;
 CREATE TABLE `teme` (
   `id` int(11) NOT NULL,
   `curs` int(11) NOT NULL,
-  `nume_fisier` varchar(255) NOT NULL,
+  `resourceId` int(11) NOT NULL,
   `descriere` varchar(45) NOT NULL,
   `deadline` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -597,12 +600,12 @@ CREATE TABLE `tm_student` (
   `nrmatr` int(11) NOT NULL,
   `status` varchar(6) NOT NULL,
   `data_incarcare` datetime NOT NULL,
-  `nume_fisier` varchar(255) NOT NULL,
+  `resourceId` int(11) NOT NULL,
   PRIMARY KEY (`temaId`,`nrmatr`),
   KEY `fk_tm_student_teme1` (`temaId`),
   KEY `fk_tm_student_studenti1` (`nrmatr`),
-  CONSTRAINT `fk_tm_student_studenti1` FOREIGN KEY (`nrmatr`) REFERENCES `studenti` (`nr_matr`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_tm_student_teme1` FOREIGN KEY (`temaId`) REFERENCES `teme` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_tm_student_teme1` FOREIGN KEY (`temaId`) REFERENCES `teme` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tm_student_studenti1` FOREIGN KEY (`nrmatr`) REFERENCES `studenti` (`nr_matr`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -624,4 +627,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-05-03 21:11:21
+-- Dump completed on 2011-05-16 16:38:37

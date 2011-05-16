@@ -112,4 +112,8 @@ public class EditMaterialeView extends Composite {
 	public void clear() {
 		temeList.removeAllRows();
 	}
+
+	public String getDescription() {
+		return denumireTbox.getText();
+	}
 }
