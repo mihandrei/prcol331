@@ -15,9 +15,9 @@ public class MaterieActivity extends AbstractActivity implements
 			.getName());
 
 	private static MaterieView materieView;
-	private MateriePlace place;
+	private StudentOverviewPlace place;
 
-	public MaterieActivity(MateriePlace place) {
+	public MaterieActivity(StudentOverviewPlace place) {
 		this.place = place;
 	}
 

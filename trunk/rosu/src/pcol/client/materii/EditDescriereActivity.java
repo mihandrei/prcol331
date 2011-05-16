@@ -1,15 +1,12 @@
 package pcol.client.materii;
 
-import pcol.client.App;
 import pcol.client.AppLoader;
-import pcol.client.contract.ContractService;
 import pcol.client.security.AppAsyncCallback;
 
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.History;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 
 public class EditDescriereActivity extends AbstractActivity{

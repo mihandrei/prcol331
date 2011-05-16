@@ -1,7 +1,7 @@
 package pcol.client.config;
 
 import pcol.client.contract.ContractPlace;
-import pcol.client.materii.MateriePlace;
+import pcol.client.materii.StudentOverviewPlace;
 import pcol.client.schedule.SchedulePlace;
 import pcol.client.teme.TemePlace;
 import pcol.client.tweet.TweetPlace;
@@ -18,8 +18,8 @@ public class StudentPlaceConfig extends PlaceConfigBase {
 		tokenizers.put("teme", new TemePlace.Tokenizer());
 		placetokens.put(TemePlace.class, "teme");
 		
-		tokenizers.put("materie", new MateriePlace.Tokenizer());
-		placetokens.put(MateriePlace.class, "materie");
+		tokenizers.put("materie", new StudentOverviewPlace.Tokenizer());
+		placetokens.put(StudentOverviewPlace.class, "materie");
 		
 		tokenizers.put("teme", new TemePlace.Tokenizer());
 		placetokens.put(TemePlace.class, "teme");

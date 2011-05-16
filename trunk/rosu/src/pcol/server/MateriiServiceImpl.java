@@ -108,14 +108,37 @@ public class MateriiServiceImpl extends AuthRemoteServiceServlet implements Mate
 
 	@Override
 	public void addMaterial(int courseid, String name, int resourceid) {
-		// TODO Auto-generated method stub
+		SessionFactory sf = HibernateUtil.getSessionFactory();
+		Session session = sf.openSession();
+		try {
+			session.beginTransaction();
+			//TODO
+			session.getTransaction().commit();
+		} finally {
+			session.close();
+		}
 		
 	}
 
 	@Override
 	public List<Resource> getMateriale(int courseid) {
-		// TODO Auto-generated method stub
-		return null;
+		SessionFactory sf = HibernateUtil.getSessionFactory();
+		Session session = sf.openSession();
+		try {
+			session.beginTransaction();
+			CurCourse course = (CurCourse) session.get(CurCourse.class,courseid);
+			List<Resource> ret = new ArrayList<Resource>();
+			
+			for(pcol.server.domain.Resource r :course.getResources()){
+				ret.add(new Resource(r.getDescriere(), r.getNumefisier()));
+			}
+			
+			session.persist(course);
+			session.getTransaction().commit();
+			return ret;
+		} finally {
+			session.close();
+		}
 	}
 
 }

@@ -4,9 +4,9 @@ import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceTokenizer;
 
 public class EditMaterialePlace extends Place{
-	private String materieid;
+	private int materieid;
 	
-	public String getMaterieid() {
+	public int getMaterieid() {
 		return materieid;
 	}
 
@@ -14,7 +14,7 @@ public class EditMaterialePlace extends Place{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result	+ materieid.hashCode();
+		result = prime * result	+ Integer.valueOf(materieid).hashCode();
 		return result;
 	}
 	
@@ -28,23 +28,28 @@ public class EditMaterialePlace extends Place{
 			return false;
 		
 		EditMaterialePlace other = (EditMaterialePlace) obj;
-		return materieid.equals(other.materieid);
+		return materieid == other.materieid;
 	}
 	
 	//TODO: enforce materieid!= null
-	public EditMaterialePlace(String materieid){
+	public EditMaterialePlace(int materieid){
 		this.materieid = materieid;
 	}
 	
 	public static class Tokenizer implements PlaceTokenizer<EditMaterialePlace>{
 		@Override
 		public String getToken(EditMaterialePlace place) {		
-			return place.materieid;
+			return ""+place.materieid;
 		}
 
 		@Override
 		public EditMaterialePlace getPlace(String token) {
-			return new EditMaterialePlace(token);
+			try {
+				int cid = Integer.parseInt(token);
+				return new EditMaterialePlace(cid);
+			} catch (NumberFormatException ex) {
+				return null;
+			}
 		}
 	}
 }
