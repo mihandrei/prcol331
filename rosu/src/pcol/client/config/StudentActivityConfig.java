@@ -3,7 +3,7 @@ package pcol.client.config;
 import pcol.client.contract.ContractActivity;
 import pcol.client.contract.ContractPlace;
 import pcol.client.materii.MaterieActivity;
-import pcol.client.materii.MateriePlace;
+import pcol.client.materii.StudentOverviewPlace;
 import pcol.client.schedule.ScheduleActivity;
 import pcol.client.schedule.SchedulePlace;
 import pcol.client.teme.TemeActivity;
@@ -39,8 +39,8 @@ public class StudentActivityConfig implements ActivityMapper {
 		else if (place instanceof ContractPlace)
 			return new ContractActivity();
 
-		else if (place instanceof MateriePlace)
-			return new MaterieActivity((MateriePlace) place);
+		else if (place instanceof StudentOverviewPlace)
+			return new MaterieActivity((StudentOverviewPlace) place);
 		else if (place instanceof TemePlace) {
 			return new TemeActivity();
 		} else if (place instanceof SchedulePlace) {
