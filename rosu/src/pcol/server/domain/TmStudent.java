@@ -1,6 +1,6 @@
 package pcol.server.domain;
 
-// Generated May 15, 2011 7:09:00 PM by Hibernate Tools 3.4.0.CR1
+// Generated May 17, 2011 11:37:48 AM by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.AttributeOverride;
@@ -27,19 +27,19 @@ public class TmStudent implements java.io.Serializable {
 	private Studenti studenti;
 	private String status;
 	private Date dataIncarcare;
-	private String numeFisier;
+	private int resourceId;
 
 	public TmStudent() {
 	}
 
 	public TmStudent(TmStudentId id, Teme teme, Studenti studenti,
-			String status, Date dataIncarcare, String numeFisier) {
+			String status, Date dataIncarcare, int resourceId) {
 		this.id = id;
 		this.teme = teme;
 		this.studenti = studenti;
 		this.status = status;
 		this.dataIncarcare = dataIncarcare;
-		this.numeFisier = numeFisier;
+		this.resourceId = resourceId;
 	}
 
 	@EmbeddedId
@@ -93,13 +93,13 @@ public class TmStudent implements java.io.Serializable {
 		this.dataIncarcare = dataIncarcare;
 	}
 
-	@Column(name = "nume_fisier", nullable = false)
-	public String getNumeFisier() {
-		return this.numeFisier;
+	@Column(name = "resourceId", nullable = false)
+	public int getResourceId() {
+		return this.resourceId;
 	}
 
-	public void setNumeFisier(String numeFisier) {
-		this.numeFisier = numeFisier;
+	public void setResourceId(int resourceId) {
+		this.resourceId = resourceId;
 	}
 
 }
