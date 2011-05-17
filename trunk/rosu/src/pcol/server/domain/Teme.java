@@ -1,6 +1,6 @@
 package pcol.server.domain;
 
-// Generated May 15, 2011 7:09:00 PM by Hibernate Tools 3.4.0.CR1
+// Generated May 17, 2011 11:37:48 AM by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -25,7 +25,7 @@ public class Teme implements java.io.Serializable {
 
 	private int id;
 	private CurCourse curCourse;
-	private String numeFisier;
+	private int resourceId;
 	private String descriere;
 	private Date deadline;
 	private Set<TmStudent> tmStudents = new HashSet<TmStudent>(0);
@@ -33,18 +33,18 @@ public class Teme implements java.io.Serializable {
 	public Teme() {
 	}
 
-	public Teme(int id, CurCourse curCourse, String numeFisier, String descriere) {
+	public Teme(int id, CurCourse curCourse, int resourceId, String descriere) {
 		this.id = id;
 		this.curCourse = curCourse;
-		this.numeFisier = numeFisier;
+		this.resourceId = resourceId;
 		this.descriere = descriere;
 	}
 
-	public Teme(int id, CurCourse curCourse, String numeFisier,
-			String descriere, Date deadline, Set<TmStudent> tmStudents) {
+	public Teme(int id, CurCourse curCourse, int resourceId, String descriere,
+			Date deadline, Set<TmStudent> tmStudents) {
 		this.id = id;
 		this.curCourse = curCourse;
-		this.numeFisier = numeFisier;
+		this.resourceId = resourceId;
 		this.descriere = descriere;
 		this.deadline = deadline;
 		this.tmStudents = tmStudents;
@@ -70,13 +70,13 @@ public class Teme implements java.io.Serializable {
 		this.curCourse = curCourse;
 	}
 
-	@Column(name = "nume_fisier", nullable = false)
-	public String getNumeFisier() {
-		return this.numeFisier;
+	@Column(name = "resourceId", nullable = false)
+	public int getResourceId() {
+		return this.resourceId;
 	}
 
-	public void setNumeFisier(String numeFisier) {
-		this.numeFisier = numeFisier;
+	public void setResourceId(int resourceId) {
+		this.resourceId = resourceId;
 	}
 
 	@Column(name = "descriere", nullable = false, length = 45)
