@@ -35,6 +35,8 @@ public class EditDescriereActivity extends AbstractActivity{
 
 		shell.backlink.setTargetHistoryToken("materie/"+place.getMaterieid());
 		view.setPresenter(this);
+		view.setDescription("");
+		view.previewMode();
 		rpc.getCourseDescription(place.getMaterieid(),new AppAsyncCallback<String>() {
 			
 			@Override

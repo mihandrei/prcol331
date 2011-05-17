@@ -44,27 +44,26 @@ public class EditDescriereView extends Composite {
 	public EditDescriereView() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
-
-	@UiHandler("button")
-	void onButtonClick(ClickEvent event) {
+	
+	void genPreview(){
 		SafeHtml html = SimpleHtmlSanitizer.sanitizeHtml(txtInput.getText());
 		String str = html.asString().replace("\n", "<br/>");
 		previewPane.setHTML(str);
-		
-		editPanel.setVisible(false);
-		previewPanel.setVisible(true);
+	}
+
+	@UiHandler("button")
+	void onButtonClick(ClickEvent event) {
+		previewMode();
 	}
 	
 	@UiHandler("btnEdit")
 	void onBtnEditClick(ClickEvent event) {
-		editPanel.setVisible(true);
-		previewPanel.setVisible(false);
-		txtInput.setFocus(true);
+		editMode();
 	}
 
 	@UiHandler("btnsave")
 	void onBtnsaveClick(ClickEvent event) {
-		presenter.saveDescription(previewPane.getHTML());
+		presenter.saveDescription(txtInput.getText());
 	}
 
 	public void setPresenter(EditDescriereActivity presenter) {
@@ -73,5 +72,18 @@ public class EditDescriereView extends Composite {
 
 	public void setDescription(String desc) {
 		txtInput.setText(desc);
+		genPreview();
+	}
+	
+	public void editMode(){
+		editPanel.setVisible(true);
+		previewPanel.setVisible(false);
+		txtInput.setFocus(true);
+	}
+	
+	public void previewMode(){
+		genPreview();
+		editPanel.setVisible(false);
+		previewPanel.setVisible(true);
 	}
 }
