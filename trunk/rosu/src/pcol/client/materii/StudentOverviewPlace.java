@@ -3,25 +3,18 @@ package pcol.client.materii;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceTokenizer;
 
-public class StudentOverviewPlace extends Place {
-	private String materieid;
-	private String section;
+public class StudentOverviewPlace extends Place{
+	private int materieid;
 	
-	public String getMaterieid() {
+	public int getMaterieid() {
 		return materieid;
 	}
-
-	public String getSection() {
-		return section;
-	}
-
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result	+ materieid.hashCode();
-		result = prime * result + ((section == null) ? 0 : section.hashCode());
+		result = prime * result	+ Integer.valueOf(materieid).hashCode();
 		return result;
 	}
 	
@@ -33,47 +26,28 @@ public class StudentOverviewPlace extends Place {
 			return false;
 		if (!(obj instanceof StudentOverviewPlace))
 			return false;
+		
 		StudentOverviewPlace other = (StudentOverviewPlace) obj;
-		if (!materieid.equals(other.materieid))
-			return false;
-		if (section == null) {
-			if (other.section != null)
-				return false;
-		} else if (!section.equals(other.section))
-			return false;
-		return true;
+		return materieid == other.materieid;
 	}
 	
 	//TODO: enforce materieid!= null
-	public StudentOverviewPlace(String materieid){
+	public StudentOverviewPlace(int materieid){
 		this.materieid = materieid;
-	}
-	
-	public StudentOverviewPlace(String materieid,String section){
-		this.materieid = materieid;
-		this.section=section;
 	}
 	
 	public static class Tokenizer implements PlaceTokenizer<StudentOverviewPlace>{
 		@Override
 		public String getToken(StudentOverviewPlace place) {		
-			String token = "";
-			token+=place.materieid;
-			if(place.section!=null){
-				token+="/"+place.section;
-			}
-			return token;
+			return ""+place.materieid;
 		}
 
 		@Override
 		public StudentOverviewPlace getPlace(String token) {
-			String[] frags = token.split("/");
-			
-			if(frags.length == 1){
-				return new StudentOverviewPlace(frags[0]);
-			}else if(frags.length == 2){
-				return new StudentOverviewPlace(frags[0], frags[1]);
-			}else {
+			try {
+				int cid = Integer.parseInt(token);
+				return new StudentOverviewPlace(cid);
+			} catch (NumberFormatException ex) {
 				return null;
 			}
 		}

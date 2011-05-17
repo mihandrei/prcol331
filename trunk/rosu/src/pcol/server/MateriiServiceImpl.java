@@ -108,12 +108,22 @@ public class MateriiServiceImpl extends AuthRemoteServiceServlet implements Mate
 	}
 
 	@Override
-	public void addMaterial(int courseid, String name, int resourceid) {
+	public void addMaterial(int courseid, String descriere, String resourcename) {
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session session = sf.openSession();
 		try {
 			session.beginTransaction();
-			//TODO
+			Query grq = session
+			.createQuery("from Resource as r where r.numefisier=:r")
+			.setParameter("r", resourcename);
+			
+			pcol.server.domain.Resource res  =(pcol.server.domain.Resource) grq.uniqueResult();
+			CurCourse curCourse = (CurCourse) session.get(CurCourse.class, courseid);
+
+			res.setDescriere(descriere);
+			res.setCurCourse(curCourse);
+			
+			session.persist(res);
 			session.getTransaction().commit();
 		} finally {
 			session.close();
@@ -137,6 +147,27 @@ public class MateriiServiceImpl extends AuthRemoteServiceServlet implements Mate
 			session.persist(course);
 			session.getTransaction().commit();
 			return ret;
+		} finally {
+			session.close();
+		}
+	}
+
+	@Override
+	public void removeMaterial(int materieid, String resourceName) {
+		SessionFactory sf = HibernateUtil.getSessionFactory();
+		Session session = sf.openSession();
+		try {
+			session.beginTransaction();
+			Query grq = session
+			.createQuery("from Resource as r where r.numefisier=:r")
+			.setParameter("r", resourceName);
+			
+			pcol.server.domain.Resource res  =(pcol.server.domain.Resource) grq.uniqueResult();			
+			
+			session.delete(res);
+			session.getTransaction().commit();
+			//resursa a fost scoasa din BD cu succes , kill za file
+			FileUpload.deleteFile(resourceName);
 		} finally {
 			session.close();
 		}

@@ -5,6 +5,7 @@
 		.tbl {
 			border-collapse: collapse;
 			font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+			margin-bottom: 2em;
 		}
 		
 		.tbl td {
@@ -17,24 +18,33 @@
 		}
 		
 		.c1 {
-			width: 15em;
+			width: 16em;
+			padding-right:0.5em;
+		
+		}
+		
+		.cont{
+			margin:1em;
 		}
 	</ui:style>
-	<g:HTMLPanel>
+	<g:HTMLPanel styleName="{style.cont}">
 		<g:FlexTable ui:field="temeList" styleName="{style.tbl}" />
 		<table>
+		<tr><td>denumire</td><td>fisier</td><td>&nbsp;</td></tr>
 			<tr>
 				<td class="{style.c1}">
-					<g:TextBox ui:field="denumireTbox" />
+					 <g:TextBox ui:field="denumireTbox" width="100%" />
 				</td>
 				<td>
 					<g:InlineLabel ui:field="resName" />
+					
 					<g:FormPanel ui:field="form">
-						<g:FileUpload ui:field="upl" />
+						
 					</g:FormPanel>
 				</td>
 				<td>
-					<g:Button ui:field="button">adauga tema</g:Button>
+					<g:Button ui:field="addBtn">adauga tema</g:Button>
+					<g:Button ui:field="cancelBtn">renunta</g:Button>
 				</td>
 			</tr>
 		</table>

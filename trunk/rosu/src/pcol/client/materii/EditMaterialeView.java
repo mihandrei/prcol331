@@ -3,6 +3,7 @@ package pcol.client.materii;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
+import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -23,36 +24,43 @@ public class EditMaterialeView extends Composite {
 
 	private static MaterialeEditViewUiBinder uiBinder = GWT
 			.create(MaterialeEditViewUiBinder.class);
-	@UiField FileUpload upl;
+	FileUpload upl;
 	@UiField FormPanel form;
 	@UiField TextBox denumireTbox;
-	@UiField Button button;
+	@UiField Button addBtn;
+	@UiField Button cancelBtn;
 	@UiField FlexTable temeList;
 	@UiField InlineLabel resName;
+	private final String fileInputName;
 	private EditMaterialeActivity presenter;
 
 	interface MaterialeEditViewUiBinder extends
 			UiBinder<Widget, EditMaterialeView> {
 	}
-
+	private void createNewFileUpload(){
+		upl= new FileUpload();
+		upl.setName(fileInputName);
+		
+		upl.addChangeHandler(new ChangeHandler() {
+			@Override
+			public void onChange(ChangeEvent arg0) {
+				presenter.onFileChange();
+			}
+		});
+	}
+	
 	public EditMaterialeView(String action, String fileInputName) {
 		initWidget(uiBinder.createAndBindUi(this));
+		this.fileInputName = fileInputName;
 	
 		form.setAction(action);
 		form.setMethod(FormPanel.METHOD_POST);
 		form.setEncoding(FormPanel.ENCODING_MULTIPART);
-		upl.setName(fileInputName);
+		createNewFileUpload();
 		
-		temeList.getColumnFormatter().getElement(0).getStyle().setWidth(15, Unit.EM);
-		temeList.setText(0, 0, "numele temei");
-		temeList.setText(0, 1, "cerinta");
+		temeList.getColumnFormatter().getElement(0).getStyle().setWidth(16, Unit.EM);
 	}
 
-	@UiHandler("upl")
-	void onUplChange(ChangeEvent event) {
-		presenter.onFileChange();
-	}
-	
 	@UiHandler("form")
 	void onFormSubmitComplete(SubmitCompleteEvent event) {
 		String res = event.getResults();
@@ -62,7 +70,7 @@ public class EditMaterialeView extends Composite {
 	void addRow(String numeTema, String cerinteUrl){
 		int lastrow = temeList.getRowCount();
 		temeList.setText(lastrow, 0, numeTema);
-		Anchor cerintaLink = new Anchor(resName.getText(),cerinteUrl,"blank");
+		Anchor cerintaLink = new Anchor("descarca",cerinteUrl,"blank");
 		temeList.setWidget(lastrow, 1, cerintaLink);
 		Anchor removeLink = new Anchor("sterge");
 		temeList.setWidget(lastrow, 2, removeLink);
@@ -80,11 +88,14 @@ public class EditMaterialeView extends Composite {
 		temeList.removeRow(rowidx);
 	}
 	
-	@UiHandler("button")
+	@UiHandler("addBtn")
 	void onButtonClick(ClickEvent event) {
 		presenter.onAdd();
 	}
-
+	@UiHandler("cancelBtn")
+	void onCancelBtnClick(ClickEvent event) {
+		waitForInputMode();
+	}
 	public void setPresenter(EditMaterialeActivity presenter) {
 		this.presenter=presenter;
 	}
@@ -97,18 +108,6 @@ public class EditMaterialeView extends Composite {
 		form.submit();
 	}
 	
-	void resetForm(){
-		resName.setVisible(false);
-		denumireTbox.setText("");
-		form.setVisible(true);
-	}
-	
-	void hideForm(String r){
-		resName.setText(r);
-		resName.setVisible(true);
-		form.setVisible(false);
-	}
-
 	public void clear() {
 		temeList.removeAllRows();
 	}
@@ -116,4 +115,39 @@ public class EditMaterialeView extends Composite {
 	public String getDescription() {
 		return denumireTbox.getText();
 	}
+
+	public void waitForInputMode(){
+		resName.setVisible(false);
+		addBtn.setVisible(false);
+		cancelBtn.setVisible(false);
+		
+		denumireTbox.setText("");
+		
+		createNewFileUpload();
+		form.clear();
+		form.add(upl);
+		form.setVisible(true);
+		
+		denumireTbox.getElement().getStyle().clearBorderColor();
+	}
+	
+	public void uploadingMode() {
+		resName.setText("se uploadeaza ... ");
+		resName.setVisible(true);
+		form.setVisible(false); 
+	}
+
+	public void readyToSaveMode(String r) {
+		resName.setText(r);
+		resName.setVisible(true);
+		form.setVisible(false); 
+		
+		addBtn.setVisible(true);
+		cancelBtn.setVisible(true);
+	}
+
+	public void descInvalid() {
+		denumireTbox.getElement().getStyle().setBorderColor("#FF3322");
+	}
+	
 }
