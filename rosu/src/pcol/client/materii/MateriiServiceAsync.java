@@ -2,6 +2,7 @@ package pcol.client.materii;
 
 import java.util.List;
 
+import pcol.client.security.AppAsyncCallback;
 import pcol.shared.Course;
 import pcol.shared.Group;
 import pcol.shared.Resource;
@@ -15,7 +16,7 @@ public interface MateriiServiceAsync {
 	void getGrupeForCourse(int courseid, AsyncCallback<List<Group>> callback);
 
 
-	void addMaterial(int courseid, String name, int resourceid,
+	void addMaterial(int courseid, String name, String resourcename,
 			AsyncCallback<Void> callback);
 
 	void getMateriale(int courseid, AsyncCallback<List<Resource>> callback);
@@ -26,6 +27,9 @@ public interface MateriiServiceAsync {
 	void getCourse(int courseid, AsyncCallback<Course> callback);
 
 	void getCourseDescription(int courseid, AsyncCallback<String> callback);
+
+	void removeMaterial(int materieid, String resourceName,
+		AsyncCallback<Void> appAsyncCallback);
 	
 	
 

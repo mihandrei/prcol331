@@ -22,6 +22,7 @@ public interface MateriiService extends RemoteService{
 	String getCourseDescription(int courseid);
 	void updateCourseDescription(int courseid, String desc);
 	
-	void addMaterial(int courseid, String name,int resourceid);
+	void addMaterial(int courseid, String name,String resourcename);
 	List<Resource> getMateriale(int courseid);
+	void removeMaterial(int materieid, String resourceName);
 }

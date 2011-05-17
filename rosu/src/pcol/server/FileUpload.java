@@ -33,7 +33,7 @@ import pcol.server.domain.Resource;
 public class FileUpload extends HttpServlet {
 	private static final String DENUMIRE = "denumire";
 	private static final String UPLOADS = "uploads";
-	private static final int MAXFILESIZE = 1024 * 1024 * 1;// 10 megs
+	private static final int MAXFILESIZE = 1024 * 1024 * 10;// 10 megs
 	
 	private static Logger log = Logger.getLogger(FileUpload.class.getName());
 
@@ -128,6 +128,10 @@ public class FileUpload extends HttpServlet {
 		}
 	}
 
+	public static void deleteFile(String fileName){
+		File file = new File(UPLOADS, fileName);
+		file.delete();
+	}
 	private String processIstream(String denumire, InputStream in)
 			throws IOException {
 		SessionFactory sf = HibernateUtil.getSessionFactory();
