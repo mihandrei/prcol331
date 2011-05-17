@@ -62,13 +62,15 @@ public class PlaceConfigBase implements PlaceHistoryMapper {
 	public String getToken(Place place) {
 		String token = placetokens.get(place.getClass());		
 		PlaceTokenizer tokenizer = tokenizers.get(token);
-		String placeArgs = tokenizer.getToken(place);
-		if(placeArgs!=null){
-			return token + '/' + placeArgs;
-		}else{
-			return token;
+
+		if(tokenizer!=null){
+			String placeArgs = tokenizer.getToken(place);
+			if(placeArgs!=null){
+				return token + '/' + placeArgs;
+			}
 		}
 		
+		return token;
 	}
 
 }
