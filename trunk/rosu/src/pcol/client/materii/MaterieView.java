@@ -7,7 +7,6 @@ public interface MaterieView extends IsWidget{
 	}
 
 	void setPresenter(Presenter presenter);
-	void setName(String name);
 	void setDescription(String desc);
 	void addMaterial(String description, String resourceName);
 	void clearMateriale();

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import pcol.client.security.AppAsyncCallback;
+import pcol.shared.Course;
 import pcol.shared.Resource;
 
 import com.google.gwt.activity.shared.AbstractActivity;
@@ -11,6 +12,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 
 public class MaterieActivity extends AbstractActivity implements
@@ -62,9 +64,14 @@ public class MaterieActivity extends AbstractActivity implements
 						}
 					}
 		});
-		
-		view.setName("todo"+place.getMaterieid());
-		
+		rpc.getCourse(place.getMaterieid(), new AppAsyncCallback<Course>() {
+			
+			@Override
+			public void onSuccess(Course arg0) {
+				shell.setCaption(arg0.name);
+			}
+		});
+
 		panel.setWidget(shell.asWidget());
 	}
 

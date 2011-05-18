@@ -33,11 +33,6 @@ public class MaterieViewImpl extends Composite implements MaterieView {
 	}
 
 	@Override
-	public void setName(String name) {
-//		title.setText(name);
-	}
-
-	@Override
 	public void setDescription(String desc) {
 		materialeHTML.setHTML(desc);
 	}

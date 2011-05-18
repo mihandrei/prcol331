@@ -20,7 +20,7 @@ import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public class EditMaterialeView extends Composite {
+public class EditMaterialeView extends Composite implements UploadView{
 
 	private static MaterialeEditViewUiBinder uiBinder = GWT
 			.create(MaterialeEditViewUiBinder.class);
@@ -32,7 +32,7 @@ public class EditMaterialeView extends Composite {
 	@UiField FlexTable temeList;
 	@UiField InlineLabel resName;
 	private final String fileInputName;
-	private EditMaterialeActivity presenter;
+	private UploadView.Presenter presenter;
 
 	interface MaterialeEditViewUiBinder extends
 			UiBinder<Widget, EditMaterialeView> {
@@ -67,7 +67,7 @@ public class EditMaterialeView extends Composite {
 		presenter.onUploaded(res);
 	}
 
-	void addRow(String numeTema, String cerinteUrl){
+	public void addRow(String numeTema, String cerinteUrl){
 		int lastrow = temeList.getRowCount();
 		temeList.setText(lastrow, 0, numeTema);
 		Anchor cerintaLink = new Anchor("descarca",cerinteUrl,"blank");
@@ -84,7 +84,7 @@ public class EditMaterialeView extends Composite {
 		});
 	}
 	
-	void removerow(int rowidx){
+	public void removerow(int rowidx){
 		temeList.removeRow(rowidx);
 	}
 	
@@ -96,7 +96,7 @@ public class EditMaterialeView extends Composite {
 	void onCancelBtnClick(ClickEvent event) {
 		waitForInputMode();
 	}
-	public void setPresenter(EditMaterialeActivity presenter) {
+	public void setPresenter(UploadView.Presenter presenter) {
 		this.presenter=presenter;
 	}
 

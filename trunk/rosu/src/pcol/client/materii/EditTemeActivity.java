@@ -14,16 +14,16 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 
-public class EditMaterialeActivity extends AbstractActivity implements UploadView.Presenter{
+public class EditTemeActivity extends AbstractActivity implements UploadView.Presenter{
 	private static MaterieShell shell;
 	private static UploadView view;
-	private EditMaterialePlace place;
+	private EditTemePlace place;
 	private String lastUploadedResourceName;
 	private static MateriiServiceAsync rpc;
 
 	private LinkedList<String> resourceNames = new LinkedList<String>();
 	
-	public EditMaterialeActivity(EditMaterialePlace place) {
+	public EditTemeActivity(EditTemePlace place) {
 		this.place = place;
 	}
 
@@ -54,17 +54,6 @@ public class EditMaterialeActivity extends AbstractActivity implements UploadVie
 			}
 		});
 		
-		rpc.getMateriale(place.getMaterieid(),
-				new AppAsyncCallback<List<Resource>>() {
-					@Override
-					public void onSuccess(List<Resource> resources) {
-						for (Resource r : resources) {
-							resourceNames.add(r.resourceName);
-							view.addRow(r.description,"uploads/"+ r.resourceName);
-						}
-					}
-		});
-
 		view.setPresenter(this);
 		panel.setWidget(shell.asWidget());
 	}
@@ -89,13 +78,13 @@ public class EditMaterialeActivity extends AbstractActivity implements UploadVie
 
 	public void onRemove(final int rowidx) {
 		String resourceName = resourceNames.get(rowidx);
-		rpc.removeMaterial(place.getMaterieid(), resourceName  , new AppAsyncCallback<Void>() {
-			@Override
-			public void onSuccess(Void arg0) {
-				resourceNames.remove(rowidx);
-				view.removerow(rowidx);
-			}
-		});
+//		rpc.removeMaterial(place.getMaterieid(), resourceName  , new AppAsyncCallback<Void>() {
+//			@Override
+//			public void onSuccess(Void arg0) {
+//				resourceNames.remove(rowidx);
+//				view.removerow(rowidx);
+//			}
+//		});
 	}
 
 	public void onAdd() {
@@ -104,16 +93,16 @@ public class EditMaterialeActivity extends AbstractActivity implements UploadVie
 			return;
 		}
 		
-		rpc.addMaterial(place.getMaterieid(), view.getDescription(),
-				lastUploadedResourceName, new AppAsyncCallback<Void>() {
-					@Override
-					public void onSuccess(Void arg0) {
-						resourceNames.addLast(lastUploadedResourceName);
-						view.addRow(view.getDescription(),"uploads/"+ lastUploadedResourceName);
-						view.waitForInputMode();
-						lastUploadedResourceName="";
-					}
-		});
+//		rpc.addMaterial(place.getMaterieid(), view.getDescription(),
+//				lastUploadedResourceName, new AppAsyncCallback<Void>() {
+//					@Override
+//					public void onSuccess(Void arg0) {
+//						resourceNames.addLast(lastUploadedResourceName);
+//						view.addRow(view.getDescription(),"uploads/"+ lastUploadedResourceName);
+//						view.waitForInputMode();
+//						lastUploadedResourceName="";
+//					}
+//		});
 
 	}
 }
