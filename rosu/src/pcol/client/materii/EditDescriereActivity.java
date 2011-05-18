@@ -2,6 +2,7 @@ package pcol.client.materii;
 
 import pcol.client.AppLoader;
 import pcol.client.security.AppAsyncCallback;
+import pcol.shared.Course;
 
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.core.client.GWT;
@@ -37,6 +38,15 @@ public class EditDescriereActivity extends AbstractActivity{
 		view.setPresenter(this);
 		view.setDescription("");
 		view.previewMode();
+
+		rpc.getCourse(place.getMaterieid(), new AppAsyncCallback<Course>() {
+			
+			@Override
+			public void onSuccess(Course arg0) {
+				shell.setCaption(arg0.name);
+			}
+		});
+		
 		rpc.getCourseDescription(place.getMaterieid(),new AppAsyncCallback<String>() {
 			
 			@Override

@@ -16,8 +16,12 @@
 			border-bottom: solid 1px #CCCCCC;
 			padding: 0.3em;
 		}
+		
+		.cont{
+			margin:1em;
+		}
 	</ui:style>
-	<g:ScrollPanel>
+	<g:ScrollPanel styleName="{style.cont}">
 		<g:HTMLPanel>
 			<g:HTML wordWrap="true" ui:field="materialeHTML" styleName="{style.center}">
 			</g:HTML>

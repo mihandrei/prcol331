@@ -26,5 +26,10 @@ public class MaterieShell extends Composite  {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 
+	public void setCaption(String name) {
+		title.setText(name);
+		
+	}
+
 
 }

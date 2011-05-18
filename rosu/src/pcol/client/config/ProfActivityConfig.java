@@ -4,6 +4,8 @@ import pcol.client.materii.EditDescriereActivity;
 import pcol.client.materii.EditDescrierePlace;
 import pcol.client.materii.EditMaterialeActivity;
 import pcol.client.materii.EditMaterialePlace;
+import pcol.client.materii.EditTemeActivity;
+import pcol.client.materii.EditTemePlace;
 import pcol.client.materii.ProfOverviewActivity;
 import pcol.client.materii.ProfOverviewPlace;
 import pcol.client.tweet.TweetActivity;
@@ -30,6 +32,8 @@ public class ProfActivityConfig implements ActivityMapper {
 			return new EditDescriereActivity((EditDescrierePlace)place);
 		}else if (place instanceof EditMaterialePlace){
 			return new EditMaterialeActivity((EditMaterialePlace)place);
+		}else if (place instanceof EditTemePlace){
+			return new EditTemeActivity((EditTemePlace)place);
 		}
 		return null;
 	}
