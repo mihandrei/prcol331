@@ -17,7 +17,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 //TODO : ii aproape identic viewul cu cel de la materii, reuse
-public class TemeViewImpl  extends Composite implements TemeView {
+public class StudentOverViewImpl  extends Composite implements StudentOverView {
 
 	private static TemeViewImplUiBinder uiBinder = GWT
 			.create(TemeViewImplUiBinder.class);
@@ -29,11 +29,11 @@ public class TemeViewImpl  extends Composite implements TemeView {
 		String link();
 	}
 
-	interface TemeViewImplUiBinder extends UiBinder<Widget, TemeViewImpl> {
+	interface TemeViewImplUiBinder extends UiBinder<Widget, StudentOverViewImpl> {
 	}
 	private Presenter presenter;
 
-	public TemeViewImpl() {
+	public StudentOverViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 

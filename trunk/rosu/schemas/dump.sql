@@ -100,8 +100,8 @@ CREATE TABLE `curicul` (
   PRIMARY KEY (`id`),
   KEY `fk_curicul_org_section1` (`sectieId`),
   KEY `fk_curicul_cur_course1` (`courseId`),
-  CONSTRAINT `fk_curicul_cur_course1` FOREIGN KEY (`courseId`) REFERENCES `cur_course` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_curicul_org_section1` FOREIGN KEY (`sectieId`) REFERENCES `org_section` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_curicul_org_section1` FOREIGN KEY (`sectieId`) REFERENCES `org_section` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_curicul_cur_course1` FOREIGN KEY (`courseId`) REFERENCES `cur_course` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -603,12 +603,14 @@ CREATE TABLE `tm_student` (
   `nrmatr` int(11) NOT NULL,
   `status` varchar(6) NOT NULL,
   `data_incarcare` datetime NOT NULL,
-  `resourceId` int(11) NOT NULL,
+  `resourceId` int(11) DEFAULT NULL,
   PRIMARY KEY (`temaId`,`nrmatr`),
   KEY `fk_tm_student_teme1` (`temaId`),
   KEY `fk_tm_student_studenti1` (`nrmatr`),
-  CONSTRAINT `fk_tm_student_studenti1` FOREIGN KEY (`nrmatr`) REFERENCES `studenti` (`nr_matr`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_tm_student_teme1` FOREIGN KEY (`temaId`) REFERENCES `teme` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `fk_tm_student_resource1` (`resourceId`),
+  CONSTRAINT `fk_tm_student_teme1` FOREIGN KEY (`temaId`) REFERENCES `teme` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tm_student_resource1` FOREIGN KEY (`resourceId`) REFERENCES `resource` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tm_student_studenti1` FOREIGN KEY (`nrmatr`) REFERENCES `studenti` (`nr_matr`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -630,4 +632,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-05-19 21:11:38
+-- Dump completed on 2011-05-20  0:10:02
