@@ -1,7 +1,9 @@
 package pcol.server.domain;
 
-// Generated May 17, 2011 11:37:48 AM by Hibernate Tools 3.4.0.CR1
+// Generated May 19, 2011 4:58:35 AM by Hibernate Tools 3.4.0.CR1
 
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +12,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -24,6 +27,7 @@ public class Resource implements java.io.Serializable {
 	private CurCourse curCourse;
 	private String numefisier;
 	private String descriere;
+	private Set<Teme> temes = new HashSet<Teme>(0);
 
 	public Resource() {
 	}
@@ -33,10 +37,12 @@ public class Resource implements java.io.Serializable {
 		this.descriere = descriere;
 	}
 
-	public Resource(CurCourse curCourse, String numefisier, String descriere) {
+	public Resource(CurCourse curCourse, String numefisier, String descriere,
+			Set<Teme> temes) {
 		this.curCourse = curCourse;
 		this.numefisier = numefisier;
 		this.descriere = descriere;
+		this.temes = temes;
 	}
 
 	@Id
@@ -76,6 +82,15 @@ public class Resource implements java.io.Serializable {
 
 	public void setDescriere(String descriere) {
 		this.descriere = descriere;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "resource")
+	public Set<Teme> getTemes() {
+		return this.temes;
+	}
+
+	public void setTemes(Set<Teme> temes) {
+		this.temes = temes;
 	}
 
 }

@@ -89,7 +89,7 @@ public class EditMaterialeActivity extends AbstractActivity implements UploadVie
 
 	public void onRemove(final int rowidx) {
 		String resourceName = resourceNames.get(rowidx);
-		rpc.removeMaterial(place.getMaterieid(), resourceName  , new AppAsyncCallback<Void>() {
+		rpc.removeMaterialByName(place.getMaterieid(), resourceName  , new AppAsyncCallback<Void>() {
 			@Override
 			public void onSuccess(Void arg0) {
 				resourceNames.remove(rowidx);
@@ -104,8 +104,9 @@ public class EditMaterialeActivity extends AbstractActivity implements UploadVie
 			return;
 		}
 		
-		rpc.addMaterial(place.getMaterieid(), view.getDescription(),
-				lastUploadedResourceName, new AppAsyncCallback<Void>() {
+		rpc.addMaterial(place.getMaterieid(),
+				new Resource(view.getDescription(),	lastUploadedResourceName),
+				new AppAsyncCallback<Void>() {
 					@Override
 					public void onSuccess(Void arg0) {
 						resourceNames.addLast(lastUploadedResourceName);

@@ -77,7 +77,7 @@ CREATE TABLE `cur_course` (
 
 LOCK TABLES `cur_course` WRITE;
 /*!40000 ALTER TABLE `cur_course` DISABLE KEYS */;
-INSERT INTO `cur_course` VALUES (1,'Tehnici de optimizare','Optimizare',1,'ava'),(5,'Inteligenta Artificiala','AI',1,NULL),(6,'Retele de calculatoare','retele',1,NULL),(7,'Programare orientata obiect','OOP',1,NULL),(8,'Ingineria sistemelor software','ISS',1,NULL),(9,'Algoritmi si structuri de date','Algoritmi',1,NULL),(10,'Metodologia redactarii unei lucrari stiintifice','Paper',1,NULL),(11,'Sisteme de operare','SO',1,NULL),(12,'Proiect colectiv','proj col',1,NULL),(13,'Branzeturi, metode industriale','BRZ',1,NULL),(14,'Metode moderne de abordare a cartofului','CRTF',1,NULL),(15,'Razboaiele luminii','lumi',1,NULL),(16,'despre gavitzapa','gravitzapa',1,NULL),(17,'kin dza dza','dza dza',1,NULL);
+INSERT INTO `cur_course` VALUES (1,'Tehnici de optimizare','Optimizare',1,'ava ana '),(5,'Inteligenta Artificiala','AI',1,'In mathematics and computer science, an algorithm is an effective method expressed as a finite list of well-defined instructions for calculating a function. Algorithms are used for calculation, data processing, and automated reasoning\n\nWhile there is no generally accepted formal definition of \"algorithm,\" an informal definition could be \"a set of rules that precisely defines a sequence of operations.\"[10] For some people, a program is only an algorithm if it stops eventually; for others, a program is only an algorithm if it stops before a given number of calculation steps'),(6,'Retele de calculatoare','retele',1,NULL),(7,'Programare orientata obiect','OOP',1,NULL),(8,'Ingineria sistemelor software','ISS',1,NULL),(9,'Algoritmi si structuri de date','Algoritmi',1,NULL),(10,'Metodologia redactarii unei lucrari stiintifice','Paper',1,NULL),(11,'Sisteme de operare','SO',1,NULL),(12,'Proiect colectiv','proj col',1,NULL),(13,'Branzeturi, metode industriale','BRZ',1,NULL),(14,'Metode moderne de abordare a cartofului','CRTF',1,NULL),(15,'Razboaiele luminii','lumi',1,NULL),(16,'despre gavitzapa','gravitzapa',1,NULL),(17,'kin dza dza','dza dza',1,NULL);
 /*!40000 ALTER TABLE `cur_course` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -463,9 +463,10 @@ CREATE TABLE `resource` (
   `numefisier` varchar(255) NOT NULL,
   `descriere` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `numefisier_UNIQUE` (`numefisier`),
   KEY `fk_resource_cur_course1` (`couseId`),
   CONSTRAINT `fk_resource_cur_course1` FOREIGN KEY (`couseId`) REFERENCES `cur_course` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -474,7 +475,7 @@ CREATE TABLE `resource` (
 
 LOCK TABLES `resource` WRITE;
 /*!40000 ALTER TABLE `resource` DISABLE KEYS */;
-INSERT INTO `resource` VALUES (1,5,'use case prof.txt','use case prof.txt'),(2,1,'mess.txt','mess.txt');
+INSERT INTO `resource` VALUES (26,NULL,'mess.txt','mess.txt'),(27,5,'oare_is_trei.jpg','oare\'s trei'),(28,5,'mess.txt(0)','dara e mess'),(29,NULL,'infrastructura.txt(0)','infrastructura.txt'),(30,1,'sport.xlsx','sport'),(31,1,'infrastructura.txt(1)','infra'),(32,1,'infrastructura.txt(2)','s'),(33,1,'lab2.pdf','ssss'),(34,NULL,'developing red.txt','developing red.txt'),(35,NULL,'mess.txt(1)','mess.txt'),(36,NULL,'mess.txt(2)','mess.txt'),(37,NULL,'mess.txt(3)','mess.txt'),(38,NULL,'use case prof.txt','use case prof.txt'),(39,NULL,'mess.txt(4)','mess.txt'),(40,NULL,'infrastructura.txt','infrastructura.txt'),(41,NULL,'lab2.pdf(0)','lab2.pdf'),(42,NULL,'putere.c','putere.c');
 /*!40000 ALTER TABLE `resource` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -568,15 +569,16 @@ DROP TABLE IF EXISTS `teme`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `teme` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `curs` int(11) NOT NULL,
   `resourceId` int(11) NOT NULL,
-  `descriere` varchar(45) NOT NULL,
   `deadline` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_teme_cursuri1` (`curs`),
-  CONSTRAINT `fk_teme_cursuri1` FOREIGN KEY (`curs`) REFERENCES `cur_course` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `fk_teme_resource1` (`resourceId`),
+  CONSTRAINT `fk_teme_cursuri1` FOREIGN KEY (`curs`) REFERENCES `cur_course` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_teme_resource1` FOREIGN KEY (`resourceId`) REFERENCES `resource` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -585,6 +587,7 @@ CREATE TABLE `teme` (
 
 LOCK TABLES `teme` WRITE;
 /*!40000 ALTER TABLE `teme` DISABLE KEYS */;
+INSERT INTO `teme` VALUES (1,1,41,'2011-05-20 00:00:00'),(2,5,42,'2011-05-24 00:00:00');
 /*!40000 ALTER TABLE `teme` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -604,8 +607,8 @@ CREATE TABLE `tm_student` (
   PRIMARY KEY (`temaId`,`nrmatr`),
   KEY `fk_tm_student_teme1` (`temaId`),
   KEY `fk_tm_student_studenti1` (`nrmatr`),
-  CONSTRAINT `fk_tm_student_teme1` FOREIGN KEY (`temaId`) REFERENCES `teme` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_tm_student_studenti1` FOREIGN KEY (`nrmatr`) REFERENCES `studenti` (`nr_matr`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_tm_student_studenti1` FOREIGN KEY (`nrmatr`) REFERENCES `studenti` (`nr_matr`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tm_student_teme1` FOREIGN KEY (`temaId`) REFERENCES `teme` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -627,4 +630,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-05-16 16:38:37
+-- Dump completed on 2011-05-19  5:18:33

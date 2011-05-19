@@ -16,8 +16,10 @@ public class MaterieShell extends Composite  {
 			.create(MaterieViewImplUiBinder.class);
 	@UiField
 	Label title;
-	@UiField InlineHyperlink backlink;
-	@UiField SimpleLayoutPanel panel;
+	@UiField
+	public InlineHyperlink backlink;
+	@UiField
+	public SimpleLayoutPanel panel;
 	
 	interface MaterieViewImplUiBinder extends UiBinder<Widget, MaterieShell> {
 	}
