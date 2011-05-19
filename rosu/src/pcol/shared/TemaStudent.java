@@ -1,8 +1,8 @@
-package pcol.client.teme;
+package pcol.shared;
 
 import java.util.Date;
 
-public class AssignmentOverview {
+public class TemaStudent {
 	public enum Status{
 		PENDING_SUBMISSION,
 		PENDING_REVIEW,
@@ -10,12 +10,12 @@ public class AssignmentOverview {
 		MISSED
 	}
 	
-	Status status = Status.PENDING_SUBMISSION;
-	Date deadline;
-	String name;
-	String id;
+	public Status status = Status.PENDING_SUBMISSION;
+	public Date deadline;
+	public String name;
+	public String id;
 
-	public AssignmentOverview(Status status, Date deadline, String name,
+	public TemaStudent(Status status, Date deadline, String name,
 			String id) {
 		this.status = status;
 		this.deadline = deadline;

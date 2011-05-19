@@ -12,8 +12,6 @@ import pcol.client.teme.EditTemeActivity;
 import pcol.client.teme.EditTemePlace;
 import pcol.client.tweet.TweetActivity;
 import pcol.client.tweet.TweetPlace;
-import pcol.client.useradmin.UsrAdminActivity;
-import pcol.client.useradmin.UsrAdminPlace;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.activity.shared.ActivityMapper;

@@ -6,8 +6,8 @@ import pcol.client.materii.MaterieActivity;
 import pcol.client.materii.StudentOverviewPlace;
 import pcol.client.schedule.ScheduleActivity;
 import pcol.client.schedule.SchedulePlace;
-import pcol.client.teme.TemeActivity;
-import pcol.client.teme.TemePlace;
+import pcol.client.teme.StudentOverViewActivity;
+import pcol.client.teme.StudentOverViewPlace;
 import pcol.client.tweet.TweetActivity;
 import pcol.client.tweet.TweetPlace;
 
@@ -41,8 +41,8 @@ public class StudentActivityConfig implements ActivityMapper {
 
 		else if (place instanceof StudentOverviewPlace)
 			return new MaterieActivity((StudentOverviewPlace) place);
-		else if (place instanceof TemePlace) {
-			return new TemeActivity();
+		else if (place instanceof StudentOverViewPlace) {
+			return new StudentOverViewActivity((StudentOverViewPlace)place );
 		} else if (place instanceof SchedulePlace) {
 			return new ScheduleActivity();
 		} else {

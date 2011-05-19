@@ -4,7 +4,7 @@ import java.util.Date;
 
 import com.google.gwt.user.client.ui.IsWidget;
 
-public interface TemeView extends IsWidget{
+public interface StudentOverView extends IsWidget{
 	public interface Presenter {
 		
 	}
