@@ -19,7 +19,10 @@ import pcol.shared.Course;
 import pcol.shared.Group;
 import pcol.shared.Resource;
 import pcol.shared.Tema;
-
+/**
+ * FIXME: security: un profesor poate modifica doar cursurile lui, 
+ * pune operatiile in scopul unui withuser, trimite sid-ul 
+ */
 public class MateriiServiceImpl extends AuthRemoteServiceServlet implements MateriiService {
 
 	@Override

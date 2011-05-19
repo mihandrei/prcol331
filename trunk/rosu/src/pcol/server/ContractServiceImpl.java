@@ -1,6 +1,7 @@
 package pcol.server;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -12,9 +13,11 @@ import pcol.server.domain.ContracteStudiu;
 import pcol.server.domain.ContracteStudiuId;
 //import pcol.server.domain.CurGrup;
 //import pcol.server.domain.CurGrupCours;
+import pcol.server.domain.CurCourse;
 import pcol.server.domain.Orar;
 import pcol.server.domain.OrgGroup;
 import pcol.server.domain.OrgSection;
+import pcol.server.domain.Profesori;
 import pcol.server.domain.Studenti;
 import pcol.server.domain.Logins;
 import pcol.server.security.AuthRemoteServiceServlet;
@@ -147,33 +150,55 @@ public class ContractServiceImpl extends AuthRemoteServiceServlet implements
 	}
 
 	@Override
+	// TODO: ar fi fost frumos ca student extends user ; prof extends user si 
+	// sa avem o metoda vistuala getschedule care sa fie impl specific de fiecare clasa
 	public List<OrarDto> getSchedule(String sid) throws AuthenticationException {
 		return withUser(sid, new UserCall<List<OrarDto>>() {
 			@Override
 			public List<OrarDto> call(Logins user, Session session) {
 				session.beginTransaction();
-				if (user.getStudentis().size() != 1) {
-					throw new RuntimeException("userul nu e student");
+				Iterable<Orar> events;
+				if (user.getStudentis().size() == 1) {
+					Studenti student = user.getStudentis().iterator().next();
+					events = getSchedule(student);
+				}else if(user.getProfesoris().size() == 1){
+					Profesori prof = user.getProfesoris().iterator().next();
+					events = getSchedule(prof);
+				}else{
+					throw new RuntimeException("userul nu e student sau profesor");
 				}
-				Studenti student = user.getStudentis().iterator().next();
 
 				List<OrarDto> ret = new ArrayList<OrarDto>();
-				for (OrgGroup group : student.getOrgGroups()) {
 
-					for (Orar orar : group.getOrars()) {
-						ret.add(new OrarDto(orar.getOrgGroup().getId(), orar
-								.getCurCourse().getId(), orar.getCurCourse()
-								.getAbbrev(), orar.getTipActivitate(), orar
-								.getZi(), orar.getSaptamana(), orar
-								.getStartOra(), orar.getEndOra(), orar
-								.getSala()));
-					}
+				for (Orar orar : events) {
+					ret.add(new OrarDto(orar.getOrgGroup().getId(), orar
+							.getCurCourse().getId(), orar.getCurCourse()
+							.getAbbrev(), orar.getTipActivitate(), orar
+							.getZi(), orar.getSaptamana(), orar
+							.getStartOra(), orar.getEndOra(), orar
+							.getSala()));
 				}
 				session.getTransaction().commit();
 				return ret;
 			}
 		});
 
+	}
+
+	protected Set<Orar> getSchedule(Profesori prof) {
+		HashSet<Orar> ret = new HashSet<Orar>();
+		for(CurCourse curs:prof.getCurCourses()){
+			ret.addAll(curs.getOrars());
+		}
+		return ret;
+	}
+
+	protected Set<Orar> getSchedule(Studenti student) {
+		HashSet<Orar> ret = new HashSet<Orar>();
+		for(OrgGroup grup: student.getOrgGroups()){
+			ret.addAll(grup.getOrars());
+		}
+		return ret;
 	}
 
 }

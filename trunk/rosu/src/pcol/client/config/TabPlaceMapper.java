@@ -20,9 +20,9 @@ public class TabPlaceMapper {
 	}
 	
 	protected List<Tab> tabs = new ArrayList<Tab>();
-	private final PlaceHistoryMapper placeconfig;
+	protected final PlaceConfigBase placeconfig;
 	
-	public TabPlaceMapper(PlaceHistoryMapper placeconfig){
+	public TabPlaceMapper(PlaceConfigBase placeconfig){
 		this.placeconfig=placeconfig;
 	}
 	
@@ -31,6 +31,6 @@ public class TabPlaceMapper {
 	}
 	
 	public String getTab(Place place){
-		return placeconfig.getToken(place);
+		return placeconfig.getPlaceToken(place);
 	}
 }

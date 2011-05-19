@@ -77,7 +77,7 @@ CREATE TABLE `cur_course` (
 
 LOCK TABLES `cur_course` WRITE;
 /*!40000 ALTER TABLE `cur_course` DISABLE KEYS */;
-INSERT INTO `cur_course` VALUES (1,'Tehnici de optimizare','Optimizare',1,'ava ana '),(5,'Inteligenta Artificiala','AI',1,'In mathematics and computer science, an algorithm is an effective method expressed as a finite list of well-defined instructions for calculating a function. Algorithms are used for calculation, data processing, and automated reasoning\n\nWhile there is no generally accepted formal definition of \"algorithm,\" an informal definition could be \"a set of rules that precisely defines a sequence of operations.\"[10] For some people, a program is only an algorithm if it stops eventually; for others, a program is only an algorithm if it stops before a given number of calculation steps'),(6,'Retele de calculatoare','retele',1,NULL),(7,'Programare orientata obiect','OOP',1,NULL),(8,'Ingineria sistemelor software','ISS',1,NULL),(9,'Algoritmi si structuri de date','Algoritmi',1,NULL),(10,'Metodologia redactarii unei lucrari stiintifice','Paper',1,NULL),(11,'Sisteme de operare','SO',1,NULL),(12,'Proiect colectiv','proj col',1,NULL),(13,'Branzeturi, metode industriale','BRZ',1,NULL),(14,'Metode moderne de abordare a cartofului','CRTF',1,NULL),(15,'Razboaiele luminii','lumi',1,NULL),(16,'despre gavitzapa','gravitzapa',1,NULL),(17,'kin dza dza','dza dza',1,NULL);
+INSERT INTO `cur_course` VALUES (1,'Tehnici de optimizare','Optimizare',3,'ava ana '),(5,'Inteligenta Artificiala','AI',3,'In mathematics and computer science, an algorithm is an effective method expressed as a finite list of well-defined instructions for calculating a function. Algorithms are used for calculation, data processing, and automated reasoning\n\nWhile there is no generally accepted formal definition of \"algorithm,\" an informal definition could be \"a set of rules that precisely defines a sequence of operations.\"[10] For some people, a program is only an algorithm if it stops eventually; for others, a program is only an algorithm if it stops before a given number of calculation steps'),(6,'Retele de calculatoare','retele',1,NULL),(7,'Programare orientata obiect','OOP',1,NULL),(8,'Ingineria sistemelor software','ISS',1,NULL),(9,'Algoritmi si structuri de date','Algoritmi',3,NULL),(10,'Metodologia redactarii unei lucrari stiintifice','Paper',1,NULL),(11,'Sisteme de operare','SO',1,NULL),(12,'Proiect colectiv','proj col',1,NULL),(13,'Branzeturi, metode industriale','BRZ',1,NULL),(14,'Metode moderne de abordare a cartofului','CRTF',1,NULL),(15,'Razboaiele luminii','lumi',1,NULL),(16,'despre gavitzapa','gravitzapa',1,NULL),(17,'kin dza dza','dza dza',1,NULL);
 /*!40000 ALTER TABLE `cur_course` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -100,8 +100,8 @@ CREATE TABLE `curicul` (
   PRIMARY KEY (`id`),
   KEY `fk_curicul_org_section1` (`sectieId`),
   KEY `fk_curicul_cur_course1` (`courseId`),
-  CONSTRAINT `fk_curicul_org_section1` FOREIGN KEY (`sectieId`) REFERENCES `org_section` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_curicul_cur_course1` FOREIGN KEY (`courseId`) REFERENCES `cur_course` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_curicul_cur_course1` FOREIGN KEY (`courseId`) REFERENCES `cur_course` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_curicul_org_section1` FOREIGN KEY (`sectieId`) REFERENCES `org_section` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -141,7 +141,7 @@ CREATE TABLE `logins` (
 
 LOCK TABLES `logins` WRITE;
 /*!40000 ALTER TABLE `logins` DISABLE KEYS */;
-INSERT INTO `logins` VALUES ('didy','didy','todo',NULL,NULL,3),('geza','geza','todo',NULL,NULL,2),('mihai','mihai','todo',NULL,NULL,1),('system','golomoz never login golomoz','golomoz',NULL,NULL,NULL),('turing','turing','todo',NULL,NULL,4);
+INSERT INTO `logins` VALUES ('didy','didy','todo',NULL,NULL,3),('geza','geza','todo',NULL,NULL,2),('mihai','mihai','todo',NULL,NULL,1),('norvig','norvig','todo',NULL,NULL,5),('system','golomoz never login golomoz','golomoz',NULL,NULL,NULL),('turing','turing','todo',NULL,NULL,4);
 /*!40000 ALTER TABLE `logins` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -411,7 +411,7 @@ CREATE TABLE `persoane` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `cnp_unique` (`cnp`),
   UNIQUE KEY `pass_unique` (`pasaport`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -420,7 +420,7 @@ CREATE TABLE `persoane` (
 
 LOCK TABLES `persoane` WRITE;
 /*!40000 ALTER TABLE `persoane` DISABLE KEYS */;
-INSERT INTO `persoane` VALUES (1,'1831104060023','251452','mihai daniel','andrei',1),(2,'1900106223','25416','geza','kovacs',1),(3,'19011','123456','diana','troanca',1),(4,'1555',NULL,'alan','turing',1);
+INSERT INTO `persoane` VALUES (1,'1831104060023','251452','mihai daniel','andrei',1),(2,'1900106223','25416','geza','kovacs',1),(3,'19011','123456','diana','troanca',1),(4,'1555',NULL,'alan','turing',1),(5,'65455',NULL,'peter','norvig',0);
 /*!40000 ALTER TABLE `persoane` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -437,7 +437,7 @@ CREATE TABLE `profesori` (
   PRIMARY KEY (`id`),
   KEY `fk_profesori_logins1` (`login`),
   CONSTRAINT `fk_profesori_logins1` FOREIGN KEY (`login`) REFERENCES `logins` (`login_name`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -446,7 +446,7 @@ CREATE TABLE `profesori` (
 
 LOCK TABLES `profesori` WRITE;
 /*!40000 ALTER TABLE `profesori` DISABLE KEYS */;
-INSERT INTO `profesori` VALUES (1,'turing');
+INSERT INTO `profesori` VALUES (3,'norvig'),(1,'turing');
 /*!40000 ALTER TABLE `profesori` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -630,4 +630,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-05-19  5:18:33
+-- Dump completed on 2011-05-19 21:11:38
