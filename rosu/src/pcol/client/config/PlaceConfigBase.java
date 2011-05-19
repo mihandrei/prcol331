@@ -59,8 +59,11 @@ public class PlaceConfigBase implements PlaceHistoryMapper {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
+	/**
+	 * serializeaza place-ul in url
+	 */
 	public String getToken(Place place) {
-		String token = placetokens.get(place.getClass());		
+		String token = getPlaceToken(place);		
 		PlaceTokenizer tokenizer = tokenizers.get(token);
 
 		if(tokenizer!=null){
@@ -73,4 +76,10 @@ public class PlaceConfigBase implements PlaceHistoryMapper {
 		return token;
 	}
 
+	/**
+	 * @return token-ul configurat pt acest Place
+	 */
+	public String getPlaceToken(Place place){
+		return placetokens.get(place.getClass());
+	}
 }

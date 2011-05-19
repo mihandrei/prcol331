@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import pcol.client.config.AdminActivityConfig;
 import pcol.client.config.AdminPlaceConfig;
 import pcol.client.config.AdminTabConfig;
+import pcol.client.config.PlaceConfigBase;
 import pcol.client.config.ProfActivityConfig;
 import pcol.client.config.ProfPlaceConfig;
 import pcol.client.config.ProfTabConfig;
@@ -113,7 +114,7 @@ public class AppLoader implements EntryPoint, LoginShell.Presenter{
 		GWT.runAsync(new RunAsyncCallback() {
 			@Override
 			public void onSuccess() {
-				PlaceHistoryMapper placeConf;
+				PlaceConfigBase placeConf;
 				Place defPlace;
 				TabPlaceMapper tabConf;
 				ActivityMapper activityConf;
