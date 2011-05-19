@@ -9,15 +9,16 @@ import org.hibernate.SessionFactory;
 
 import pcol.client.materii.MateriiService;
 import pcol.server.domain.CurCourse;
-import pcol.server.domain.Curicul;
 import pcol.server.domain.Logins;
 import pcol.server.domain.OrgGroup;
 import pcol.server.domain.Profesori;
+import pcol.server.domain.Teme;
 import pcol.server.security.AuthRemoteServiceServlet;
 import pcol.shared.AuthenticationException;
 import pcol.shared.Course;
 import pcol.shared.Group;
 import pcol.shared.Resource;
+import pcol.shared.Tema;
 
 public class MateriiServiceImpl extends AuthRemoteServiceServlet implements MateriiService {
 
@@ -35,9 +36,10 @@ public class MateriiServiceImpl extends AuthRemoteServiceServlet implements Mate
 				for(CurCourse cur : prof.getCurCourses()){
 					ret.add(new Course(cur.getId(), cur.getName(),cur.getAbbrev(),-1));
 				}
+				session.getTransaction().commit();
 				return ret;
 			}
-			});
+		});
 	}
 	
 	@Override
@@ -108,22 +110,22 @@ public class MateriiServiceImpl extends AuthRemoteServiceServlet implements Mate
 	}
 
 	@Override
-	public void addMaterial(int courseid, String descriere, String resourcename) {
+	public void addMaterial(int courseid, Resource res){
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session session = sf.openSession();
 		try {
 			session.beginTransaction();
 			Query grq = session
 			.createQuery("from Resource as r where r.numefisier=:r")
-			.setParameter("r", resourcename);
+			.setParameter("r", res.resourceName);
 			
-			pcol.server.domain.Resource res  =(pcol.server.domain.Resource) grq.uniqueResult();
+			pcol.server.domain.Resource domres  =(pcol.server.domain.Resource) grq.uniqueResult();
 			CurCourse curCourse = (CurCourse) session.get(CurCourse.class, courseid);
 
-			res.setDescriere(descriere);
-			res.setCurCourse(curCourse);
+			domres.setDescriere(res.description);
+			domres.setCurCourse(curCourse);
 			
-			session.persist(res);
+			session.persist(domres);
 			session.getTransaction().commit();
 		} finally {
 			session.close();
@@ -144,7 +146,6 @@ public class MateriiServiceImpl extends AuthRemoteServiceServlet implements Mate
 				ret.add(new Resource(r.getDescriere(), r.getNumefisier()));
 			}
 			
-			session.persist(course);
 			session.getTransaction().commit();
 			return ret;
 		} finally {
@@ -153,7 +154,7 @@ public class MateriiServiceImpl extends AuthRemoteServiceServlet implements Mate
 	}
 
 	@Override
-	public void removeMaterial(int materieid, String resourceName) {
+	public void removeMaterialByName(int materieid, String resourceName) {
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session session = sf.openSession();
 		try {
@@ -168,6 +169,67 @@ public class MateriiServiceImpl extends AuthRemoteServiceServlet implements Mate
 			session.getTransaction().commit();
 			//resursa a fost scoasa din BD cu succes , kill za file
 			FileUpload.deleteFile(resourceName);
+		} finally {
+			session.close();
+		}
+	}
+
+	@Override
+	public List<Tema> getTeme(int materieid) {
+		SessionFactory sf = HibernateUtil.getSessionFactory();
+		Session session = sf.openSession();
+		try {
+			session.beginTransaction();
+			CurCourse course = (CurCourse) session.get(CurCourse.class,materieid);
+			List<Tema> ret = new ArrayList<Tema>();
+			
+			for(Teme dt :course.getTemes()){
+				pcol.server.domain.Resource domRes = dt.getResource();
+				Resource r = new Resource(domRes.getDescriere(),domRes.getNumefisier());
+				ret.add(new Tema(materieid,r,dt.getDeadline()));
+			}
+			
+			session.getTransaction().commit();
+			return ret;
+		} finally {
+			session.close();
+		}
+	}
+
+	@Override
+	public void addTema(Tema t) {
+		SessionFactory sf = HibernateUtil.getSessionFactory();
+		Session session = sf.openSession();
+		try {
+			session.beginTransaction();
+			CurCourse curCourse = (CurCourse) session.get(CurCourse.class, t.materieid);
+			Query grq = session
+			.createQuery("from Resource as r where r.numefisier=:r")
+			.setParameter("r", t.res.resourceName);
+			
+			pcol.server.domain.Resource domres  =(pcol.server.domain.Resource) grq.uniqueResult();
+			
+			Teme domTema = new Teme(domres, curCourse);
+			domTema.setDeadline(t.deadline);
+			
+			session.persist(domTema);
+			session.getTransaction().commit();
+		} finally {
+			session.close();
+		}
+	}
+
+	@Override
+	public void removeTema(int temaid) {
+		SessionFactory sf = HibernateUtil.getSessionFactory();
+		Session session = sf.openSession();
+		try {
+			session.beginTransaction();
+			Teme domt = (Teme) session.get(Teme.class,temaid);
+			String numeFisier = domt.getResource().getNumefisier();
+			session.delete(domt);
+			session.getTransaction().commit();
+			FileUpload.deleteFile(numeFisier);
 		} finally {
 			session.close();
 		}

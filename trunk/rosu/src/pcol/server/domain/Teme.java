@@ -1,6 +1,6 @@
 package pcol.server.domain;
 
-// Generated May 17, 2011 11:37:48 AM by Hibernate Tools 3.4.0.CR1
+// Generated May 19, 2011 4:58:35 AM by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -8,6 +8,8 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,41 +25,47 @@ import javax.persistence.TemporalType;
 @Table(name = "teme", catalog = "proj_col")
 public class Teme implements java.io.Serializable {
 
-	private int id;
+	private Integer id;
+	private Resource resource;
 	private CurCourse curCourse;
-	private int resourceId;
-	private String descriere;
 	private Date deadline;
 	private Set<TmStudent> tmStudents = new HashSet<TmStudent>(0);
 
 	public Teme() {
 	}
 
-	public Teme(int id, CurCourse curCourse, int resourceId, String descriere) {
-		this.id = id;
+	public Teme(Resource resource, CurCourse curCourse) {
+		this.resource = resource;
 		this.curCourse = curCourse;
-		this.resourceId = resourceId;
-		this.descriere = descriere;
 	}
 
-	public Teme(int id, CurCourse curCourse, int resourceId, String descriere,
-			Date deadline, Set<TmStudent> tmStudents) {
-		this.id = id;
+	public Teme(Resource resource, CurCourse curCourse, Date deadline,
+			Set<TmStudent> tmStudents) {
+		this.resource = resource;
 		this.curCourse = curCourse;
-		this.resourceId = resourceId;
-		this.descriere = descriere;
 		this.deadline = deadline;
 		this.tmStudents = tmStudents;
 	}
 
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
-	public int getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "resourceId", nullable = false)
+	public Resource getResource() {
+		return this.resource;
+	}
+
+	public void setResource(Resource resource) {
+		this.resource = resource;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -68,24 +76,6 @@ public class Teme implements java.io.Serializable {
 
 	public void setCurCourse(CurCourse curCourse) {
 		this.curCourse = curCourse;
-	}
-
-	@Column(name = "resourceId", nullable = false)
-	public int getResourceId() {
-		return this.resourceId;
-	}
-
-	public void setResourceId(int resourceId) {
-		this.resourceId = resourceId;
-	}
-
-	@Column(name = "descriere", nullable = false, length = 45)
-	public String getDescriere() {
-		return this.descriere;
-	}
-
-	public void setDescriere(String descriere) {
-		this.descriere = descriere;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)

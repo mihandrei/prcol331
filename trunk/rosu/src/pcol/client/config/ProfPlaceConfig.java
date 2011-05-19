@@ -2,9 +2,9 @@ package pcol.client.config;
 
 import pcol.client.materii.EditDescrierePlace;
 import pcol.client.materii.EditMaterialePlace;
-import pcol.client.materii.EditTemePlace;
 import pcol.client.materii.ProfOverviewPlace;
 import pcol.client.schedule.SchedulePlace;
+import pcol.client.teme.EditTemePlace;
 import pcol.client.tweet.TweetPlace;
 
 public class ProfPlaceConfig extends PlaceConfigBase {
