@@ -1,6 +1,7 @@
 package pcol.server;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -8,12 +9,13 @@ import java.util.Set;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
+import com.google.gwt.dev.util.collect.HashMap;
+
 import pcol.client.contract.ContractService;
 import pcol.server.domain.ContracteStudiu;
 import pcol.server.domain.ContracteStudiuId;
-//import pcol.server.domain.CurGrup;
-//import pcol.server.domain.CurGrupCours;
 import pcol.server.domain.CurCourse;
+import pcol.server.domain.Curicul;
 import pcol.server.domain.Orar;
 import pcol.server.domain.OrgGroup;
 import pcol.server.domain.OrgSection;
@@ -25,7 +27,6 @@ import pcol.shared.AuthenticationException;
 import pcol.shared.Contract;
 import pcol.shared.Course;
 import pcol.shared.CourseGroup;
-import pcol.shared.Curicul;
 import pcol.shared.OrarDto;
 import pcol.shared.Tuple;
 
@@ -33,44 +34,64 @@ public class ContractServiceImpl extends AuthRemoteServiceServlet implements
 		ContractService {
 
 	@Override
-	public Curicul getCuricula(String sid) throws AuthenticationException {
-		return withUser(sid, new UserCall<Curicul>() {
+	public pcol.shared.Curicul getCuricula(String sid) throws AuthenticationException {
+		return withUser(sid, new UserCall<pcol.shared.Curicul>() {
 			@Override
-			public Curicul call(Logins user, Session session) {
-				// sau HQL: select ss.curGrups from Studenti as st join
-				// st.orgGroup.orgSection as ss
-				// where st.Logins.loginName=:login
+			public pcol.shared.Curicul call(Logins user, Session session) {
 				session.beginTransaction();
 				if (user.getStudentis().size() != 1) {
 					throw new RuntimeException("userul nu e student");
 				}
 				Studenti student = user.getStudentis().iterator().next();
-				Curicul ret = new Curicul();
-				for (OrgGroup gr : student.getOrgGroups()) {
-					OrgSection os = gr.getOrgSection();
-					for (pcol.server.domain.Curicul cur : os.getCuriculs()) {
-						int semestru = cur.getSemester();
-						if (!ret.cursuriPeSemestru.containsKey(semestru)) {
-							ret.cursuriPeSemestru.put(semestru,
-									new ArrayList<CourseGroup>());
-							CourseGroup cg = new CourseGroup();
-							// cg.exclusive = cur.isExclusiv();
-							cg.name = cg.exclusive ? "optionale"
-									: "obligatorii";
-							cg.courses.add(new Course(cur.getCurCourse()
-									.getId(), cur.getCurCourse().getName(), cur
-									.getCurCourse().getAbbrev(), cur
-									.getNcredite()));
-							ret.cursuriPeSemestru.get(semestru).add(cg);
-
-						}
+				
+				Query grq = session
+				.createQuery(
+						"from Curicul as cur where "+
+						"cur.orgSection in "+
+						"( select g.orgSection "+
+						  "from Studenti as s "+
+						  "join s.orgGroups as g "+
+						  "where s.nrMatr=:nrmatr "+
+						") "+ 
+						"and cur.semester = :sem ")
+				.setParameter("nrmatr", student.getNrMatr())
+				.setParameter("sem", CommonBusinessLogic.isFirstSemester()?1:2);
+				
+				//grupez in grupe de cursuri
+				Map<Integer,CourseGroup> grouped = new HashMap<Integer,CourseGroup>();
+				
+				for (Curicul citem : (List<Curicul>) grq.list()) {
+					Integer optGroup = citem.getOptionalGroup();
+					if(!grouped.containsKey(optGroup)){
+						CourseGroup cg = new CourseGroup();
+						cg.exclusive = citem.getOptionalGroup()!= null;
+						cg.name = cg.exclusive ? "optionale":"obligatorii";
+						cg.an = citem.getAn();
+						cg.semester = citem.getSemester();
+						grouped.put(optGroup, cg);
 					}
+					
+					grouped.get(optGroup).courses.add(new Course(
+							citem.getCurCourse().getId(),
+							citem.getCurCourse().getName(),
+							citem.getCurCourse().getAbbrev(),
+							citem.getNcredite()));
 				}
-
-				// }
+				
+				//grupez dupa an 
+				pcol.shared.Curicul ret = new pcol.shared.Curicul();					
+				for(Integer optGroup: grouped.keySet()){
+					CourseGroup cg = grouped.get(optGroup);
+					
+					if (!ret.cursuriPeSemestru.containsKey(cg.an)) {
+						ret.cursuriPeSemestru.put(cg.an, new ArrayList<CourseGroup>());
+					}
+					
+					ret.cursuriPeSemestru.get(cg.an).add(cg);
+				}
 				session.getTransaction().commit();
 				return ret;
-			}// lalalaa
+			}
 		});
 	}
 
@@ -96,7 +117,7 @@ public class ContractServiceImpl extends AuthRemoteServiceServlet implements
 
 				int ver = 0;
 				for (ContracteStudiu contr : (List<ContracteStudiu>) grq.list()) {
-					selection.add(contr.getId().getCuriculId());
+					selection.add(contr.getCuricul().getCurCourse().getId());
 					ver = contr.getId().getContractVersion();
 				}
 				session.getTransaction().commit();
@@ -110,9 +131,9 @@ public class ContractServiceImpl extends AuthRemoteServiceServlet implements
 	}
 
 	@Override
-	public Tuple<Curicul, Contract> getContractAndCuricul(String sid)
+	public Tuple<pcol.shared.Curicul, Contract> getContractAndCuricul(String sid)
 			throws AuthenticationException {
-		return new Tuple<Curicul, Contract>(getCuricula(sid), getContract(sid));
+		return new Tuple<pcol.shared.Curicul, Contract>(getCuricula(sid), getContract(sid));
 	}
 
 	@Override
@@ -126,19 +147,31 @@ public class ContractServiceImpl extends AuthRemoteServiceServlet implements
 					throw new RuntimeException("userul nu e student");
 				}
 				Studenti student = user.getStudentis().iterator().next();
-
+				
 				// latest version
-				Integer contractVersion = (Integer) session
-						.createQuery(
+				Integer contractVersion = (Integer) session.createQuery(
 								" select max(c.id.contractVersion) from ContracteStudiu as c"
-										+ " where c.studenti.nrMatr=:nrmatr)")
+							  + " where c.studenti.nrMatr=:nrmatr)")
 						.setParameter("nrmatr", student.getNrMatr())
 						.uniqueResult();
+				
+				if(contractVersion == null){
+					contractVersion=0;
+				}
 
 				for (Integer idCurs : selectedCourseIds) {
+					Curicul curicul = (Curicul)session.createQuery("from Curicul as cur " +
+							"where cur.curCourse.id=:cursid and cur.orgSection in "+
+							"( select g.orgSection from Studenti as s " +
+							" join s.orgGroups as g "+
+							" where s.nrMatr=:nrmatr )")
+					.setParameter("nrmatr", student.getNrMatr())
+					.setParameter("cursid", idCurs)
+					.uniqueResult();
+
 					ContracteStudiu newci = new ContracteStudiu();
 					newci.setId(new ContracteStudiuId(student.getNrMatr(),
-							idCurs, contractVersion + 1));
+							curicul.getId(), contractVersion + 1));
 					session.save(newci);
 					student.getContracteStudius().add(newci);
 				}
