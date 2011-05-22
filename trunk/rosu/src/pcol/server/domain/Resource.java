@@ -1,6 +1,6 @@
 package pcol.server.domain;
 
-// Generated May 19, 2011 4:58:35 AM by Hibernate Tools 3.4.0.CR1
+// Generated May 22, 2011 6:44:07 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -27,6 +27,7 @@ public class Resource implements java.io.Serializable {
 	private CurCourse curCourse;
 	private String numefisier;
 	private String descriere;
+	private Set<TmStudent> tmStudents = new HashSet<TmStudent>(0);
 	private Set<Teme> temes = new HashSet<Teme>(0);
 
 	public Resource() {
@@ -38,10 +39,11 @@ public class Resource implements java.io.Serializable {
 	}
 
 	public Resource(CurCourse curCourse, String numefisier, String descriere,
-			Set<Teme> temes) {
+			Set<TmStudent> tmStudents, Set<Teme> temes) {
 		this.curCourse = curCourse;
 		this.numefisier = numefisier;
 		this.descriere = descriere;
+		this.tmStudents = tmStudents;
 		this.temes = temes;
 	}
 
@@ -82,6 +84,15 @@ public class Resource implements java.io.Serializable {
 
 	public void setDescriere(String descriere) {
 		this.descriere = descriere;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "resource")
+	public Set<TmStudent> getTmStudents() {
+		return this.tmStudents;
+	}
+
+	public void setTmStudents(Set<TmStudent> tmStudents) {
+		this.tmStudents = tmStudents;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "resource")

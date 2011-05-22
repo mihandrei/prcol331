@@ -1,6 +1,6 @@
 package pcol.server.domain;
 
-// Generated May 15, 2011 7:09:00 PM by Hibernate Tools 3.4.0.CR1
+// Generated May 22, 2011 6:44:07 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -27,6 +27,7 @@ import javax.persistence.UniqueConstraint;
 public class Studenti implements java.io.Serializable {
 
 	private Integer nrMatr;
+	private OrgSection orgSection;
 	private Logins logins;
 	private int inscrisInAn;
 	private Set<OrgGroup> orgGroups = new HashSet<OrgGroup>(0);
@@ -38,14 +39,16 @@ public class Studenti implements java.io.Serializable {
 	public Studenti() {
 	}
 
-	public Studenti(Logins logins, int inscrisInAn) {
+	public Studenti(OrgSection orgSection, Logins logins, int inscrisInAn) {
+		this.orgSection = orgSection;
 		this.logins = logins;
 		this.inscrisInAn = inscrisInAn;
 	}
 
-	public Studenti(Logins logins, int inscrisInAn, Set<OrgGroup> orgGroups,
-			Set<TmStudent> tmStudents, NotePartiale notePartiale,
-			Set<ContracteStudiu> contracteStudius) {
+	public Studenti(OrgSection orgSection, Logins logins, int inscrisInAn,
+			Set<OrgGroup> orgGroups, Set<TmStudent> tmStudents,
+			NotePartiale notePartiale, Set<ContracteStudiu> contracteStudius) {
+		this.orgSection = orgSection;
 		this.logins = logins;
 		this.inscrisInAn = inscrisInAn;
 		this.orgGroups = orgGroups;
@@ -63,6 +66,16 @@ public class Studenti implements java.io.Serializable {
 
 	public void setNrMatr(Integer nrMatr) {
 		this.nrMatr = nrMatr;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "section", nullable = false)
+	public OrgSection getOrgSection() {
+		return this.orgSection;
+	}
+
+	public void setOrgSection(OrgSection orgSection) {
+		this.orgSection = orgSection;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)

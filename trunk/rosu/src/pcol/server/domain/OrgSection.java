@@ -1,6 +1,6 @@
 package pcol.server.domain;
 
-// Generated May 15, 2011 7:09:00 PM by Hibernate Tools 3.4.0.CR1
+// Generated May 22, 2011 6:44:07 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -26,6 +26,7 @@ public class OrgSection implements java.io.Serializable {
 	private OrgFaculty orgFaculty;
 	private String name;
 	private Set<Curicul> curiculs = new HashSet<Curicul>(0);
+	private Set<Studenti> studentis = new HashSet<Studenti>(0);
 	private Set<OrgGroup> orgGroups = new HashSet<OrgGroup>(0);
 
 	public OrgSection() {
@@ -37,10 +38,12 @@ public class OrgSection implements java.io.Serializable {
 	}
 
 	public OrgSection(OrgFaculty orgFaculty, String name,
-			Set<Curicul> curiculs, Set<OrgGroup> orgGroups) {
+			Set<Curicul> curiculs, Set<Studenti> studentis,
+			Set<OrgGroup> orgGroups) {
 		this.orgFaculty = orgFaculty;
 		this.name = name;
 		this.curiculs = curiculs;
+		this.studentis = studentis;
 		this.orgGroups = orgGroups;
 	}
 
@@ -81,6 +84,15 @@ public class OrgSection implements java.io.Serializable {
 
 	public void setCuriculs(Set<Curicul> curiculs) {
 		this.curiculs = curiculs;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "orgSection")
+	public Set<Studenti> getStudentis() {
+		return this.studentis;
+	}
+
+	public void setStudentis(Set<Studenti> studentis) {
+		this.studentis = studentis;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "orgSection")
