@@ -1,6 +1,6 @@
 package pcol.server.domain;
 
-// Generated May 17, 2011 11:37:48 AM by Hibernate Tools 3.4.0.CR1
+// Generated May 22, 2011 6:44:07 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.AttributeOverride;
@@ -23,23 +23,32 @@ import javax.persistence.TemporalType;
 public class TmStudent implements java.io.Serializable {
 
 	private TmStudentId id;
+	private Resource resource;
 	private Teme teme;
 	private Studenti studenti;
 	private String status;
 	private Date dataIncarcare;
-	private int resourceId;
 
 	public TmStudent() {
 	}
 
 	public TmStudent(TmStudentId id, Teme teme, Studenti studenti,
-			String status, Date dataIncarcare, int resourceId) {
+			String status, Date dataIncarcare) {
 		this.id = id;
 		this.teme = teme;
 		this.studenti = studenti;
 		this.status = status;
 		this.dataIncarcare = dataIncarcare;
-		this.resourceId = resourceId;
+	}
+
+	public TmStudent(TmStudentId id, Resource resource, Teme teme,
+			Studenti studenti, String status, Date dataIncarcare) {
+		this.id = id;
+		this.resource = resource;
+		this.teme = teme;
+		this.studenti = studenti;
+		this.status = status;
+		this.dataIncarcare = dataIncarcare;
 	}
 
 	@EmbeddedId
@@ -52,6 +61,16 @@ public class TmStudent implements java.io.Serializable {
 
 	public void setId(TmStudentId id) {
 		this.id = id;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "resourceId")
+	public Resource getResource() {
+		return this.resource;
+	}
+
+	public void setResource(Resource resource) {
+		this.resource = resource;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -91,15 +110,6 @@ public class TmStudent implements java.io.Serializable {
 
 	public void setDataIncarcare(Date dataIncarcare) {
 		this.dataIncarcare = dataIncarcare;
-	}
-
-	@Column(name = "resourceId", nullable = false)
-	public int getResourceId() {
-		return this.resourceId;
-	}
-
-	public void setResourceId(int resourceId) {
-		this.resourceId = resourceId;
 	}
 
 }

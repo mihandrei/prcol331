@@ -49,6 +49,7 @@ CREATE TABLE `contracte_studiu` (
 
 LOCK TABLES `contracte_studiu` WRITE;
 /*!40000 ALTER TABLE `contracte_studiu` DISABLE KEYS */;
+INSERT INTO `contracte_studiu` VALUES (1040,1,2,NULL,NULL),(1040,1,3,NULL,NULL),(1040,1,4,NULL,NULL),(1040,1,5,NULL,NULL),(1040,2,1,NULL,NULL),(1040,2,2,NULL,NULL),(1040,2,3,NULL,NULL),(1040,2,4,NULL,NULL),(1040,2,5,NULL,NULL),(1040,8,4,NULL,NULL),(1040,8,5,NULL,NULL),(1040,9,5,NULL,NULL),(1040,10,3,NULL,NULL),(1040,10,4,NULL,NULL);
 /*!40000 ALTER TABLE `contracte_studiu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -77,7 +78,7 @@ CREATE TABLE `cur_course` (
 
 LOCK TABLES `cur_course` WRITE;
 /*!40000 ALTER TABLE `cur_course` DISABLE KEYS */;
-INSERT INTO `cur_course` VALUES (1,'Tehnici de optimizare','Optimizare',3,'ava ana '),(5,'Inteligenta Artificiala','AI',3,'In mathematics and computer science, an algorithm is an effective method expressed as a finite list of well-defined instructions for calculating a function. Algorithms are used for calculation, data processing, and automated reasoning\n\nWhile there is no generally accepted formal definition of \"algorithm,\" an informal definition could be \"a set of rules that precisely defines a sequence of operations.\"[10] For some people, a program is only an algorithm if it stops eventually; for others, a program is only an algorithm if it stops before a given number of calculation steps'),(6,'Retele de calculatoare','retele',1,NULL),(7,'Programare orientata obiect','OOP',1,NULL),(8,'Ingineria sistemelor software','ISS',1,NULL),(9,'Algoritmi si structuri de date','Algoritmi',3,NULL),(10,'Metodologia redactarii unei lucrari stiintifice','Paper',1,NULL),(11,'Sisteme de operare','SO',1,NULL),(12,'Proiect colectiv','proj col',1,NULL),(13,'Branzeturi, metode industriale','BRZ',1,NULL),(14,'Metode moderne de abordare a cartofului','CRTF',1,NULL),(15,'Razboaiele luminii','lumi',1,NULL),(16,'despre gavitzapa','gravitzapa',1,NULL),(17,'kin dza dza','dza dza',1,NULL);
+INSERT INTO `cur_course` VALUES (1,'Tehnici de optimizare','Optimizare',3,'ava ana '),(5,'Inteligenta Artificiala','AI',3,'In mathematics and computer science, an algorithm is an effective method expressed as a finite list of well-defined instructions for calculating a function. Algorithms are used for calculation, data processing, and automated reasoning\n\nWhile there is no generally accepted formal definition of \"algorithm,\" an informal definition could be \"a set of rules that precisely defines a sequence of operations.\"[10] For some people, a program is only an algorithm if it stops eventually; for others, a program is only an algorithm if it stops before a given number of calculation steps\n\nAQ#'),(6,'Retele de calculatoare','retele',1,NULL),(7,'Programare orientata obiect','OOP',1,NULL),(8,'Ingineria sistemelor software','ISS',1,NULL),(9,'Algoritmi si structuri de date','Algoritmi',3,NULL),(10,'Metodologia redactarii unei lucrari stiintifice','Paper',1,NULL),(11,'Sisteme de operare','SO',1,NULL),(12,'Proiect colectiv','proj col',1,NULL),(13,'Branzeturi, metode industriale','BRZ',1,NULL),(14,'Metode moderne de abordare a cartofului','CRTF',1,NULL),(15,'Razboaiele luminii','lumi',1,NULL),(16,'despre gavitzapa','gravitzapa',1,NULL),(17,'kin dza dza','dza dza',1,NULL);
 /*!40000 ALTER TABLE `cur_course` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -102,7 +103,7 @@ CREATE TABLE `curicul` (
   KEY `fk_curicul_cur_course1` (`courseId`),
   CONSTRAINT `fk_curicul_org_section1` FOREIGN KEY (`sectieId`) REFERENCES `org_section` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_curicul_cur_course1` FOREIGN KEY (`courseId`) REFERENCES `cur_course` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -111,7 +112,7 @@ CREATE TABLE `curicul` (
 
 LOCK TABLES `curicul` WRITE;
 /*!40000 ALTER TABLE `curicul` DISABLE KEYS */;
-INSERT INTO `curicul` VALUES (1,1,1,0,4,2,2,1),(1,5,NULL,0,4,2,3,2);
+INSERT INTO `curicul` VALUES (1,1,NULL,0,4,2,2,1),(1,5,NULL,0,4,2,3,2),(1,6,NULL,0,5,2,3,7),(1,7,NULL,0,6,2,1,8),(1,16,1,1,3,2,3,9),(1,17,1,1,3,2,3,10);
 /*!40000 ALTER TABLE `curicul` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -516,9 +517,12 @@ DROP TABLE IF EXISTS `studenti`;
 CREATE TABLE `studenti` (
   `nr_matr` int(11) NOT NULL AUTO_INCREMENT,
   `login` varchar(45) NOT NULL,
-  `inscris_in_an` int(11) NOT NULL DEFAULT '1',
+  `section` int(11) NOT NULL,
+  `inscris_in_an` int(11) NOT NULL,
   PRIMARY KEY (`nr_matr`),
   UNIQUE KEY `uniq_login` (`login`),
+  KEY `fk_studenti_org_section1` (`section`),
+  CONSTRAINT `fk_studenti_org_section1` FOREIGN KEY (`section`) REFERENCES `org_section` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_studenti_users` FOREIGN KEY (`login`) REFERENCES `logins` (`login_name`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=1041 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -529,7 +533,7 @@ CREATE TABLE `studenti` (
 
 LOCK TABLES `studenti` WRITE;
 /*!40000 ALTER TABLE `studenti` DISABLE KEYS */;
-INSERT INTO `studenti` VALUES (1040,'mihai',3);
+INSERT INTO `studenti` VALUES (1040,'mihai',1,3);
 /*!40000 ALTER TABLE `studenti` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -632,4 +636,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-05-20  0:10:02
+-- Dump completed on 2011-05-22 19:22:56

@@ -46,13 +46,10 @@ public class ContractServiceImpl extends AuthRemoteServiceServlet implements
 				
 				Query grq = session
 				.createQuery(
-						"from Curicul as cur where "+
-						"cur.orgSection in "+
-						"( select g.orgSection "+
-						  "from Studenti as s "+
-						  "join s.orgGroups as g "+
-						  "where s.nrMatr=:nrmatr "+
-						") "+ 
+						"select cur "+
+						"from Curicul as cur , Studenti as s where "+ 
+						"s.nrMatr=:nrmatr "+
+						"and cur.orgSection = s.orgSection " +
 						"and cur.semester = :sem ")
 				.setParameter("nrmatr", student.getNrMatr())
 				.setParameter("sem", CommonBusinessLogic.isFirstSemester()?1:2);
@@ -147,39 +144,55 @@ public class ContractServiceImpl extends AuthRemoteServiceServlet implements
 					throw new RuntimeException("userul nu e student");
 				}
 				Studenti student = user.getStudentis().iterator().next();
-				
-				// latest version
-				Integer contractVersion = (Integer) session.createQuery(
-								" select max(c.id.contractVersion) from ContracteStudiu as c"
-							  + " where c.studenti.nrMatr=:nrmatr)")
-						.setParameter("nrmatr", student.getNrMatr())
-						.uniqueResult();
-				
-				if(contractVersion == null){
-					contractVersion=0;
-				}
-
-				for (Integer idCurs : selectedCourseIds) {
-					Curicul curicul = (Curicul)session.createQuery("from Curicul as cur " +
-							"where cur.curCourse.id=:cursid and cur.orgSection in "+
-							"( select g.orgSection from Studenti as s " +
-							" join s.orgGroups as g "+
-							" where s.nrMatr=:nrmatr )")
-					.setParameter("nrmatr", student.getNrMatr())
-					.setParameter("cursid", idCurs)
-					.uniqueResult();
-
-					ContracteStudiu newci = new ContracteStudiu();
-					newci.setId(new ContracteStudiuId(student.getNrMatr(),
-							curicul.getId(), contractVersion + 1));
-					session.save(newci);
-					student.getContracteStudius().add(newci);
-				}
+				submitContract(student, selectedCourseIds, session);
 				session.getTransaction().commit();
 				return null;
 			}
 		});
 
+	}
+	/**
+	 * @return versiunea contractului
+	 */
+	private int submitContract(Studenti student, 
+			Set<Integer> selectedCourseIds, Session session){
+		// latest version
+		Integer contractVersion = (Integer) session.createQuery(
+						" select max(c.id.contractVersion) from ContracteStudiu as c"
+					  + " where c.studenti.nrMatr=:nrmatr)")
+				.setParameter("nrmatr", student.getNrMatr())
+				.uniqueResult();
+		
+		if(contractVersion == null){
+			contractVersion=0;
+		}
+
+		for (Integer idCurs : selectedCourseIds) {
+			Curicul curicul = (Curicul)session.createQuery(
+					"select cur "+
+					" from Curicul as cur , Studenti as s" +
+					" where cur.curCourse.id=:cursid " +
+					" and cur.orgSection = s.orgSection "+
+					" and s.nrMatr=:nrmatr ")
+			.setParameter("nrmatr", student.getNrMatr())
+			.setParameter("cursid", idCurs)
+			.uniqueResult();
+
+			ContracteStudiu newci = new ContracteStudiu();
+			newci.setId(new ContracteStudiuId(student.getNrMatr(),
+					curicul.getId(), contractVersion + 1));
+			session.save(newci);
+			student.getContracteStudius().add(newci);
+		}
+		
+		return contractVersion + 1;
+	}
+	
+	private void assignStudentToGroup(Studenti student ){
+		for(ContracteStudiu citem : student.getContracteStudius()){
+			citem.getCuricul().getAn();
+			student.getOrgSection();
+		}
 	}
 
 	@Override
