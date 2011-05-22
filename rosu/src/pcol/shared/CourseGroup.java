@@ -15,6 +15,8 @@ public class CourseGroup implements IsSerializable {
 
 	public boolean exclusive;
 	public String name ;
+	public int an;
+	public int semester;
 
 	public CourseGroup copy() {
 		CourseGroup ret = new CourseGroup();
