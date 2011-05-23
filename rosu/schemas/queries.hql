@@ -36,3 +36,11 @@ cur.orgSection in
   where s.nrMatr=1040
 )
 and cur.semester = 2
+
+
+ select gr
+ from OrgGroup as gr 
+ join gr.studentis as s
+ where gr.an=2 
+ group by gr
+ having count(s) <= 2

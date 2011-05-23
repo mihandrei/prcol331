@@ -33,6 +33,8 @@ import pcol.shared.Tuple;
 public class ContractServiceImpl extends AuthRemoteServiceServlet implements
 		ContractService {
 
+	private static final int MAX_STUDENTI_GRUPA = 3;
+
 	@Override
 	public pcol.shared.Curicul getCuricula(String sid) throws AuthenticationException {
 		return withUser(sid, new UserCall<pcol.shared.Curicul>() {
@@ -144,7 +146,8 @@ public class ContractServiceImpl extends AuthRemoteServiceServlet implements
 					throw new RuntimeException("userul nu e student");
 				}
 				Studenti student = user.getStudentis().iterator().next();
-				submitContract(student, selectedCourseIds, session);
+				int contractVersion = submitContract(student, selectedCourseIds, session);
+				assignStudentToGroup(student,contractVersion,session);
 				session.getTransaction().commit();
 				return null;
 			}
@@ -187,12 +190,46 @@ public class ContractServiceImpl extends AuthRemoteServiceServlet implements
 		
 		return contractVersion + 1;
 	}
-	
-	private void assignStudentToGroup(Studenti student ){
-		for(ContracteStudiu citem : student.getContracteStudius()){
-			citem.getCuricul().getAn();
-			student.getOrgSection();
+
+	private void assignStudentToGroup(Studenti student, Integer contractVersion, Session session ){
+		Query selectAniInContract = session.createQuery(
+				" select distinct contr.curicul.an,  contr.curicul.orgSection.id "+
+				" from ContracteStudiu as contr " +
+				" where contr.studenti.nrMatr=:nrmatr " +
+				" and contr.id.contractVersion=:contractVersion")
+			.setParameter("nrmatr", student.getNrMatr())
+			.setParameter("contractVersion", contractVersion);
+		
+		Query selectGrupaLibera = session.createQuery(
+				"select gr from OrgGroup as gr " + 
+				"join gr.studentis as s " +
+				"where gr.an=:an and gr.orgSection.id=:sectieId "+ 
+				"group by gr having count(s) <= :maxStudentiInGrupa")
+			.setParameter("maxStudentiInGrupa", Long.valueOf(MAX_STUDENTI_GRUPA));
+		
+//		student.getOrgGroups().clear();
+//		session.persist(student);
+		
+		for(Object[] anid : (List<Object[]>)selectAniInContract.list()){
+			Integer an = (Integer) anid[0];
+			Integer sectieId = (Integer) anid[1];
+			
+			selectGrupaLibera.setParameter("an",an)
+				.setParameter("sectieId", sectieId);
+			
+			OrgGroup grupa = (OrgGroup) selectGrupaLibera.uniqueResult();
+			
+			if(grupa==null){
+				OrgSection sectie = (OrgSection) session.get(OrgSection.class, sectieId);
+				//todo: naming pt grupe
+				grupa = new OrgGroup(sectie, sectie.getName() , an);
+				session.persist(grupa);
+			}
+			
+			student.getOrgGroups().add(grupa);
+			session.persist(student);
 		}
+		
 	}
 
 	@Override

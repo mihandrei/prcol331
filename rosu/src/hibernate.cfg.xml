@@ -3,16 +3,20 @@
 "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
-    <session-factory>
+    <session-factory name="">
         <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
+        <property name="hibernate.c3p0.acquire_increment">1</property>
+        <property name="hibernate.c3p0.idle_test_period">60</property>
+        <property name="hibernate.c3p0.timeout">300</property>
         <property name="hibernate.check_nullability">false</property>
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="hibernate.connection.password">rosu</property>
+        <property name="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/proj_col</property>
         <property name="hibernate.connection.username">rosu</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
         <property name="hibernate.search.autoregister_listeners">false</property>
-        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.show_sql">false</property>
         <mapping class="pcol.server.domain.ContracteStudiu" />
         <mapping class="pcol.server.domain.SchemaNotare" />
         <mapping class="pcol.server.domain.Profesori" />

@@ -49,7 +49,7 @@ CREATE TABLE `contracte_studiu` (
 
 LOCK TABLES `contracte_studiu` WRITE;
 /*!40000 ALTER TABLE `contracte_studiu` DISABLE KEYS */;
-INSERT INTO `contracte_studiu` VALUES (1040,1,2,NULL,NULL),(1040,1,3,NULL,NULL),(1040,1,4,NULL,NULL),(1040,1,5,NULL,NULL),(1040,2,1,NULL,NULL),(1040,2,2,NULL,NULL),(1040,2,3,NULL,NULL),(1040,2,4,NULL,NULL),(1040,2,5,NULL,NULL),(1040,8,4,NULL,NULL),(1040,8,5,NULL,NULL),(1040,9,5,NULL,NULL),(1040,10,3,NULL,NULL),(1040,10,4,NULL,NULL);
+INSERT INTO `contracte_studiu` VALUES (1001,7,1,NULL,NULL),(1001,10,1,NULL,NULL),(1001,10,2,NULL,NULL),(1021,1,4,NULL,NULL),(1021,1,5,NULL,NULL),(1021,1,6,NULL,NULL),(1021,2,6,NULL,NULL),(1021,7,1,NULL,NULL),(1021,7,2,NULL,NULL),(1021,8,1,NULL,NULL),(1021,8,3,NULL,NULL),(1021,10,5,NULL,NULL),(1021,10,6,NULL,NULL),(1040,1,2,NULL,NULL),(1040,1,3,NULL,NULL),(1040,1,4,NULL,NULL),(1040,1,5,NULL,NULL),(1040,2,1,NULL,NULL),(1040,2,2,NULL,NULL),(1040,2,3,NULL,NULL),(1040,2,4,NULL,NULL),(1040,2,5,NULL,NULL),(1040,8,4,NULL,NULL),(1040,8,5,NULL,NULL),(1040,9,5,NULL,NULL),(1040,10,3,NULL,NULL),(1040,10,4,NULL,NULL);
 /*!40000 ALTER TABLE `contracte_studiu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -312,7 +312,7 @@ CREATE TABLE `orar` (
 
 LOCK TABLES `orar` WRITE;
 /*!40000 ALTER TABLE `orar` DISABLE KEYS */;
-INSERT INTO `orar` VALUES (1,1,1,'curs',1,0,14,16,'5/I'),(2,1,1,'sem',1,2,16,18,'5/I'),(3,1,6,'curs',2,0,8,10,'2/I'),(4,3,7,'lab',2,1,8,10,'L336'),(5,1,8,'curs',2,0,10,12,'2/I'),(6,1,5,'curs',2,0,14,16,'2/I'),(7,3,9,'curs',2,0,14,16,'7/I'),(8,1,6,'lab',3,0,8,10,'L302'),(9,1,8,'lab',3,1,10,12,'L339'),(10,1,5,'lab',3,2,10,12,'L302'),(11,1,12,'lab',3,0,12,14,'L307'),(12,1,10,'curs',4,2,8,10,'5/I'),(13,1,8,'sem',4,2,10,12,'7/I'),(14,1,5,'sem',4,2,12,14,'5/I'),(15,2,11,'curs',4,0,14,16,'C310'),(16,2,11,'lab',4,0,16,18,'L339'),(17,3,7,'curs',5,0,8,10,'C335'),(18,3,7,'sem',5,1,14,16,'C509'),(19,3,9,'sem',5,2,14,16,'C509'),(20,3,7,'lab',5,2,16,18,'L307');
+INSERT INTO `orar` VALUES (1,9,1,'curs',1,0,14,16,'5/I'),(2,9,1,'sem',1,2,16,18,'5/I'),(3,9,6,'curs',2,0,8,10,'2/I'),(4,3,7,'lab',2,1,8,10,'L336'),(5,9,8,'curs',2,0,10,12,'2/I'),(6,9,5,'curs',2,0,14,16,'2/I'),(7,3,9,'curs',2,0,14,16,'7/I'),(8,9,6,'lab',3,0,8,10,'L302'),(9,9,8,'lab',3,1,10,12,'L339'),(10,9,5,'lab',3,2,10,12,'L302'),(11,9,12,'lab',3,0,12,14,'L307'),(12,9,10,'curs',4,2,8,10,'5/I'),(13,9,8,'sem',4,2,10,12,'7/I'),(14,9,5,'sem',4,2,12,14,'5/I'),(15,8,11,'curs',4,0,14,16,'C310'),(16,8,11,'lab',4,0,16,18,'L339'),(17,3,7,'curs',5,0,8,10,'C335'),(18,3,7,'sem',5,1,14,16,'C509'),(19,3,9,'sem',5,2,14,16,'C509'),(20,3,7,'lab',5,2,16,18,'L307');
 /*!40000 ALTER TABLE `orar` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -355,7 +355,7 @@ CREATE TABLE `org_group` (
   PRIMARY KEY (`id`),
   KEY `fk_grupe_sectii1` (`section`),
   CONSTRAINT `fk_grupe_sectii1` FOREIGN KEY (`section`) REFERENCES `org_section` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -364,7 +364,7 @@ CREATE TABLE `org_group` (
 
 LOCK TABLES `org_group` WRITE;
 /*!40000 ALTER TABLE `org_group` DISABLE KEYS */;
-INSERT INTO `org_group` VALUES (1,1,'mf331',3),(2,1,'mf321',2),(3,1,'mf311',1);
+INSERT INTO `org_group` VALUES (3,1,'mi311',1),(8,1,'mi321',2),(9,1,'mi331',3);
 /*!40000 ALTER TABLE `org_group` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -522,8 +522,8 @@ CREATE TABLE `studenti` (
   PRIMARY KEY (`nr_matr`),
   UNIQUE KEY `uniq_login` (`login`),
   KEY `fk_studenti_org_section1` (`section`),
-  CONSTRAINT `fk_studenti_org_section1` FOREIGN KEY (`section`) REFERENCES `org_section` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_studenti_users` FOREIGN KEY (`login`) REFERENCES `logins` (`login_name`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_studenti_users` FOREIGN KEY (`login`) REFERENCES `logins` (`login_name`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_studenti_org_section1` FOREIGN KEY (`section`) REFERENCES `org_section` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=1041 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -533,7 +533,7 @@ CREATE TABLE `studenti` (
 
 LOCK TABLES `studenti` WRITE;
 /*!40000 ALTER TABLE `studenti` DISABLE KEYS */;
-INSERT INTO `studenti` VALUES (1040,'mihai',1,3);
+INSERT INTO `studenti` VALUES (1001,'didy',1,3),(1021,'geza',1,2),(1040,'mihai',1,3);
 /*!40000 ALTER TABLE `studenti` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -561,7 +561,7 @@ CREATE TABLE `studenti_grupe` (
 
 LOCK TABLES `studenti_grupe` WRITE;
 /*!40000 ALTER TABLE `studenti_grupe` DISABLE KEYS */;
-INSERT INTO `studenti_grupe` VALUES (1040,1),(1040,2),(1040,3);
+INSERT INTO `studenti_grupe` VALUES (1021,8),(1001,9),(1021,9);
 /*!40000 ALTER TABLE `studenti_grupe` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -612,9 +612,9 @@ CREATE TABLE `tm_student` (
   KEY `fk_tm_student_teme1` (`temaId`),
   KEY `fk_tm_student_studenti1` (`nrmatr`),
   KEY `fk_tm_student_resource1` (`resourceId`),
-  CONSTRAINT `fk_tm_student_teme1` FOREIGN KEY (`temaId`) REFERENCES `teme` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_tm_student_resource1` FOREIGN KEY (`resourceId`) REFERENCES `resource` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_tm_student_studenti1` FOREIGN KEY (`nrmatr`) REFERENCES `studenti` (`nr_matr`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_tm_student_studenti1` FOREIGN KEY (`nrmatr`) REFERENCES `studenti` (`nr_matr`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_tm_student_teme1` FOREIGN KEY (`temaId`) REFERENCES `teme` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -636,4 +636,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-05-22 19:22:56
+-- Dump completed on 2011-05-24  0:38:29
