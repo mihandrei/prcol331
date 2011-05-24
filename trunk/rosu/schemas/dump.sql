@@ -49,7 +49,7 @@ CREATE TABLE `contracte_studiu` (
 
 LOCK TABLES `contracte_studiu` WRITE;
 /*!40000 ALTER TABLE `contracte_studiu` DISABLE KEYS */;
-INSERT INTO `contracte_studiu` VALUES (1001,7,1,NULL,NULL),(1001,10,1,NULL,NULL),(1001,10,2,NULL,NULL),(1021,1,4,NULL,NULL),(1021,1,5,NULL,NULL),(1021,1,6,NULL,NULL),(1021,2,6,NULL,NULL),(1021,7,1,NULL,NULL),(1021,7,2,NULL,NULL),(1021,8,1,NULL,NULL),(1021,8,3,NULL,NULL),(1021,10,5,NULL,NULL),(1021,10,6,NULL,NULL),(1040,1,2,NULL,NULL),(1040,1,3,NULL,NULL),(1040,1,4,NULL,NULL),(1040,1,5,NULL,NULL),(1040,2,1,NULL,NULL),(1040,2,2,NULL,NULL),(1040,2,3,NULL,NULL),(1040,2,4,NULL,NULL),(1040,2,5,NULL,NULL),(1040,8,4,NULL,NULL),(1040,8,5,NULL,NULL),(1040,9,5,NULL,NULL),(1040,10,3,NULL,NULL),(1040,10,4,NULL,NULL);
+INSERT INTO `contracte_studiu` VALUES (1001,2,7,NULL,NULL),(1001,7,1,NULL,NULL),(1001,7,3,NULL,NULL),(1001,7,4,NULL,NULL),(1001,7,5,NULL,NULL),(1001,7,7,NULL,NULL),(1001,8,4,NULL,NULL),(1001,10,1,NULL,NULL),(1001,10,2,NULL,NULL),(1001,10,3,NULL,NULL),(1001,10,4,NULL,NULL),(1001,10,5,NULL,NULL),(1001,10,6,NULL,NULL),(1001,10,7,NULL,NULL),(1021,1,4,NULL,NULL),(1021,1,5,NULL,NULL),(1021,1,6,NULL,NULL),(1021,2,6,NULL,NULL),(1021,2,7,NULL,NULL),(1021,2,8,NULL,NULL),(1021,7,1,NULL,NULL),(1021,7,2,NULL,NULL),(1021,8,1,NULL,NULL),(1021,8,3,NULL,NULL),(1021,10,5,NULL,NULL),(1021,10,6,NULL,NULL),(1021,10,7,NULL,NULL),(1040,1,2,NULL,NULL),(1040,1,3,NULL,NULL),(1040,1,4,NULL,NULL),(1040,1,5,NULL,NULL),(1040,1,7,NULL,NULL),(1040,1,8,NULL,NULL),(1040,1,9,NULL,NULL),(1040,2,1,NULL,NULL),(1040,2,2,NULL,NULL),(1040,2,3,NULL,NULL),(1040,2,4,NULL,NULL),(1040,2,5,NULL,NULL),(1040,2,7,NULL,NULL),(1040,2,8,NULL,NULL),(1040,2,9,NULL,NULL),(1040,7,7,NULL,NULL),(1040,7,8,NULL,NULL),(1040,7,9,NULL,NULL),(1040,8,4,NULL,NULL),(1040,8,5,NULL,NULL),(1040,8,7,NULL,NULL),(1040,8,8,NULL,NULL),(1040,8,9,NULL,NULL),(1040,9,5,NULL,NULL),(1040,9,6,NULL,NULL),(1040,9,7,NULL,NULL),(1040,9,9,NULL,NULL),(1040,10,3,NULL,NULL),(1040,10,4,NULL,NULL),(1040,10,8,NULL,NULL);
 /*!40000 ALTER TABLE `contracte_studiu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -66,8 +66,11 @@ CREATE TABLE `cur_course` (
   `abbrev` varchar(12) NOT NULL,
   `profId` int(11) NOT NULL,
   `description` text,
+  `msg_channel` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_cur_course_profesori1` (`profId`),
+  KEY `fk_cur_course_msg_channel1` (`msg_channel`),
+  CONSTRAINT `fk_cur_course_msg_channel1` FOREIGN KEY (`msg_channel`) REFERENCES `msg_channel` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_cur_course_profesori1` FOREIGN KEY (`profId`) REFERENCES `profesori` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -78,7 +81,7 @@ CREATE TABLE `cur_course` (
 
 LOCK TABLES `cur_course` WRITE;
 /*!40000 ALTER TABLE `cur_course` DISABLE KEYS */;
-INSERT INTO `cur_course` VALUES (1,'Tehnici de optimizare','Optimizare',3,'ava ana '),(5,'Inteligenta Artificiala','AI',3,'In mathematics and computer science, an algorithm is an effective method expressed as a finite list of well-defined instructions for calculating a function. Algorithms are used for calculation, data processing, and automated reasoning\n\nWhile there is no generally accepted formal definition of \"algorithm,\" an informal definition could be \"a set of rules that precisely defines a sequence of operations.\"[10] For some people, a program is only an algorithm if it stops eventually; for others, a program is only an algorithm if it stops before a given number of calculation steps\n\nAQ#'),(6,'Retele de calculatoare','retele',1,NULL),(7,'Programare orientata obiect','OOP',1,NULL),(8,'Ingineria sistemelor software','ISS',1,NULL),(9,'Algoritmi si structuri de date','Algoritmi',3,NULL),(10,'Metodologia redactarii unei lucrari stiintifice','Paper',1,NULL),(11,'Sisteme de operare','SO',1,NULL),(12,'Proiect colectiv','proj col',1,NULL),(13,'Branzeturi, metode industriale','BRZ',1,NULL),(14,'Metode moderne de abordare a cartofului','CRTF',1,NULL),(15,'Razboaiele luminii','lumi',1,NULL),(16,'despre gavitzapa','gravitzapa',1,NULL),(17,'kin dza dza','dza dza',1,NULL);
+INSERT INTO `cur_course` VALUES (1,'Tehnici de optimizare','Optimizare',3,'ava ana ','Optimizare'),(5,'Inteligenta Artificiala','AI',3,'In mathematics and computer science, an algorithm is an effective method expressed as a finite list of well-defined instructions for calculating a function. Algorithms are used for calculation, data processing, and automated reasoning\n\nWhile there is no generally accepted formal definition of \"algorithm,\" an informal definition could be \"a set of rules that precisely defines a sequence of operations.\"[10] For some people, a program is only an algorithm if it stops eventually; for others, a program is only an algorithm if it stops before a given number of calculation steps\n\nAQ#','AI'),(6,'Retele de calculatoare','retele',1,NULL,'retele'),(7,'Programare orientata obiect','OOP',1,NULL,'OOP'),(8,'Ingineria sistemelor software','ISS',1,NULL,'ISS'),(9,'Algoritmi si structuri de date','Algoritmi',3,NULL,'Algoritmi'),(10,'Metodologia redactarii unei lucrari stiintifice','Paper',1,NULL,'Paper'),(11,'Sisteme de operare','SO',1,NULL,'SO'),(12,'Proiect colectiv','proj col',1,NULL,'proj col'),(13,'Branzeturi, metode industriale','BRZ',1,NULL,'BRZ'),(14,'Metode moderne de abordare a cartofului','CRTF',1,NULL,'CRTF'),(15,'Razboaiele luminii','lumi',1,NULL,'lumi'),(16,'despre gavitzapa','gravitzapa',1,NULL,'gravitzapa'),(17,'kin dza dza','dza dza',1,NULL,'dza dza');
 /*!40000 ALTER TABLE `cur_course` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -103,7 +106,7 @@ CREATE TABLE `curicul` (
   KEY `fk_curicul_cur_course1` (`courseId`),
   CONSTRAINT `fk_curicul_org_section1` FOREIGN KEY (`sectieId`) REFERENCES `org_section` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_curicul_cur_course1` FOREIGN KEY (`courseId`) REFERENCES `cur_course` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -112,7 +115,7 @@ CREATE TABLE `curicul` (
 
 LOCK TABLES `curicul` WRITE;
 /*!40000 ALTER TABLE `curicul` DISABLE KEYS */;
-INSERT INTO `curicul` VALUES (1,1,NULL,0,4,2,2,1),(1,5,NULL,0,4,2,3,2),(1,6,NULL,0,5,2,3,7),(1,7,NULL,0,6,2,1,8),(1,16,1,1,3,2,3,9),(1,17,1,1,3,2,3,10);
+INSERT INTO `curicul` VALUES (1,1,NULL,0,4,2,3,1),(1,5,NULL,0,4,2,3,2),(1,6,NULL,0,5,2,3,7),(1,7,NULL,0,6,2,1,8),(1,16,1,1,3,2,3,9),(1,17,1,1,3,2,3,10),(1,9,NULL,0,5,2,1,11),(1,13,2,1,3,2,1,12),(1,14,2,1,3,2,1,13),(1,8,NULL,0,6,2,3,14),(1,10,1,0,5,2,3,15),(1,12,NULL,0,5,2,3,16),(1,15,NULL,0,4,2,3,17),(1,11,NULL,0,6,2,2,18),(1,16,1,1,2,2,2,19),(1,17,1,1,2,2,2,20);
 /*!40000 ALTER TABLE `curicul` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -165,7 +168,7 @@ CREATE TABLE `msg_channel` (
 
 LOCK TABLES `msg_channel` WRITE;
 /*!40000 ALTER TABLE `msg_channel` DISABLE KEYS */;
-INSERT INTO `msg_channel` VALUES ('MF311'),('MF321'),('MF331'),('mihai');
+INSERT INTO `msg_channel` VALUES ('AI'),('Algoritmi'),('BRZ'),('CRTF'),('dza dza'),('gravitzapa'),('ISS'),('lumi'),('OOP'),('Optimizare'),('Paper'),('proj col'),('retele'),('SO');
 /*!40000 ALTER TABLE `msg_channel` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -185,7 +188,7 @@ CREATE TABLE `msg_message` (
   PRIMARY KEY (`id`),
   KEY `fk_mesaje_users1` (`expeditor`),
   CONSTRAINT `fk_mesaje_users1` FOREIGN KEY (`expeditor`) REFERENCES `logins` (`login_name`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -194,7 +197,7 @@ CREATE TABLE `msg_message` (
 
 LOCK TABLES `msg_message` WRITE;
 /*!40000 ALTER TABLE `msg_message` DISABLE KEYS */;
-INSERT INTO `msg_message` VALUES (1,'<p>Yesterday,<br>All those backups seemed a waste of pay.<br>Now my database has gone away.<br>Oh I believe in yesterday.</p>','mihai','INFO','2011-04-17 00:00:00'),(2,'You can never find general mechanical means <br>for predicting the acts of computing machines <br>It\'s something that cannot be done. So we users <br>must find our own bugs. Our computers are losers! <br><a target=\"_blank\" href=\"http://www.lel.ed.ac.uk/~gpullum/loopsnoop.pdf\"> source </a>','mihai','INFO','2011-04-11 11:20:00'),(3,'I have no money, no resources, no hopes. I am the happiest man alive.','system','INFO','2011-04-09 11:20:00'),(4,'Debugging is twice as hard as writing the code in the first place.  Therefore, if you write the code as cleverly as possible, you are&ndash;by definition&ndash;not smart enough to debug it.','system','INFO','2011-03-11 11:20:00'),(5,'Atunci cand sunt suparat, ma retrag intre oile mele si ma linistesc','system','INFO','2010-04-11 11:20:00');
+INSERT INTO `msg_message` VALUES (1,'<p>Yesterday,<br>All those backups seemed a waste of pay.<br>Now my database has gone away.<br>Oh I believe in yesterday.</p>','mihai','INFO','2011-04-17 00:00:00'),(2,'You can never find general mechanical means <br>for predicting the acts of computing machines <br>It\'s something that cannot be done. So we users <br>must find our own bugs. Our computers are losers! <br><a target=\"_blank\" href=\"http://www.lel.ed.ac.uk/~gpullum/loopsnoop.pdf\"> source </a>','mihai','INFO','2011-04-11 11:20:00'),(3,'I have no money, no resources, no hopes. I am the happiest man alive.','system','INFO','2011-04-09 11:20:00'),(4,'Debugging is twice as hard as writing the code in the first place.  Therefore, if you write the code as cleverly as possible, you are&ndash;by definition&ndash;not smart enough to debug it.','system','INFO','2011-03-11 11:20:00'),(5,'Atunci cand sunt suparat, ma retrag intre oile mele si ma linistesc','system','INFO','2010-04-11 11:20:00'),(6,'asa','norvig','INFO','2011-05-24 18:45:47'),(7,'asa','norvig','INFO','2011-05-24 18:47:35'),(9,'maine mai tarziu','norvig','INFO','2011-05-24 18:55:58'),(10,'oop is the police','turing','INFO','2011-05-24 18:57:28');
 /*!40000 ALTER TABLE `msg_message` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -222,7 +225,7 @@ CREATE TABLE `msg_message_channel` (
 
 LOCK TABLES `msg_message_channel` WRITE;
 /*!40000 ALTER TABLE `msg_message_channel` DISABLE KEYS */;
-INSERT INTO `msg_message_channel` VALUES (1,'MF331'),(2,'MF331'),(3,'mihai'),(4,'MF331'),(5,'MF331'),(5,'mihai');
+INSERT INTO `msg_message_channel` VALUES (6,'AI'),(9,'AI'),(10,'OOP');
 /*!40000 ALTER TABLE `msg_message_channel` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -250,7 +253,7 @@ CREATE TABLE `msg_subscription` (
 
 LOCK TABLES `msg_subscription` WRITE;
 /*!40000 ALTER TABLE `msg_subscription` DISABLE KEYS */;
-INSERT INTO `msg_subscription` VALUES ('mihai','MF331'),('mihai','mihai');
+INSERT INTO `msg_subscription` VALUES ('geza','AI'),('mihai','AI'),('mihai','dza dza'),('mihai','gravitzapa'),('mihai','OOP'),('mihai','Optimizare'),('mihai','retele');
 /*!40000 ALTER TABLE `msg_subscription` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -312,7 +315,7 @@ CREATE TABLE `orar` (
 
 LOCK TABLES `orar` WRITE;
 /*!40000 ALTER TABLE `orar` DISABLE KEYS */;
-INSERT INTO `orar` VALUES (1,9,1,'curs',1,0,14,16,'5/I'),(2,9,1,'sem',1,2,16,18,'5/I'),(3,9,6,'curs',2,0,8,10,'2/I'),(4,3,7,'lab',2,1,8,10,'L336'),(5,9,8,'curs',2,0,10,12,'2/I'),(6,9,5,'curs',2,0,14,16,'2/I'),(7,3,9,'curs',2,0,14,16,'7/I'),(8,9,6,'lab',3,0,8,10,'L302'),(9,9,8,'lab',3,1,10,12,'L339'),(10,9,5,'lab',3,2,10,12,'L302'),(11,9,12,'lab',3,0,12,14,'L307'),(12,9,10,'curs',4,2,8,10,'5/I'),(13,9,8,'sem',4,2,10,12,'7/I'),(14,9,5,'sem',4,2,12,14,'5/I'),(15,8,11,'curs',4,0,14,16,'C310'),(16,8,11,'lab',4,0,16,18,'L339'),(17,3,7,'curs',5,0,8,10,'C335'),(18,3,7,'sem',5,1,14,16,'C509'),(19,3,9,'sem',5,2,14,16,'C509'),(20,3,7,'lab',5,2,16,18,'L307');
+INSERT INTO `orar` VALUES (1,9,1,'curs',1,0,14,16,'5/I'),(2,9,1,'sem',1,2,16,18,'5/I'),(3,9,6,'curs',2,0,8,10,'2/I'),(4,10,7,'lab',2,1,8,10,'L336'),(5,9,8,'curs',2,0,10,12,'2/I'),(6,9,5,'curs',2,0,14,16,'2/I'),(7,10,9,'curs',2,0,14,16,'7/I'),(8,9,6,'lab',3,0,8,10,'L302'),(9,9,8,'lab',3,1,10,12,'L339'),(10,9,5,'lab',3,2,10,12,'L302'),(11,9,12,'lab',3,0,12,14,'L307'),(12,9,10,'curs',4,2,8,10,'5/I'),(13,9,8,'sem',4,2,10,12,'7/I'),(14,9,5,'sem',4,2,12,14,'5/I'),(15,8,11,'curs',4,0,14,16,'C310'),(16,8,11,'lab',4,0,16,18,'L339'),(17,10,7,'curs',5,0,8,10,'C335'),(18,10,7,'sem',5,1,14,16,'C509'),(19,10,9,'sem',5,2,14,16,'C509'),(20,10,7,'lab',5,2,16,18,'L307');
 /*!40000 ALTER TABLE `orar` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -355,7 +358,7 @@ CREATE TABLE `org_group` (
   PRIMARY KEY (`id`),
   KEY `fk_grupe_sectii1` (`section`),
   CONSTRAINT `fk_grupe_sectii1` FOREIGN KEY (`section`) REFERENCES `org_section` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -364,7 +367,7 @@ CREATE TABLE `org_group` (
 
 LOCK TABLES `org_group` WRITE;
 /*!40000 ALTER TABLE `org_group` DISABLE KEYS */;
-INSERT INTO `org_group` VALUES (3,1,'mi311',1),(8,1,'mi321',2),(9,1,'mi331',3);
+INSERT INTO `org_group` VALUES (8,1,'mi321',2),(9,1,'mi331',3),(10,1,'mi311',1);
 /*!40000 ALTER TABLE `org_group` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -561,7 +564,7 @@ CREATE TABLE `studenti_grupe` (
 
 LOCK TABLES `studenti_grupe` WRITE;
 /*!40000 ALTER TABLE `studenti_grupe` DISABLE KEYS */;
-INSERT INTO `studenti_grupe` VALUES (1021,8),(1001,9),(1021,9);
+INSERT INTO `studenti_grupe` VALUES (1021,8),(1040,8),(1001,9),(1021,9),(1040,9),(1001,10),(1040,10);
 /*!40000 ALTER TABLE `studenti_grupe` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -636,4 +639,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-05-24  0:38:29
+-- Dump completed on 2011-05-24 19:10:43
