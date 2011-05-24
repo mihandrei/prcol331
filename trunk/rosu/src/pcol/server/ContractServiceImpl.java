@@ -1,27 +1,21 @@
 package pcol.server;
 
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
-import org.hibernate.Query;
 import org.hibernate.Session;
 
-import com.google.gwt.dev.util.collect.HashMap;
-
 import pcol.client.contract.ContractService;
+import pcol.server.blogic.Contracte;
+import pcol.server.blogic.Orare;
 import pcol.server.domain.ContracteStudiu;
-import pcol.server.domain.ContracteStudiuId;
-import pcol.server.domain.CurCourse;
 import pcol.server.domain.Curicul;
+import pcol.server.domain.Logins;
 import pcol.server.domain.Orar;
-import pcol.server.domain.OrgGroup;
-import pcol.server.domain.OrgSection;
 import pcol.server.domain.Profesori;
 import pcol.server.domain.Studenti;
-import pcol.server.domain.Logins;
 import pcol.server.security.AuthRemoteServiceServlet;
 import pcol.shared.AuthenticationException;
 import pcol.shared.Contract;
@@ -30,10 +24,10 @@ import pcol.shared.CourseGroup;
 import pcol.shared.OrarDto;
 import pcol.shared.Tuple;
 
+import com.google.gwt.dev.util.collect.HashMap;
+
 public class ContractServiceImpl extends AuthRemoteServiceServlet implements
 		ContractService {
-
-	private static final int MAX_STUDENTI_GRUPA = 3;
 
 	@Override
 	public pcol.shared.Curicul getCuricula(String sid) throws AuthenticationException {
@@ -46,20 +40,10 @@ public class ContractServiceImpl extends AuthRemoteServiceServlet implements
 				}
 				Studenti student = user.getStudentis().iterator().next();
 				
-				Query grq = session
-				.createQuery(
-						"select cur "+
-						"from Curicul as cur , Studenti as s where "+ 
-						"s.nrMatr=:nrmatr "+
-						"and cur.orgSection = s.orgSection " +
-						"and cur.semester = :sem ")
-				.setParameter("nrmatr", student.getNrMatr())
-				.setParameter("sem", CommonBusinessLogic.isFirstSemester()?1:2);
-				
 				//grupez in grupe de cursuri
 				Map<Integer,CourseGroup> grouped = new HashMap<Integer,CourseGroup>();
 				
-				for (Curicul citem : (List<Curicul>) grq.list()) {
+				for (Curicul citem : Contracte.getCuricula(student, session)) {
 					Integer optGroup = citem.getOptionalGroup();
 					if(!grouped.containsKey(optGroup)){
 						CourseGroup cg = new CourseGroup();
@@ -105,17 +89,9 @@ public class ContractServiceImpl extends AuthRemoteServiceServlet implements
 					throw new RuntimeException("userul nu e student");
 				}
 				Studenti student = user.getStudentis().iterator().next();
-				Query grq = session
-						.createQuery(
-								" from  ContracteStudiu as cs "
-										+ " where cs.id.nrmat = :nrmatr "
-										+ " and cs.id.contractVersion = ("
-										+ " select max(c.id.contractVersion) from ContracteStudiu as c"
-										+ " where c.studenti.nrMatr=:nrmatr)")
-						.setParameter("nrmatr", student.getNrMatr());
 
 				int ver = 0;
-				for (ContracteStudiu contr : (List<ContracteStudiu>) grq.list()) {
+				for (ContracteStudiu contr : Contracte.getContract(student, session)) {
 					selection.add(contr.getCuricul().getCurCourse().getId());
 					ver = contr.getId().getContractVersion();
 				}
@@ -146,95 +122,15 @@ public class ContractServiceImpl extends AuthRemoteServiceServlet implements
 					throw new RuntimeException("userul nu e student");
 				}
 				Studenti student = user.getStudentis().iterator().next();
-				int contractVersion = submitContract(student, selectedCourseIds, session);
-				assignStudentToGroup(student,contractVersion,session);
+				Contracte.onContractSumbitted(student, session, selectedCourseIds);
 				session.getTransaction().commit();
 				return null;
 			}
 		});
-
 	}
-	/**
-	 * @return versiunea contractului
-	 */
-	private int submitContract(Studenti student, 
-			Set<Integer> selectedCourseIds, Session session){
-		// latest version
-		Integer contractVersion = (Integer) session.createQuery(
-						" select max(c.id.contractVersion) from ContracteStudiu as c"
-					  + " where c.studenti.nrMatr=:nrmatr)")
-				.setParameter("nrmatr", student.getNrMatr())
-				.uniqueResult();
-		
-		if(contractVersion == null){
-			contractVersion=0;
-		}
-
-		for (Integer idCurs : selectedCourseIds) {
-			Curicul curicul = (Curicul)session.createQuery(
-					"select cur "+
-					" from Curicul as cur , Studenti as s" +
-					" where cur.curCourse.id=:cursid " +
-					" and cur.orgSection = s.orgSection "+
-					" and s.nrMatr=:nrmatr ")
-			.setParameter("nrmatr", student.getNrMatr())
-			.setParameter("cursid", idCurs)
-			.uniqueResult();
-
-			ContracteStudiu newci = new ContracteStudiu();
-			newci.setId(new ContracteStudiuId(student.getNrMatr(),
-					curicul.getId(), contractVersion + 1));
-			session.save(newci);
-			student.getContracteStudius().add(newci);
-		}
-		
-		return contractVersion + 1;
-	}
-
-	private void assignStudentToGroup(Studenti student, Integer contractVersion, Session session ){
-		Query selectAniInContract = session.createQuery(
-				" select distinct contr.curicul.an,  contr.curicul.orgSection.id "+
-				" from ContracteStudiu as contr " +
-				" where contr.studenti.nrMatr=:nrmatr " +
-				" and contr.id.contractVersion=:contractVersion")
-			.setParameter("nrmatr", student.getNrMatr())
-			.setParameter("contractVersion", contractVersion);
-		
-		Query selectGrupaLibera = session.createQuery(
-				"select gr from OrgGroup as gr " + 
-				"join gr.studentis as s " +
-				"where gr.an=:an and gr.orgSection.id=:sectieId "+ 
-				"group by gr having count(s) <= :maxStudentiInGrupa")
-			.setParameter("maxStudentiInGrupa", Long.valueOf(MAX_STUDENTI_GRUPA));
-		
-//		student.getOrgGroups().clear();
-//		session.persist(student);
-		
-		for(Object[] anid : (List<Object[]>)selectAniInContract.list()){
-			Integer an = (Integer) anid[0];
-			Integer sectieId = (Integer) anid[1];
-			
-			selectGrupaLibera.setParameter("an",an)
-				.setParameter("sectieId", sectieId);
-			
-			OrgGroup grupa = (OrgGroup) selectGrupaLibera.uniqueResult();
-			
-			if(grupa==null){
-				OrgSection sectie = (OrgSection) session.get(OrgSection.class, sectieId);
-				//todo: naming pt grupe
-				grupa = new OrgGroup(sectie, sectie.getName() , an);
-				session.persist(grupa);
-			}
-			
-			student.getOrgGroups().add(grupa);
-			session.persist(student);
-		}
-		
-	}
-
+	
 	@Override
-	// TODO: ar fi fost frumos ca student extends user ; prof extends user si 
-	// sa avem o metoda vistuala getschedule care sa fie impl specific de fiecare clasa
+	
 	public List<OrarDto> getSchedule(String sid) throws AuthenticationException {
 		return withUser(sid, new UserCall<List<OrarDto>>() {
 			@Override
@@ -243,10 +139,10 @@ public class ContractServiceImpl extends AuthRemoteServiceServlet implements
 				Iterable<Orar> events;
 				if (user.getStudentis().size() == 1) {
 					Studenti student = user.getStudentis().iterator().next();
-					events = getSchedule(student);
+					events = Orare.getSchedule(student,session);
 				}else if(user.getProfesoris().size() == 1){
 					Profesori prof = user.getProfesoris().iterator().next();
-					events = getSchedule(prof);
+					events = Orare.getSchedule(prof,session);
 				}else{
 					throw new RuntimeException("userul nu e student sau profesor");
 				}
@@ -265,23 +161,6 @@ public class ContractServiceImpl extends AuthRemoteServiceServlet implements
 				return ret;
 			}
 		});
-
-	}
-
-	protected Set<Orar> getSchedule(Profesori prof) {
-		HashSet<Orar> ret = new HashSet<Orar>();
-		for(CurCourse curs:prof.getCurCourses()){
-			ret.addAll(curs.getOrars());
-		}
-		return ret;
-	}
-
-	protected Set<Orar> getSchedule(Studenti student) {
-		HashSet<Orar> ret = new HashSet<Orar>();
-		for(OrgGroup grup: student.getOrgGroups()){
-			ret.addAll(grup.getOrars());
-		}
-		return ret;
 	}
 
 }

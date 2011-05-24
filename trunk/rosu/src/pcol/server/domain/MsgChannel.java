@@ -1,6 +1,6 @@
 package pcol.server.domain;
 
-// Generated May 15, 2011 7:09:00 PM by Hibernate Tools 3.4.0.CR1
+// Generated May 24, 2011 2:57:40 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -21,6 +22,7 @@ import javax.persistence.Table;
 public class MsgChannel implements java.io.Serializable {
 
 	private String id;
+	private Set<CurCourse> curCourses = new HashSet<CurCourse>(0);
 	private Set<Logins> loginses = new HashSet<Logins>(0);
 	private Set<MsgMessage> msgMessages = new HashSet<MsgMessage>(0);
 
@@ -31,9 +33,10 @@ public class MsgChannel implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public MsgChannel(String id, Set<Logins> loginses,
-			Set<MsgMessage> msgMessages) {
+	public MsgChannel(String id, Set<CurCourse> curCourses,
+			Set<Logins> loginses, Set<MsgMessage> msgMessages) {
 		this.id = id;
+		this.curCourses = curCourses;
 		this.loginses = loginses;
 		this.msgMessages = msgMessages;
 	}
@@ -46,6 +49,15 @@ public class MsgChannel implements java.io.Serializable {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "msgChannel")
+	public Set<CurCourse> getCurCourses() {
+		return this.curCourses;
+	}
+
+	public void setCurCourses(Set<CurCourse> curCourses) {
+		this.curCourses = curCourses;
 	}
 
 	@ManyToMany(fetch = FetchType.LAZY)

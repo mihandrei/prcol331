@@ -21,6 +21,14 @@ public class ScheduleActivity extends AbstractActivity implements
 	private static WeekView view;
 	private static boolean firstrun = true;
 	private static ContractServiceAsync rpc = null;
+	/**
+	 * hack; invalideaza cache-ul , cand reporneste activitatea 
+	 * va lua datele de pe server
+	 * Ideal ar trebui o politica de cache mai globala si uniforma
+	 */
+	public static void invalidateCache(){
+		firstrun=true;
+	}
 	@Override
 	public void start(final AcceptsOneWidget panel, EventBus eventBus) {
 		GWT.runAsync(new RunAsyncCallback() {

@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import org.hibernate.Query;
 import org.hibernate.Session;
 
 import pcol.client.tweet.TweetService;
+import pcol.server.blogic.Mesaje;
 import pcol.server.domain.Logins;
 import pcol.server.domain.MsgMessage;
 import pcol.server.security.AuthRemoteServiceServlet;
@@ -20,21 +20,13 @@ public class TweetServiceImpl extends AuthRemoteServiceServlet implements
 	static Logger log = Logger.getLogger(TweetServiceImpl.class.getName());
 	
 	@Override
-	public List<Tweet> getTweets(String sid, int limit) throws AuthenticationException{
+	public List<Tweet> getTweets(String sid, final int limit) throws AuthenticationException{
 		return withUser(sid, new UserCall<List<Tweet>>() {
 			@Override
 			public List<Tweet> call(Logins user, Session session) {
 				session.beginTransaction();
-				Query res = session
-				.createQuery(
-						"select distinct m from Logins as u " +
-						"join u.msgChannels as c " +
-						"join c.msgMessages as m " +
-						"where u.loginName=:login " +
-				"order by m.date desc")
-				.setParameter("login", user.getLoginName());
 
-				List<MsgMessage> msgs = res.list();
+				List<MsgMessage> msgs = Mesaje.getTweets(user.getLoginName(), limit, session);
 				List<Tweet> ret = new ArrayList<Tweet>();
 				for(MsgMessage m :msgs){
 					ret.add(new Tweet(m.getMsg(), m.getLogins().getLoginName(),
@@ -47,8 +39,13 @@ public class TweetServiceImpl extends AuthRemoteServiceServlet implements
 	}
 
 	@Override
-	public void sendTweet(String sid, String mesaj, String destinatie) {
-		// TODO Auto-generated method stub
-		
+	public void sendTweet(String sid, final String mesaj, final String destinatie) throws AuthenticationException {
+		withUser(sid, new UserCall<Void>() {
+			@Override
+			public Void call(Logins usr, Session s) {
+				Mesaje.sendTweet(usr, mesaj, destinatie, s);
+				return null;
+			}
+		});
 	}
 }
