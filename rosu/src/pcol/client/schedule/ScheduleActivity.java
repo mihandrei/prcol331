@@ -1,6 +1,7 @@
 package pcol.client.schedule;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import pcol.client.AppLoader;
 import pcol.client.contract.ContractService;
@@ -19,7 +20,7 @@ import com.google.gwt.user.client.ui.RootLayoutPanel;
 
 public class ScheduleActivity extends AbstractActivity implements
 		WeekView.Presenter {
-
+	static final Logger log = Logger.getLogger(ScheduleActivity.class.getName());
 	private static WeekView view;
 	private static boolean firstrun = true;
 	private static ContractServiceAsync rpc = null;
@@ -30,6 +31,7 @@ public class ScheduleActivity extends AbstractActivity implements
 	 */
 	public static void invalidateCache(){
 		firstrun=true;
+		log.fine("cache invalidated");
 	}
 	@Override
 	public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
