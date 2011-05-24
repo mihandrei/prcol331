@@ -1,0 +1,62 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style type="pcol.client.contract.CourseGroupWidget.MyStyle">
+		.selected {
+			background-color: #B0F070;
+		}
+		
+		.col0 {
+			width: 2em;
+		}
+		
+		.col1 {
+			width: 5em;
+		}
+		
+		.col3 {
+			width: 5em;
+		}
+		
+		.col4 {
+			width: 6.8em;
+		}
+		
+		.caption {
+			font-size: 1.2em;
+			border-bottom: solid 1px #A1E619;
+			/*margin: 1em 0em 1em 0em;*/
+			padding:0.2em;
+			width: 10em;
+		}
+		
+		.tbl {
+			border-collapse: collapse;
+			font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+			
+			/*margin-left:1em;*/
+		}
+		
+		.tbl td {
+			cursor: pointer;
+			border-bottom: solid 1px #CCCCCC;
+			padding: 0.5em;
+		}
+		
+		.tbl tr:hover {
+			background-color: #E0E0E0;
+		}
+		
+		.tbl tr.selected:hover {
+			background-color: #40E040;
+		}
+		
+		.picat{background-color:#FFAA00;}
+		.luat{background-color:#00AAFF;}
+		
+	</ui:style>
+	<g:HTMLPanel>
+		<g:Label ui:field="caption" styleName="{style.caption}" />
+		<g:FlexTable ui:field="tbl" styleName="{style.tbl}" />
+	</g:HTMLPanel>
+</ui:UiBinder> 

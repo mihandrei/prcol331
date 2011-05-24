@@ -1,0 +1,41 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+		
+		.loginp{
+			background-color: white;
+			padding: 1em;
+			color: #606060;
+			font-size: 1.1em;
+		}
+		.loginp * {
+			margin: 5px;
+		}
+		
+		.badauth {
+			color: #FF7060;
+		}
+		
+		.tbox {
+			font-size: 1.5em;
+			width: 240px;
+			padding: 5px;
+			margin-bottom: 20px;
+			color: black;
+		}
+		
+			
+	</ui:style>
+	<g:HTMLPanel styleName="{style.loginp}">
+			<div>
+				<g:Label text="Parola" />
+				<g:PasswordTextBox ui:field="pwd" styleName="{style.tbox}" />
+			</div>
+			<div>
+				<g:Button text="login" ui:field="button" />
+				<g:InlineLabel text="parola gresita" ui:field="badauth"
+					styleName="{style.badauth}" />
+			</div>
+	</g:HTMLPanel>
+</ui:UiBinder> 

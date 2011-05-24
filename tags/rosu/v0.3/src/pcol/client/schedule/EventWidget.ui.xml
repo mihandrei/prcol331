@@ -1,0 +1,27 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+		.antet {
+			background-color: #3377FF;
+			color:white;
+			border-radius: 5px 5px 0px 0px;
+		}
+		.nume{
+			font-style: italic;
+		}
+		.event {
+		/*	border: solid 1px white;*/
+			min-height: 1.1em;
+			position: absolute;
+			border-radius: 5px;
+			overflow: hidden;
+		}
+	</ui:style>
+	<g:HTMLPanel styleName="{style.event}" ui:field="eventPanel">
+			<g:Label styleName="{style.antet}" ui:field="eventTitle"/>			
+			<g:Label ui:field="nameLbl" styleName="{style.nume}"></g:Label>
+			<g:InlineHyperlink ui:field="cursHy"></g:InlineHyperlink>&nbsp;in&nbsp;
+			<g:InlineLabel ui:field="salaHy"></g:InlineLabel>
+	</g:HTMLPanel>
+</ui:UiBinder> 
