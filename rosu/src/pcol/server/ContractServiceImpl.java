@@ -1,6 +1,7 @@
 package pcol.server;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -24,8 +25,6 @@ import pcol.shared.CourseGroup;
 import pcol.shared.OrarDto;
 import pcol.shared.Tuple;
 
-import com.google.gwt.dev.util.collect.HashMap;
-
 public class ContractServiceImpl extends AuthRemoteServiceServlet implements
 		ContractService {
 
@@ -40,37 +39,42 @@ public class ContractServiceImpl extends AuthRemoteServiceServlet implements
 				}
 				Studenti student = user.getStudentis().iterator().next();
 				
-				//grupez in grupe de cursuri
-				Map<Integer,CourseGroup> grouped = new HashMap<Integer,CourseGroup>();
+				//key1: anul; key2 : id-ul grupei de curs ; valoare: grupa de curs
+				//al doilea e map si nu list ca sa pot sa retrieve un elem in O(1)
+				Map<Integer, Map<Integer,CourseGroup>> anGrupCursuri = new HashMap<Integer, Map<Integer,CourseGroup>>();
 				
 				for (Curicul citem : Contracte.getCuricula(student, session)) {
+					//ensure an
+					if (!anGrupCursuri.containsKey(citem.getAn())) {
+						anGrupCursuri.put(citem.getAn(), new HashMap<Integer,CourseGroup>());
+					}
+					
+					//grupurile de cursuri pt un an dat
+					Map<Integer, CourseGroup> grupCursuri = anGrupCursuri.get(citem.getAn());
+					
 					Integer optGroup = citem.getOptionalGroup();
-					if(!grouped.containsKey(optGroup)){
+					//ensure coursegroup
+					if(!grupCursuri.containsKey(optGroup)){
 						CourseGroup cg = new CourseGroup();
 						cg.exclusive = citem.getOptionalGroup()!= null;
 						cg.name = cg.exclusive ? "optionale":"obligatorii";
 						cg.an = citem.getAn();
 						cg.semester = citem.getSemester();
-						grouped.put(optGroup, cg);
+						grupCursuri.put(optGroup, cg);
 					}
 					
-					grouped.get(optGroup).courses.add(new Course(
+					grupCursuri.get(optGroup).courses.add(new Course(
 							citem.getCurCourse().getId(),
 							citem.getCurCourse().getName(),
 							citem.getCurCourse().getAbbrev(),
 							citem.getNcredite()));
 				}
 				
-				//grupez dupa an 
+				//flatten the map
 				pcol.shared.Curicul ret = new pcol.shared.Curicul();					
-				for(Integer optGroup: grouped.keySet()){
-					CourseGroup cg = grouped.get(optGroup);
-					
-					if (!ret.cursuriPeSemestru.containsKey(cg.an)) {
-						ret.cursuriPeSemestru.put(cg.an, new ArrayList<CourseGroup>());
-					}
-					
-					ret.cursuriPeSemestru.get(cg.an).add(cg);
+				for(Integer an: anGrupCursuri.keySet()){
+					ArrayList<CourseGroup> flattened = new ArrayList<CourseGroup>(anGrupCursuri.get(an).values());
+					ret.cursuriPeAn.put(an,flattened);
 				}
 				session.getTransaction().commit();
 				return ret;

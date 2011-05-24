@@ -7,6 +7,6 @@ import java.util.Map;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class Curicul implements IsSerializable{
-	public Map<Integer, List<CourseGroup>> cursuriPeSemestru = new HashMap<Integer, List<CourseGroup>>();
+	public Map<Integer, List<CourseGroup>> cursuriPeAn = new HashMap<Integer, List<CourseGroup>>();
 
 }
