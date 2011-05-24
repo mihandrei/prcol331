@@ -1,4 +1,4 @@
-
+--contractele active (utimile versiuni)
  from
   ContracteStudiu as cs   
  where
@@ -44,3 +44,24 @@ and cur.semester = 2
  where gr.an=2 
  group by gr
  having count(s) <= 2
+ 
+
+--selecteaza intrarile in orar care corespund contractului ales de student
+--adica din orarele grupelor la care-i inscris filtreaza doar materiile din contract
+-- BUG? daca joinurile pe orar apar primele atunci selectarea 
+-- lui orar.curCourse.abbrev produce un query gresit
+select orar
+from 
+Studenti as s 
+join s.contracteStudius as con
+join con.curicul as cur
+
+join s.orgGroups as gr
+join gr.orars as orar
+
+where 
+orar.curCourse = cur.curCourse 
+and s.nrMatr=1021
+and   con.id.contractVersion = 
+(select max(c.id.contractVersion) from ContracteStudiu as c
+  where c.studenti.nrMatr=1021)

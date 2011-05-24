@@ -1,6 +1,6 @@
 package pcol.server.domain;
 
-// Generated May 15, 2011 7:09:00 PM by Hibernate Tools 3.4.0.CR1
+// Generated May 24, 2011 2:57:40 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,6 +24,7 @@ public class CurCourse implements java.io.Serializable {
 
 	private Integer id;
 	private Profesori profesori;
+	private MsgChannel msgChannel;
 	private String name;
 	private String abbrev;
 	private String description;
@@ -36,17 +37,20 @@ public class CurCourse implements java.io.Serializable {
 	public CurCourse() {
 	}
 
-	public CurCourse(Profesori profesori, String name, String abbrev) {
+	public CurCourse(Profesori profesori, MsgChannel msgChannel, String name,
+			String abbrev) {
 		this.profesori = profesori;
+		this.msgChannel = msgChannel;
 		this.name = name;
 		this.abbrev = abbrev;
 	}
 
-	public CurCourse(Profesori profesori, String name, String abbrev,
-			String description, Set<Resource> resources,
+	public CurCourse(Profesori profesori, MsgChannel msgChannel, String name,
+			String abbrev, String description, Set<Resource> resources,
 			Set<SchemaNotare> schemaNotares, Set<Teme> temes,
 			Set<Curicul> curiculs, Set<Orar> orars) {
 		this.profesori = profesori;
+		this.msgChannel = msgChannel;
 		this.name = name;
 		this.abbrev = abbrev;
 		this.description = description;
@@ -76,6 +80,16 @@ public class CurCourse implements java.io.Serializable {
 
 	public void setProfesori(Profesori profesori) {
 		this.profesori = profesori;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "msg_channel", nullable = false)
+	public MsgChannel getMsgChannel() {
+		return this.msgChannel;
+	}
+
+	public void setMsgChannel(MsgChannel msgChannel) {
+		this.msgChannel = msgChannel;
 	}
 
 	@Column(name = "name", nullable = false)

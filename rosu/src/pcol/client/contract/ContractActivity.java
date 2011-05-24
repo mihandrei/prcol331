@@ -11,6 +11,7 @@ import java.util.Set;
 
 import pcol.client.App;
 import pcol.client.AppLoader;
+import pcol.client.schedule.ScheduleActivity;
 import pcol.client.security.AppAsyncCallback;
 import pcol.shared.Contract;
 import pcol.shared.Course;
@@ -143,6 +144,7 @@ public class ContractActivity extends AbstractActivity implements
 				AppLoader.getApp().showInfo("contractul a fost salvat");
 				initiallySelectedCourseIds = new HashSet<Integer>(selectedCourseIds);
 				view.setSaveEnabled(isDirty());
+				ScheduleActivity.invalidateCache();
 			}
 		});
 		}
