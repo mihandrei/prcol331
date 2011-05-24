@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
+@SuppressWarnings("serial")
 public class User implements IsSerializable, Serializable{
 	private Role role;
 	private String loginName;

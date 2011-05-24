@@ -1,5 +1,6 @@
 package pcol.shared;
 
+@SuppressWarnings("serial")
 public class AuthenticationException extends Exception {
 	public AuthenticationException(){
 		

@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.fileupload.FileItemIterator;
 import org.apache.commons.fileupload.FileItemStream;
-import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.util.Streams;
 import org.apache.commons.io.FilenameUtils;
@@ -30,6 +29,7 @@ import pcol.server.domain.Resource;
  * fisier si creerea resursei corespunzatoare
  *
  */
+@SuppressWarnings("serial")
 public class FileUpload extends HttpServlet {
 	private static final String DENUMIRE = "denumire";
 	private static final String UPLOADS = "uploads";

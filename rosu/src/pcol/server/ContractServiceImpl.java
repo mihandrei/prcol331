@@ -25,6 +25,7 @@ import pcol.shared.CourseGroup;
 import pcol.shared.OrarDto;
 import pcol.shared.Tuple;
 
+@SuppressWarnings("serial")
 public class ContractServiceImpl extends AuthRemoteServiceServlet implements
 		ContractService {
 

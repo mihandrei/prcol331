@@ -8,7 +8,7 @@ public class StudentTabConfig extends TabPlaceMapper {
 		tabs.add(new Tab("noutati", "noutati", false));
 		tabs.add(new Tab("orar", "orar", false));
 		tabs.add(new Tab("teme", "teme", false));
-		tabs.add(new Tab("contract", "contract", true));
+		tabs.add(new Tab("contract", "contract", false));
 	}
 	
 	@Override

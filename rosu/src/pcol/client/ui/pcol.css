@@ -1,4 +1,4 @@
-@external gwt-TabLayoutPanelTab, gwt-TabLayoutPanelContent;
+@external gwt-TabLayoutPanelTab, gwt-TabLayoutPanelContent,gwt-TabLayoutPanelContentContainer;
 @external tabpanelnav, gwt-TabLayoutPanelTab-selected;
 body {
 	background-color: #505050;
@@ -40,6 +40,10 @@ textarea {
 	background-color: white;
 }
 
+.tabpanelnav  .gwt-TabLayoutPanelContentContainer{
+	border-style: none;	
+}
+	
 .dockp {
 	min-width: 49em; /*move to rootlayoutpanel style to get scroll*/
 	min-height: 40em;

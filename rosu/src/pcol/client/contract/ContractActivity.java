@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import pcol.client.App;
 import pcol.client.AppLoader;
 import pcol.client.schedule.ScheduleActivity;
 import pcol.client.security.AppAsyncCallback;
@@ -69,8 +68,8 @@ public class ContractActivity extends AbstractActivity implements
 			selectedCourseIds = new HashSet<Integer>(initiallySelectedCourseIds);
 			
 			Curicul curicul = result.f;
-			for(int sem : curicul.cursuriPeSemestru.keySet()){
-				addCgs(curicul.cursuriPeSemestru.get(sem),note, "sem "+sem);
+			for(int sem : curicul.cursuriPeAn.keySet()){
+				addCgs(curicul.cursuriPeAn.get(sem),note, "anul "+sem);
 			}
 			
 			view.setSaveEnabled(isDirty());

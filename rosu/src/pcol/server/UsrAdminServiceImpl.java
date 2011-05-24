@@ -3,6 +3,7 @@ package pcol.server;
 import pcol.client.useradmin.UsrService;
 import pcol.server.security.AuthRemoteServiceServlet;
 
+@SuppressWarnings("serial")
 public class UsrAdminServiceImpl extends AuthRemoteServiceServlet implements UsrService {
 
 	@Override

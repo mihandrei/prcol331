@@ -2,8 +2,6 @@ package pcol.client;
 
 import java.util.logging.Logger;
 
-import pcol.client.config.AdminActivityConfig;
-import pcol.client.config.AdminPlaceConfig;
 import pcol.client.config.TabPlaceMapper;
 import pcol.client.config.TabPlaceMapper.Tab;
 import pcol.client.security.AppDoneEvent;
@@ -11,7 +9,6 @@ import pcol.client.security.AuthenticationService;
 import pcol.client.security.AuthenticationServiceAsync;
 import pcol.client.security.LoginEvent;
 import pcol.client.security.LoginManager;
-import pcol.client.tweet.TweetPlace;
 import pcol.client.ui.ReLoginDialog;
 import pcol.client.ui.ReLoginView;
 import pcol.client.ui.Shell;
@@ -39,6 +36,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 
 public final class App implements Shell.Presenter{
+	@SuppressWarnings("unused")
 	private static final Logger log = Logger.getLogger(App.class.getName());
 
 	public final EventBus eventBus;
@@ -186,7 +184,7 @@ public final class App implements Shell.Presenter{
 		PlaceChangeRequestEvent willChange = new PlaceChangeRequestEvent(Place.NOWHERE);
 	    eventBus.fireEvent(willChange);
 		String warning = willChange.getWarning();
-		 if (warning == null || Window.confirm(warning)) {
+		if (warning == null || Window.confirm(warning)) {
 			 //loginmanagerul sa invalideze credentiale (sid & cookie)
 			 loginManager.logout();
 			 //daca nu-l deregistrez o sa aculte pe bus placechangeeventuri, si o sa vrea sa le mapeze			 
@@ -198,7 +196,7 @@ public final class App implements Shell.Presenter{
 			 activityManager.setDisplay(null);
 			 //notifica apploaderul si alte ca am incheiat
 			 eventBus.fireEvent(new AppDoneEvent());
-		 }
+		}
 	}
 	
 	public void showError(String msg){
