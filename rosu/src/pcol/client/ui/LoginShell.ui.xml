@@ -46,7 +46,7 @@
 		<g:north size='60'>
 			<g:HTMLPanel>
 				<div class="{main.style.bar}">
-					<span class="{main.style.sketch}"> Pc </span>
+					<span class="{main.style.sketch}"> Rosu </span>
 				</div>
 			</g:HTMLPanel>
 		</g:north>
@@ -81,20 +81,23 @@
 				</p>
 				<ul>
 					<li>rol student : mihai,mihai</li>
-					<li>rol admin : didy,didy</li>
-					<li>rol prof : TODO</li>
+					<li>rol student : didy,didy</li>
+					<li>rol student : geza,geza</li>
+					<li>rol prof : norvig,norvig </li>
+					<li>rol prof : turing,turing </li>
 				</ul>
 			</g:HTMLPanel>
 		</g:east>
 
 		<g:center>
 			<g:HTMLPanel styleName="{style.center}">
-			<h1> En route </h1>
+			<h1> Rosu </h1>
 			<p>
-				3stie e o aplicatie de management a studentilor
+				este o aplicatie ce organizeaza activitati didactice comune
+				intr-un mod intuitiv si simplu 
 			</p>
 			<p>
-			    versiunea curenta : rosu , instabila
+			    versiunea curenta : rosu , instabila si incompleta
 			</p>
 			<h1> &lt;code: </h1>
 			<p>
@@ -104,7 +107,7 @@
 			tags:
 			<ul>
 			<li>Html,css</li>
-			<li>GWT 2.2</li>
+			<li>GWT 2.3</li>
 			<li>Hibernate</li>
 			<li>mysql</li></ul>
 			</p>
