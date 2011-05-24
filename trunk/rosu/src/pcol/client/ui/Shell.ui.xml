@@ -91,7 +91,7 @@
 						<g:InlineLabel ui:field="nrmatrlbl"/> &nbsp;|&nbsp;
 						<g:InlineLabel styleName="{style.logoutlbl}" ui:field="logoutlbl"> logout </g:InlineLabel>
 					</div>
-					<span class="{main.style.sketch}"> Pc </span>
+					<span class="{main.style.sketch}"> Rosu </span>
 					<g:Label styleName="{style.infotopbar}" ui:field="infobar"/> 
 				</div>
 			</g:HTMLPanel>
