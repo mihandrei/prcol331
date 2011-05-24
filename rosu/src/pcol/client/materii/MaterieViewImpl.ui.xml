@@ -3,7 +3,7 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style>
 		.center {
-			background-color: white;
+			background-color: #FCFCFB;
 			padding: 1em;
 		}
 		.tbl {

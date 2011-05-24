@@ -7,7 +7,7 @@
 		}
 		
 		.sw {
-			background-color: white;
+			background-color: #FCFCFB;
 			margin-bottom: 1px;
 			padding:8px;
 		}
@@ -20,12 +20,22 @@
 	</ui:style>
 	<g:HTMLPanel>
 		<div class="{style.sw}">
+			<h1><g:Label ui:field="caption"></g:Label></h1>
+		</div>
+		<div class="{style.sw}">
 			<h2>Teme</h2>
 			<g:FlowPanel ui:field="temelinks" styleName="{style.indent1}" />
 		</div>
 		<div class="{style.sw}">
 			<h2>Note</h2>
 			<g:FlowPanel ui:field="notelinks" styleName="{style.indent1}" />
+		</div>
+		<div class="{style.sw}">
+			<h2>Mesaje</h2>
+			<div class="{style.indent1}">
+				<g:Hyperlink text="publica un anunt pentru acest curs"
+					ui:field="msgLink" />
+				</div>
 		</div>
 		<div class="{style.sw}">
 			<h2>Setari</h2>

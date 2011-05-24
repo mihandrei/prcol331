@@ -43,8 +43,10 @@ public class TweetServiceImpl extends AuthRemoteServiceServlet implements
 	public void sendTweet(String sid, final String mesaj, final String destinatie) throws AuthenticationException {
 		withUser(sid, new UserCall<Void>() {
 			@Override
-			public Void call(Logins usr, Session s) {
-				Mesaje.sendTweet(usr, mesaj, destinatie, s);
+			public Void call(Logins usr, Session session) {
+				session.beginTransaction();
+				Mesaje.saveTweet(usr, mesaj, destinatie, session);
+				session.getTransaction().commit();
 				return null;
 			}
 		});

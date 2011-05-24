@@ -3,7 +3,7 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:p1="urn:import:com.google.gwt.user.cellview.client">
 	<ui:style>
 		.scrollpanel {
-			background-color: white;
+			background-color: #FCFCFB;
 			padding: 1em;
 		}
 	</ui:style>

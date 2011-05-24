@@ -13,7 +13,7 @@
 		}
 		
 		.center {
-			background-color: white;
+			background-color: #FCFCFB;
 		}
 		
 	</ui:style>

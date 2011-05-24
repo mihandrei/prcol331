@@ -14,6 +14,7 @@ import pcol.client.config.StudentActivityConfig;
 import pcol.client.config.StudentPlaceConfig;
 import pcol.client.config.StudentTabConfig;
 import pcol.client.config.TabPlaceMapper;
+import pcol.client.schedule.SchedulePlace;
 import pcol.client.security.AppDoneEvent;
 import pcol.client.security.AutoLoginEvent;
 import pcol.client.security.LoginEvent;
@@ -131,7 +132,7 @@ public class AppLoader implements EntryPoint, LoginShell.Presenter{
 					activityConf = new AdminActivityConfig();
 				}else if(usr.getRole() == Role.PROFESOR){
 					placeConf = new ProfPlaceConfig();
-					defPlace = new TweetPlace();
+					defPlace = new SchedulePlace();
 					tabConf = new ProfTabConfig(placeConf);
 					activityConf = new ProfActivityConfig();
 				}else{
