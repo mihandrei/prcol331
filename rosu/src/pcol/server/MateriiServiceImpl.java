@@ -173,7 +173,7 @@ public class MateriiServiceImpl extends AuthRemoteServiceServlet implements Mate
 			session.delete(res);
 			session.getTransaction().commit();
 			//resursa a fost scoasa din BD cu succes , kill za file
-			FileUpload.deleteFile(resourceName);
+			FileUpload.deleteFile(resourceName,getServletContext());
 		} finally {
 			session.close();
 		}
@@ -234,7 +234,7 @@ public class MateriiServiceImpl extends AuthRemoteServiceServlet implements Mate
 			String numeFisier = domt.getResource().getNumefisier();
 			session.delete(domt);
 			session.getTransaction().commit();
-			FileUpload.deleteFile(numeFisier);
+			FileUpload.deleteFile(numeFisier,getServletContext());
 		} finally {
 			session.close();
 		}

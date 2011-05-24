@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.logging.Logger;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -39,6 +40,7 @@ public class FileUpload extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		String uploadsPath = getServletContext().getRealPath(UPLOADS);
 		// daca ii un upload
 		if (ServletFileUpload.isMultipartContent(request)) {
 			ServletFileUpload upload = new ServletFileUpload();
@@ -70,7 +72,7 @@ public class FileUpload extends HttpServlet {
 						if (denumire == null || denumire.trim().isEmpty()) {
 							denumire = FilenameUtils.getName(filename);;
 						}
-						String resName = processIstream(denumire, stream);
+						String resName = processIstream(denumire, stream,uploadsPath);
 						
 						PrintWriter out = response.getWriter();
 						out.print("ok:"+resName);
@@ -91,16 +93,17 @@ public class FileUpload extends HttpServlet {
 	 * creeaza un fisier nou. daca fisierul exista deja creeaza unul cu nume
 	 * asemanator threadsafe: Daca e apelata de 2 threaduri diferite e garantat
 	 * ca nu va creea un fisier cu acelasi nume
+	 * @param uploadsPath 
 	 * 
 	 * @throws IOException
 	 */
-	private static File getUniqueSequentialFileName(String filename)
+	private static File getUniqueSequentialFileName(String filename, String uploadsPath)
 			throws IOException {
 		File file;
 		int nr = 0;
 		String cfilename = filename;
 		do {
-			file = new File(UPLOADS, cfilename);
+			file = new File(uploadsPath, cfilename);
 			cfilename = filename + "(" + nr + ")";
 			nr += 1;
 		} while (!file.createNewFile());// check & creation is atomice
@@ -128,16 +131,17 @@ public class FileUpload extends HttpServlet {
 		}
 	}
 
-	public static void deleteFile(String fileName){
-		File file = new File(UPLOADS, fileName);
+	public static void deleteFile(String fileName,ServletContext ctx){
+		String uploadsPath = ctx.getRealPath(UPLOADS);
+		File file = new File(uploadsPath, fileName);
 		file.delete();
 	}
-	private String processIstream(String denumire, InputStream in)
+	private String processIstream(String denumire, InputStream in, String uploadsPath)
 			throws IOException {
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session session = sf.openSession();
 
-		File file = getUniqueSequentialFileName(denumire);
+		File file = getUniqueSequentialFileName(denumire,uploadsPath);
 		FileOutputStream out = new FileOutputStream(file);
 
 		try {
