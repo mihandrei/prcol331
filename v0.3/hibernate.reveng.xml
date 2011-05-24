@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
+<hibernate-reverse-engineering>
+
+	<schema-selection match-catalog="proj_col" />
+
+	<table-filter match-name="contracte_studiu"
+		match-catalog="proj_col">
+	</table-filter>
+	<table-filter match-name="cur_course" match-catalog="proj_col"></table-filter>
+	<table-filter match-name="curicul" match-catalog="proj_col"></table-filter>
+	<table-filter match-name="logins" match-catalog="proj_col"></table-filter>
+	<table-filter match-name="msg_channel" match-catalog="proj_col"></table-filter>
+	<table-filter match-name="msg_message" match-catalog="proj_col"></table-filter>
+	<table-filter match-name="msg_message_channel"
+		match-catalog="proj_col">
+	</table-filter>
+	<table-filter match-name="msg_subscription"
+		match-catalog="proj_col">
+	</table-filter>
+	<table-filter match-name="note_partiale" match-catalog="proj_col"></table-filter>
+	<table-filter match-name="orar" match-catalog="proj_col"></table-filter>
+	<table-filter match-name="org_faculty" match-catalog="proj_col"></table-filter>
+	<table-filter match-name="org_group" match-catalog="proj_col"></table-filter>
+	<table-filter match-name="org_section" match-catalog="proj_col"></table-filter>
+	<table-filter match-name="persoane" match-catalog="proj_col"></table-filter>
+	<table-filter match-name="profesori" match-catalog="proj_col"></table-filter>
+	<table-filter match-name="resource" match-catalog="proj_col"></table-filter>
+	<table-filter match-name="schema_notare" match-catalog="proj_col"></table-filter>
+	<table-filter match-name="studenti" match-catalog="proj_col"></table-filter>
+	<table-filter match-name="studenti_grupe"
+		match-catalog="proj_col">
+	</table-filter>
+	<table-filter match-name="teme" match-catalog="proj_col"></table-filter>
+	<table-filter match-name="tm_student" match-catalog="proj_col"></table-filter>
+</hibernate-reverse-engineering>

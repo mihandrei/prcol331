@@ -1,0 +1,31 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:p1="urn:import:com.google.gwt.user.cellview.client">
+	<ui:style>
+		.c {
+			background-color: #FCFCFB;
+			padding: 1em;
+		}
+		
+		.el {
+			border: solid 1px;
+			padding:2px;
+		}
+		
+		.e {
+			margin-bottom: 4px;
+			margin-right: 4px;
+		}
+	</ui:style>
+	<g:HTMLPanel styleName="{style.c}">
+		<div class="{style.e}">
+			destinatar <g:TextBox ui:field="channel"/>
+		</div>
+		<div class="{style.e}">
+			<g:TextArea ui:field="text" characterWidth="30"
+				visibleLines="5" addStyleNames="{style.el}"/>
+		</div>
+		<g:Button ui:field="send" >trimite</g:Button>
+		
+	</g:HTMLPanel>
+</ui:UiBinder> 

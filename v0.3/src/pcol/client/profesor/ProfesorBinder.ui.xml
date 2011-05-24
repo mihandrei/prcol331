@@ -1,0 +1,51 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+		.important {
+			font-weight: bold;
+		}
+	</ui:style>
+	<g:ScrollPanel height="300px">
+		<g:HTMLPanel>
+			<g:Grid width="100%" height="">
+				<g:row>
+					<g:customCell>
+						<g:TextArea ui:field="anunt" width="382px" height="64px" />
+					</g:customCell>
+				</g:row>
+				<g:row>
+					<g:customCell>
+						<g:Button width="89px" ui:field="trimite" text="trimite anunt" />
+					</g:customCell>
+				</g:row>
+			</g:Grid>
+			<g:FlexTable ui:field="uploadtbl"/>
+			<g:FormPanel ui:field="form">
+				<g:HTMLPanel>
+					<table>
+						<tr>
+							<td>numele atasamentului:</td>
+							<td>
+								<g:TextBox ui:field="denumireTbox" />
+							</td>
+						</tr>
+						<tr>
+							<td>fisierul:</td>
+							<td>
+								<g:FileUpload ui:field="upl" />
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<g:Button ui:field="button" text="uploadeaza" />
+							</td>
+						</tr>
+					</table>
+				</g:HTMLPanel>
+			</g:FormPanel>
+		</g:HTMLPanel>
+	</g:ScrollPanel>
+
+
+</ui:UiBinder> 
