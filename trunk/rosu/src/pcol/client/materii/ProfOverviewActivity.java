@@ -3,6 +3,7 @@ package pcol.client.materii;
 import java.util.List;
 
 import pcol.client.security.AppAsyncCallback;
+import pcol.shared.Course;
 import pcol.shared.Group;
 
 import com.google.gwt.activity.shared.AbstractActivity;
@@ -31,12 +32,16 @@ public class ProfOverviewActivity extends AbstractActivity {
 		}
 
 		view.setPresenter(this);
-		view.descLink.setTargetHistoryToken("editdescriere/"
-				+ place.getMaterieid());
-		view.materialeLink.setTargetHistoryToken("editmateriale/"
-				+ place.getMaterieid());
-		view.temeLink.setTargetHistoryToken("editteme/" + place.getMaterieid());
-
+		view.setLinkMaterieId(place.getMaterieid());
+		
+		rpc.getCourse(place.getMaterieid(), new AppAsyncCallback<Course>() {
+			
+			@Override
+			public void onSuccess(Course curs) {
+				view.msgLink.setTargetHistoryToken("compune/"+curs.msgChan);
+				view.setCaption(curs.name);
+			}
+		});
 		rpc.getGrupeForCourse(place.getMaterieid(),
 				new AppAsyncCallback<List<Group>>() {
 

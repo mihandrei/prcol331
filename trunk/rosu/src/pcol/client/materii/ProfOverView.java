@@ -7,6 +7,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.Label;
 
 public class ProfOverView extends Composite {
 
@@ -17,6 +18,8 @@ public class ProfOverView extends Composite {
 	@UiField Hyperlink temeLink;
 	@UiField FlowPanel temelinks;
 	@UiField FlowPanel notelinks;
+	@UiField Hyperlink msgLink;
+	@UiField Label caption;
 
 	interface MaterieOverViewUiBinder extends UiBinder<Widget, ProfOverView> {
 	}
@@ -29,6 +32,16 @@ public class ProfOverView extends Composite {
 
 	public void setPresenter(ProfOverviewActivity presenter) {
 		this.presenter = presenter;
+	}
+
+	public void setCaption(String name) {
+		caption.setText(name);
+	}
+	
+	public void setLinkMaterieId(int id){
+		descLink.setTargetHistoryToken("editdescriere/"	+ id);
+		materialeLink.setTargetHistoryToken("editmateriale/" + id);
+		temeLink.setTargetHistoryToken("editteme/" + id);
 	}
 
 }

@@ -24,8 +24,10 @@ public class Mesaje {
 		return res.list();
 	}
 
-	public static void sendTweet(Logins login, String mesaj, String destinatie, Session session) {
+	public static void saveTweet(Logins login, String mesaj, String destinatie, Session session) {
 		MsgMessage msg = new MsgMessage(login, mesaj, "INFO", new Date());
+		MsgChannel chan = (MsgChannel) session.get(MsgChannel.class, destinatie);
+		msg.getMsgChannels().add(chan);
 		session.persist(msg);
 	}
 

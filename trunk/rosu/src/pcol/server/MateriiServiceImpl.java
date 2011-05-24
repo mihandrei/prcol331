@@ -38,7 +38,7 @@ public class MateriiServiceImpl extends AuthRemoteServiceServlet implements Mate
 				Profesori prof = user.getProfesoris().iterator().next();
 				ArrayList<Course> ret = new ArrayList<Course>();
 				for(CurCourse cur : prof.getCurCourses()){
-					ret.add(new Course(cur.getId(), cur.getName(),cur.getAbbrev(),-1));
+					ret.add(new Course(cur.getId(), cur.getName(),cur.getAbbrev(),cur.getMsgChannel().getId(),-1));
 				}
 				session.getTransaction().commit();
 				return ret;
@@ -79,7 +79,7 @@ public class MateriiServiceImpl extends AuthRemoteServiceServlet implements Mate
 			session.beginTransaction();
 			CurCourse cur = (CurCourse) session.get(CurCourse.class,courseid);
 			session.getTransaction().commit();
-			return new Course(cur.getId(), cur.getName(),cur.getAbbrev(),-1); 
+			return new Course(cur.getId(), cur.getName(),cur.getAbbrev(),cur.getMsgChannel().getId(),-1); 
 		} finally {
 			session.close();
 		}

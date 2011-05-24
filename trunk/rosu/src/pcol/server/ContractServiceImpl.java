@@ -12,6 +12,7 @@ import pcol.client.contract.ContractService;
 import pcol.server.blogic.Contracte;
 import pcol.server.blogic.Orare;
 import pcol.server.domain.ContracteStudiu;
+import pcol.server.domain.CurCourse;
 import pcol.server.domain.Curicul;
 import pcol.server.domain.Logins;
 import pcol.server.domain.Orar;
@@ -63,11 +64,12 @@ public class ContractServiceImpl extends AuthRemoteServiceServlet implements
 						cg.semester = citem.getSemester();
 						grupCursuri.put(optGroup, cg);
 					}
-					
+					CurCourse curs = citem.getCurCourse();
 					grupCursuri.get(optGroup).courses.add(new Course(
-							citem.getCurCourse().getId(),
-							citem.getCurCourse().getName(),
-							citem.getCurCourse().getAbbrev(),
+							curs.getId(),
+							curs.getName(),
+							curs.getAbbrev(),
+							curs.getMsgChannel().getId(),
 							citem.getNcredite()));
 				}
 				

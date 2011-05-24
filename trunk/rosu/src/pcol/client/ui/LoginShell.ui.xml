@@ -8,7 +8,7 @@
 		}
 		
 		.loginp {
-			background-color: white;
+			background-color: #FCFCFB;
 			padding: 1em;
 			color: #606060;
 			font-size: 1.1em;

@@ -10,6 +10,8 @@ import pcol.client.schedule.ScheduleActivity;
 import pcol.client.schedule.SchedulePlace;
 import pcol.client.teme.EditTemeActivity;
 import pcol.client.teme.EditTemePlace;
+import pcol.client.tweet.SendTweetActivity;
+import pcol.client.tweet.SendTweetPlace;
 import pcol.client.tweet.TweetActivity;
 import pcol.client.tweet.TweetPlace;
 
@@ -26,6 +28,8 @@ public class ProfActivityConfig implements ActivityMapper {
 	public Activity getActivity(Place place) {
 		if (place instanceof TweetPlace){
 			return new TweetActivity();
+		}else if (place instanceof SendTweetPlace){
+			return new SendTweetActivity((SendTweetPlace)place);
 		}else if (place instanceof ProfOverviewPlace){
 			return new ProfOverviewActivity((ProfOverviewPlace)place);
 		}else if (place instanceof EditDescrierePlace){
