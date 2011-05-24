@@ -1,15 +1,12 @@
 package pcol.client.teme;
 
 import java.util.Date;
-import java.util.List;
 
-import pcol.client.AppLoader;
 import pcol.client.materii.MaterieShell;
 import pcol.client.materii.MateriiService;
 import pcol.client.materii.MateriiServiceAsync;
 import pcol.client.security.AppAsyncCallback;
 import pcol.shared.Course;
-import pcol.shared.TemaStudent;
 
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.core.client.GWT;

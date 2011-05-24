@@ -15,6 +15,7 @@ import pcol.shared.AuthenticationException;
 import pcol.shared.Tweet;
 import pcol.shared.Tweet.Level;
 
+@SuppressWarnings("serial")
 public class TweetServiceImpl extends AuthRemoteServiceServlet implements
 		TweetService {
 	static Logger log = Logger.getLogger(TweetServiceImpl.class.getName());

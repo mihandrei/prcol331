@@ -23,6 +23,7 @@ import pcol.shared.Tema;
  * FIXME: security: un profesor poate modifica doar cursurile lui, 
  * pune operatiile in scopul unui withuser, trimite sid-ul 
  */
+@SuppressWarnings("serial")
 public class MateriiServiceImpl extends AuthRemoteServiceServlet implements MateriiService {
 
 	@Override
@@ -45,6 +46,7 @@ public class MateriiServiceImpl extends AuthRemoteServiceServlet implements Mate
 		});
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Group> getGrupeForCourse(int courseid){
 		SessionFactory sf = HibernateUtil.getSessionFactory();

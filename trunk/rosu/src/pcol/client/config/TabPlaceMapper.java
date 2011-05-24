@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.place.shared.Place;
-import com.google.gwt.place.shared.PlaceHistoryMapper;
 
 public class TabPlaceMapper {
 	public static class Tab{

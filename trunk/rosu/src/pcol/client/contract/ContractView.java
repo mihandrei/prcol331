@@ -2,8 +2,6 @@ package pcol.client.contract;
 
 import java.util.List;
 
-import pcol.shared.CourseGroup;
-
 import com.google.gwt.user.client.ui.IsWidget;
 
 public interface ContractView extends IsWidget{

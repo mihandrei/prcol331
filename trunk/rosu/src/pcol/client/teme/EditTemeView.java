@@ -2,10 +2,9 @@ package pcol.client.teme;
 
 import java.util.Date;
 
-import com.google.gwt.user.client.ui.IsWidget;
-
 import pcol.client.materii.UploadView;
-import pcol.client.materii.UploadView.Presenter;
+
+import com.google.gwt.user.client.ui.IsWidget;
 
 public interface EditTemeView extends IsWidget {
 	public interface Presenter extends UploadView.Presenter{

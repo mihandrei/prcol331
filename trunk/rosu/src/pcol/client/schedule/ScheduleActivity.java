@@ -6,6 +6,7 @@ import pcol.client.AppLoader;
 import pcol.client.contract.ContractService;
 import pcol.client.contract.ContractServiceAsync;
 import pcol.client.security.AppAsyncCallback;
+import pcol.client.security.AppDoneEvent;
 import pcol.shared.OrarDto;
 
 import com.google.gwt.activity.shared.AbstractActivity;
@@ -14,6 +15,7 @@ import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
+import com.google.gwt.user.client.ui.RootLayoutPanel;
 
 public class ScheduleActivity extends AbstractActivity implements
 		WeekView.Presenter {
@@ -30,7 +32,7 @@ public class ScheduleActivity extends AbstractActivity implements
 		firstrun=true;
 	}
 	@Override
-	public void start(final AcceptsOneWidget panel, EventBus eventBus) {
+	public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
 		GWT.runAsync(new RunAsyncCallback() {
 
 			@Override
@@ -58,6 +60,17 @@ public class ScheduleActivity extends AbstractActivity implements
 						
 					});
 				}
+				
+				//inca un hack datorat lipsei de cache global
+				//pe logout app se termina dar campurile statice raman
+				eventBus.addHandler(AppDoneEvent.TYPE, new AppDoneEvent.Handler() {
+					@Override
+					public void onAppTerminated(AppDoneEvent event) {
+						invalidateCache();
+					}
+				});
+				
+				
 				panel.setWidget(view.asWidget());
 
 				AppLoader.getApp().showTipFor("orar");

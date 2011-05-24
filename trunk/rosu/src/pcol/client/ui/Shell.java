@@ -21,7 +21,6 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
@@ -45,14 +44,14 @@ public class Shell extends Composite implements HasSelectionHandlers<String> {
 	}
 
 	private static class Pallette {
-		public static Pallette VIBRANT = new Pallette(new String[] { "#3FBA20",
-				"#0f7fc0", "#ff2a2a", "#fed700" });
-		public static Pallette PASTEL = new Pallette(new String[] { "#C3DBBD",
-				"#C2CFD6", "#D6C2C2", "#D6D3C2" });
-		public static Pallette NICE = new Pallette( 
-				new String[] { "#FFD800", "#0095FF", "#F20D0D", "#A1E619" });
+//		public static Pallette VIBRANT = new Pallette(new String[] { "#3FBA20",
+//				"#0f7fc0", "#ff2a2a", "#fed700" });
+//		public static Pallette PASTEL = new Pallette(new String[] { "#C3DBBD",
+//				"#C2CFD6", "#D6C2C2", "#D6D3C2" });
+//		public static Pallette NICE = new Pallette( 
+//				new String[] { "#FFD800", "#0095FF", "#F20D0D", "#A1E619" });
 		public static Pallette LESS = new Pallette( 
-				new String[] { "#F20D0D", "#0095FF","#FFD800", "#E4F070","#C2CFD6" });
+				new String[] { "#F20D0D", "#0095FF","#FFD800", "#A1E619","#C2CFD6" });
 		private String[] scolor;
 
 		public Pallette(String[] colors) {

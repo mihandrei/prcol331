@@ -3,8 +3,6 @@ package pcol.client.security;
 import java.util.Date;
 import java.util.logging.Logger;
 
-import pcol.client.App;
-import pcol.client.ui.ReLoginView.Presenter;
 import pcol.shared.AuthenticationException;
 import pcol.shared.User;
 
