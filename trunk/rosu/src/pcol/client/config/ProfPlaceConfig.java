@@ -6,13 +6,9 @@ import pcol.client.materii.ProfOverviewPlace;
 import pcol.client.schedule.SchedulePlace;
 import pcol.client.teme.EditTemePlace;
 import pcol.client.tweet.SendTweetPlace;
-import pcol.client.tweet.TweetPlace;
 
 public class ProfPlaceConfig extends PlaceConfigBase {
 	public ProfPlaceConfig() {
-		tokenizers.put("noutati", new TweetPlace.Tokenizer());
-		placetokens.put(TweetPlace.class, "noutati");
-		
 		tokenizers.put("compune", new SendTweetPlace.Tokenizer());
 		placetokens.put(SendTweetPlace.class, "compune");
 		
