@@ -1,13 +1,10 @@
-* [http://prcol331.googlecode.com/files/Presentation1.pdf a presentation ]
-
-* [Ahitectura]
-
-* [DevelopingRed]
-
-* [Infrastructure]
-
-* [Cerinte]
-
+* documentatie
+    * [http://prcol331.googlecode.com/files/Presentation1.pdf a presentation ]
+    * [Ahitectura]
+    * [DevelopingRed]
+    * [Infrastructure]
 * [manualeSiScule]
 
 * [SVN]
+
+* [Cerinte]
