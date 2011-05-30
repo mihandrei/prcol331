@@ -1,9 +1,13 @@
-* [Cerinte]
+* [http://prcol331.googlecode.com/files/Presentation1.pdf a presentation ]
 
 * [Ahitectura]
 
-* [Setup]
+* [DevelopingRed]
 
-* [SVN]
+* [Infrastructure]
+
+* [Cerinte]
 
 * [manualeSiScule]
+
+* [SVN]
