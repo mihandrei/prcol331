@@ -1,12 +1,16 @@
 package pcol.client.teme;
 
 import java.util.Date;
+import java.util.List;
 
+import pcol.client.AppLoader;
 import pcol.client.materii.MaterieShell;
 import pcol.client.materii.MateriiService;
 import pcol.client.materii.MateriiServiceAsync;
 import pcol.client.security.AppAsyncCallback;
 import pcol.shared.Course;
+import pcol.shared.Tema;
+import pcol.shared.TemaStudent;
 
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.core.client.GWT;
@@ -48,19 +52,18 @@ public class StudentOverViewActivity extends AbstractActivity implements Student
 			}
 		});
 		view.clear();
-		view.addItem("de predat","lab 4","tema/"+3, new Date());		
-//		rpc.getTemeStudent(AppLoader.getApp().getSid(),
-//				place.getMaterieid(),
-//			new AppAsyncCallback<List<TemaStudent>>() {
-//
-//				@Override
-//				public void onSuccess(List<TemaStudent> temestudent) {
-//					for(TemaStudent tema:temestudent){
-//						view.addItem(tema.status.toString(),tema.name,"tema/"+tema.id, tema.deadline);
-//					}
-//				}
+		rpc.getTemeStudent(AppLoader.getApp().getSid(),
+				place.getMaterieid(),
+			new AppAsyncCallback<List<Tema>>() {
 
-//		});
+				@Override
+				public void onSuccess(List<Tema> temestudent) {
+					for(Tema tema:temestudent){
+						view.addItem("status", tema.description,"tema/"+tema.materieid, tema.deadline);
+					}
+				}
+
+		});
 
 		panel.setWidget(shell.asWidget());
 	}

@@ -35,6 +35,9 @@ public interface MateriiServiceAsync {
 	void addTema(Tema t, AsyncCallback<Void> callback);
 
 	void removeTema(int temaid, AsyncCallback<Void> callback);
+
+	void getTemeStudent(String sid, int materieid,
+			AsyncCallback<List<Tema>> callback);
 	
 	
 

@@ -25,6 +25,7 @@ public interface MateriiService extends RemoteService{
 	void removeMaterialByName(int materieid, String resourceName);
 
 	List<Tema> getTeme(int materieid);
+	List<Tema> getTemeStudent(String sid, int materieid) throws AuthenticationException;
 	void addTema(Tema t);
 	void removeTema(int temaid);
 }
