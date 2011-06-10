@@ -2,23 +2,29 @@ package pcol.server;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import pcol.client.materii.MateriiService;
+import pcol.server.blogic.Contracte;
+import pcol.server.domain.ContracteStudiu;
 import pcol.server.domain.CurCourse;
 import pcol.server.domain.Logins;
 import pcol.server.domain.OrgGroup;
 import pcol.server.domain.Profesori;
+import pcol.server.domain.Studenti;
 import pcol.server.domain.Teme;
+import pcol.server.domain.TmStudent;
 import pcol.server.security.AuthRemoteServiceServlet;
 import pcol.shared.AuthenticationException;
 import pcol.shared.Course;
 import pcol.shared.Group;
 import pcol.shared.Resource;
 import pcol.shared.Tema;
+import pcol.shared.TemaStudent;
 /**
  * FIXME: security: un profesor poate modifica doar cursurile lui, 
  * pune operatiile in scopul unui withuser, trimite sid-ul 
@@ -191,7 +197,7 @@ public class MateriiServiceImpl extends AuthRemoteServiceServlet implements Mate
 			for(Teme dt :course.getTemes()){
 				pcol.server.domain.Resource domRes = dt.getResource();
 				Resource r = new Resource(domRes.getDescriere(),domRes.getNumefisier());
-				ret.add(new Tema(materieid,r,dt.getDeadline()));
+				ret.add(new Tema(materieid,dt.getName(), dt.getDeadline(),r,null));
 			}
 			
 			session.getTransaction().commit();
@@ -201,6 +207,7 @@ public class MateriiServiceImpl extends AuthRemoteServiceServlet implements Mate
 		}
 	}
 
+	
 	@Override
 	public void addTema(Tema t) {
 		SessionFactory sf = HibernateUtil.getSessionFactory();
@@ -214,7 +221,7 @@ public class MateriiServiceImpl extends AuthRemoteServiceServlet implements Mate
 			
 			pcol.server.domain.Resource domres  =(pcol.server.domain.Resource) grq.uniqueResult();
 			
-			Teme domTema = new Teme(domres, curCourse);
+			Teme domTema = new Teme(domres, curCourse,t.description);
 			domTema.setDeadline(t.deadline);
 			
 			session.persist(domTema);
@@ -240,4 +247,51 @@ public class MateriiServiceImpl extends AuthRemoteServiceServlet implements Mate
 		}
 	}
 
+	@Override
+	public List<Tema> getTemeStudent(String sid, final int materieid) throws AuthenticationException {
+		return withUser(sid, new UserCall<List<Tema>>() {
+			@Override
+			public List<Tema> call(Logins user, Session session) {
+				session.beginTransaction();
+				if (user.getStudentis().size() != 1) {
+					throw new RuntimeException("userul nu e student");
+				}
+				Studenti student = user.getStudentis().iterator().next();
+				
+				List<Tema> ret = getTemeStudent(student, materieid, session);
+				session.getTransaction().commit();
+				return ret;
+			}
+		});
+	}
+	public List<Tema> getTemeStudent(Studenti student, int materieid,Session session) {
+		Query temeMaterie = session
+		.createQuery("from Teme as t where t.curCourse.id=:courseId")
+		.setParameter("courseId", materieid);
+		
+		Query grq = session
+		.createQuery(
+				"from TmStudent as ts "+
+				"where ts.studenti.nrMatr=:nrmatr "+
+				"and ts.teme.id = :tid ")
+		.setParameter("nrmatr", materieid);
+		
+		List<Tema> ret = new ArrayList<Tema>();
+
+		for(Teme tm:(List<Teme>)temeMaterie.list()){
+			grq.setParameter("tid", tm.getId());
+			TemaStudent ts = null;
+			
+			TmStudent tmst = (TmStudent) grq.uniqueResult();
+			if(tmst!=null){
+				ts = new TemaStudent(tmst.getStatus(), tmst.getTeme().getDeadline(),
+						null,null);
+			}
+			pcol.server.domain.Resource domRes = tm.getResource();
+			Resource r = new Resource(domRes.getDescriere(),domRes.getNumefisier());
+			ret.add(new Tema(materieid,tm.getName(),tm.getDeadline(),r,ts));
+		}
+		
+		return ret;
+	}
 }

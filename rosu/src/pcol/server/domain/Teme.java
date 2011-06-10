@@ -1,6 +1,6 @@
 package pcol.server.domain;
 
-// Generated May 19, 2011 4:58:35 AM by Hibernate Tools 3.4.0.CR1
+// Generated May 25, 2011 9:14:34 AM by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -28,21 +28,24 @@ public class Teme implements java.io.Serializable {
 	private Integer id;
 	private Resource resource;
 	private CurCourse curCourse;
+	private String name;
 	private Date deadline;
 	private Set<TmStudent> tmStudents = new HashSet<TmStudent>(0);
 
 	public Teme() {
 	}
 
-	public Teme(Resource resource, CurCourse curCourse) {
+	public Teme(Resource resource, CurCourse curCourse, String name) {
 		this.resource = resource;
 		this.curCourse = curCourse;
+		this.name = name;
 	}
 
-	public Teme(Resource resource, CurCourse curCourse, Date deadline,
-			Set<TmStudent> tmStudents) {
+	public Teme(Resource resource, CurCourse curCourse, String name,
+			Date deadline, Set<TmStudent> tmStudents) {
 		this.resource = resource;
 		this.curCourse = curCourse;
+		this.name = name;
 		this.deadline = deadline;
 		this.tmStudents = tmStudents;
 	}
@@ -76,6 +79,15 @@ public class Teme implements java.io.Serializable {
 
 	public void setCurCourse(CurCourse curCourse) {
 		this.curCourse = curCourse;
+	}
+
+	@Column(name = "name", nullable = false, length = 45)
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)

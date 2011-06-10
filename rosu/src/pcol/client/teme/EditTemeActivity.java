@@ -109,7 +109,7 @@ public class EditTemeActivity extends AbstractActivity implements EditTemeView.P
 			view.descInvalid();
 			return;
 		}
-		Tema tema = new Tema(place.getMaterieid(), new Resource(view.getDescription(),lastUploadedResourceName), view.getDeadLine());
+		Tema tema = new Tema(place.getMaterieid(),view.getDescription(), view.getDeadLine(), new Resource(view.getDescription(),lastUploadedResourceName),null);
 		rpc.addTema(tema, new AppAsyncCallback<Void>() {
 					@Override
 					public void onSuccess(Void arg0) {

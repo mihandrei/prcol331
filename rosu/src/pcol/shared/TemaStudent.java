@@ -2,7 +2,9 @@ package pcol.shared;
 
 import java.util.Date;
 
-public class TemaStudent {
+import com.google.gwt.user.client.rpc.IsSerializable;
+
+public class TemaStudent implements IsSerializable{
 	public enum Status{
 		PENDING_SUBMISSION,
 		PENDING_REVIEW,
@@ -14,10 +16,12 @@ public class TemaStudent {
 	public Date deadline;
 	public String name;
 	public String id;
-
-	public TemaStudent(Status status, Date deadline, String name,
+	public TemaStudent(){
+		
+	}
+	public TemaStudent(String status, Date deadline, String name,
 			String id) {
-		this.status = status;
+		this.status = Status.valueOf(status);
 		this.deadline = deadline;
 		this.name = name;
 		this.id = id;
