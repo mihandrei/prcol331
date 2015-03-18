@@ -1,0 +1,55 @@
+# Infrastructura #
+
+Aplicatia initiala (loader):
+> scopul ei e sa incarce Aplicatia
+  1. daca exista un session id in cookie incearca login automat
+> 2.  daca nu exista cookie saau nu e valid SIDu atunci afiseaza pagina de start
+> 3.	pagina de start afiseaza informatii publice & interfata de login
+> 4.  user sea autentifica, loaderul trimite la srv credentiale usr, pwd
+> 5.  App se configureaza in fuctie de rolul userului
+
+Structura Aplicatiei:
+  * e impartita logic in mai multe Place-uri : locatii unde userul poate ajunge,
+> > urmarind un link, scriind un URL
+  * fiecarui Place ii corespunde un String : tokenul de istorie ce o sa apara in URL
+  * fiecarui Place ii corespunde o activitate.
+  * o activitate este creeata si pornita cand userul navigheaza la Place-ul corespunzator
+> > , activiitatea anterioara  e oprita
+  * mai contine servicii ce nu pot fi incapsulate in activitati
+
+Aplicatia :
+  1. App initializeaza UI flowul : configureaza Activitatile, Place-urile,
+> > si navigarea (taburile & eventual breadcrumb)
+
+> 2.  App porneste managementul activitatilor: o activitate porneste
+
+> 3.  Activitatile apeleaza metode pe server
+> 4.  in cazul in care sesiunea expira se afiseaza un dialog modal care cere
+> > reintroducearea parolei. notificat userul sa reincerce comanda
+
+> 5. in cazul unei erori de autorizare nu avem ce face decat sa afisam un mesaj explicand ca tre sa ai
+drepuri de prof/admin/etc ca sa faci actiunea X
+> 6. App mentine unele servicii centrale:
+    * autentificare
+    * centralizare erori
+    * sync Place cu navigarea(taburile colorate)
+    * mesaje globale & tips
+    * in vers 2 : heartbeat?, command pattern? politica de cache?
+> > > ( de ex anunturile se schima rapid, orarele ba)
+
+
+# Interfata #
+
+## minimala dar functionala ##
+  * multa grafica oboseste
+  * culorile sunt simboluri vizuale pentru sectiuni din aplicatie
+
+> > (materiile sunt albastre)
+  * e rapida, pagina nu se reincarca.
+
+## bazate pa orar ##
+motivatie:
+  * n orar saptamanal e modul natural de a gandi activitatile
+  * n orar prin natura lui e mai organizat si mai compact decat
+> > 3 liste una pt cursuri alta pt semniarii si laboratoare
+  * serul e deja familiar cu orare
